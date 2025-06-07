@@ -2,65 +2,640 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>數位貼紙價目表</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
+    * { box-sizing: border-box; }
+    
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; 
+      margin: 0; 
+      padding: 16px; 
+      background: #f8f9fa;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    .header h1 {
+      margin: 0 0 8px 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    
+    .header p {
+      margin: 0;
+      color: #666;
+      font-size: 14px;
+    }
     
     .section {
       margin-bottom: 20px;
-      padding: 15px;
-      border-radius: 8px;
+      padding: 16px;
+      border-radius: 12px;
       border: 1px solid #ddd;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
     .size-buttons { background-color: #f5f5f5; }
     .select-area { background-color: #fafafa; border-color: #e0e0e0; }
     
-    .size-buttons h3 { margin: 0 0 10px 0; color: #333; font-size: 16px; }
+    .size-buttons h3, .select-area label { 
+      margin: 0 0 12px 0; 
+      color: #333; 
+      font-size: 16px; 
+      font-weight: 600;
+    }
+
+    /* 收合功能 */
+    .collapsible-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .collapse-btn {
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #666;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      display: none; /* 默認隱藏，手機端顯示 */
+    }
+
+    .collapse-btn:hover {
+      background: rgba(0,0,0,0.1);
+    }
+
+    .collapsible-content {
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+    }
+
+    .collapsible-content.collapsed {
+      max-height: 0 !important;
+      opacity: 0;
+      margin-top: 0 !important;
+    }
+
+    /* 手機端顯示收合按鈕 */
+    @media (max-width: 768px) {
+      .collapse-btn {
+        display: block;
+      }
+      
+      .size-buttons .collapsible-content {
+        margin-top: 12px;
+      }
+    }
+
+    /* 選單容器 */
+    .select-container {
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .select-group {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .select-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
     
     .button-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-      gap: 8px;
+      gap: 10px;
+    }
+    
+    /* 手機端優化 */
+    @media (max-width: 768px) {
+      body { padding: 12px; font-size: 14px; }
+      
+      .header h1 { font-size: 20px; }
+      .header p { font-size: 13px; }
+      
+      .section { padding: 12px; margin-bottom: 16px; }
+      
+      .button-grid {
+        grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
+        gap: 8px;
+      }
+      
+      .size-buttons h3, .select-area label { font-size: 14px; }
+
+      .select-container {
+        gap: 12px;
+      }
+
+      .select-group {
+        min-width: 130px;
+      }
+
+      .select-group label {
+        font-size: 13px;
+      }
+      
+      #material-input {
+        font-size: 14px;
+      }
+      
+      .material-dropdown {
+        max-height: 150px;
+      }
+      
+      .material-option {
+        font-size: 13px;
+      }
+    }
+    
+    /* 更小屏幕優化 */
+    @media (max-width: 480px) {
+      .button-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+      }
+
+      .select-container {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .select-group {
+        min-width: 100%;
+      }
     }
     
     .size-btn {
-      padding: 8px 12px;
-      border: 1px solid #ccc;
+      padding: 12px 8px;
+      border: 2px solid #ccc;
       background: #fff;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 12px;
-      transition: all 0.3s ease;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      text-align: center;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
     }
     
-    .size-btn:hover { background: #e0e0e0; border-color: #999; }
-    .size-btn.active { background: #ffcc00; border-color: #ffaa00; font-weight: bold; }
+    .size-btn:hover { 
+      background: #e0e0e0; 
+      border-color: #999; 
+      transform: translateY(-1px);
+    }
+    
+    .size-btn:active {
+      transform: translateY(0);
+    }
+    
+    .size-btn.active { 
+      background: #ffcc00; 
+      border-color: #ffaa00; 
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(255, 204, 0, 0.3);
+    }
     
     #size-select { 
-      padding: 6px 10px; 
-      font-size: 14px; 
-      border: 1px solid #ccc; 
-      border-radius: 4px; 
-      width: 150px;
+      padding: 12px 16px; 
+      font-size: 16px; 
+      border: 2px solid #ccc; 
+      border-radius: 8px; 
+      width: 100%;
+      background: white;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px;
+      padding-right: 40px;
+    }
+
+    /* 複合式材質輸入框 */
+    .material-search-container {
+      position: relative;
+      width: 100%;
+    }
+
+    #material-input {
+      padding: 12px 40px 12px 16px; 
+      font-size: 16px; 
+      border: 2px solid #ccc; 
+      border-radius: 8px; 
+      width: 100%;
+      background: white;
+      outline: none;
+    }
+
+    #material-input:focus {
+      border-color: #ff9800;
+      box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+    }
+
+    .material-dropdown-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 14px;
+      transition: transform 0.2s ease;
+    }
+
+    .material-dropdown-btn.open {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    /* 無障礙訪問優化 */
+    .material-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 2px solid #ccc;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 1000;
+      display: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .material-dropdown.show {
+      display: block;
+    }
+
+    .material-option {
+      padding: 10px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+      transition: background-color 0.2s ease;
+    }
+
+    .material-option:hover, .material-option.highlighted {
+      background-color: #f0f8ff;
+    }
+
+    .material-option:last-child {
+      border-bottom: none;
+    }
+
+    .no-results {
+      padding: 10px 16px;
+      color: #999;
+      font-style: italic;
+    }
+
+    /* 防止動畫衝突 */
+    .material-highlight.animating {
+      pointer-events: none;
+    }
+
+    /* 載入狀態 */
+    .table-loading {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* 螢幕閱讀器專用文字 */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* 改善焦點可見性 */
+    .material-option:focus,
+    .size-btn:focus,
+    #size-select:focus,
+    #material-input:focus {
+      outline: 2px solid #ff9800;
+      outline-offset: 2px;
+    }
+
+    /* 高對比度支援 */
+    @media (prefers-contrast: high) {
+      .material-option:hover, .material-option.highlighted {
+        background-color: #000080;
+        color: white;
+      }
+      
+      .size-btn.active {
+        background: #ffcc00;
+        border-color: #000;
+        color: #000;
+      }
+    }
+
+    /* 減少動畫偏好支援 */
+    @media (prefers-reduced-motion: reduce) {
+      .material-highlight {
+        animation: none !important;
+      }
+      
+      .collapsible-content {
+        transition: none !important;
+      }
+      
+      * {
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* 表格頂部尺寸顯示 */
+    .table-header {
+      padding: 12px 16px;
+      font-size: 24px;
+      color: #ff8c00;
+      text-align: center;
+      font-weight: bold;
+      margin: 0;
+      border: none;
+      background: none;
+    }
+
+    @media (max-width: 768px) {
+      .table-header {
+        font-size: 20px;
+        padding: 10px 12px;
+      }
     }
     
-    table { border-collapse: collapse; width: 100%; }
-    td { padding: 6px; text-align: center; }
+    /* 表格容器和固定表頭 */
+    .table-wrapper {
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background: white;
+      position: relative;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      max-height: 70vh;
+      margin-top: 12px;
+    }
+    
+    table { 
+      border-collapse: separate;
+      border-spacing: 0;
+      width: 100%; 
+      min-width: 600px;
+      font-size: 14px;
+      position: relative;
+    }
+    
+    td, th { 
+      padding: 10px 8px; 
+      text-align: center; 
+      border: 1px solid #e0e0e0;
+      white-space: nowrap;
+      background: white;
+    }
+
+    /* 固定第一列（材質名稱） */
+    .material-name {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      font-weight: 600;
+      text-align: left !important;
+      padding-left: 12px !important;
+      max-width: 180px;
+      min-width: 160px;
+      word-wrap: break-word;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+
+    /* 固定第一行（數量標題） */
+    .qty-header, .empty-corner {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      font-weight: bold;
+      color: #333;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* 左上角固定格 */
+    .empty-corner {
+      position: sticky;
+      left: 0;
+      top: 0;
+      z-index: 3;
+      background: #f8f9fa !important;
+    }
+
+    .qty-header {
+      background: #ffcc00 !important;
+    }
+    
+    /* 手機端表格優化 */
+    @media (max-width: 768px) {
+      table { 
+        font-size: 12px; 
+        min-width: 550px;
+      }
+      
+      td, th { 
+        padding: 8px 6px; 
+      }
+
+      .material-name {
+        min-width: 140px;
+        max-width: 140px;
+        font-size: 11px;
+      }
+
+      .table-wrapper {
+        max-height: 60vh;
+      }
+    }
+    
+    /* 材質名稱列背景 */
+    .material-even { background: #ffcc66 !important; }
+    .material-odd { background: #ffcc00 !important; }
+    
+    /* 價格行背景 */
+    .price-even { background: #f8f9fa !important; }
+    .price-odd { background: #fff !important; }
+
+    /* 高亮材質行動畫 */
+    .material-highlight {
+      animation: highlightFlash 1s ease-in-out 1 !important;
+    }
+
+    .material-highlight td {
+      animation: highlightFlash 1s ease-in-out 1 !important;
+      background-color: #fff3e0 !important;
+      border-left: 3px solid #ff9800 !important;
+    }
+
+    @keyframes highlightFlash {
+      0% { 
+        background-color: #fff3e0 !important;
+      }
+      50% { 
+        background-color: #ffcc80 !important;
+      }
+      100% { 
+        background-color: #fff3e0 !important;
+      }
+    }
+    
+    .scroll-hint {
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+      margin-top: 8px;
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .scroll-hint { display: block; }
+    }
+    
+    /* 加載動畫 */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
+    
+    /* 優化觸控體驗 */
+    @media (pointer: coarse) {
+      .size-btn {
+        min-height: 48px;
+        padding: 14px 8px;
+      }
+      
+      #size-select, #material-input {
+        min-height: 48px;
+        padding: 14px 16px;
+      }
+      
+      #size-select {
+        padding-right: 44px;
+      }
+      
+      #material-input {
+        padding-right: 44px;
+      }
+      
+      .material-dropdown-btn {
+        width: 32px;
+        height: 32px;
+        right: 8px;
+      }
+      
+      .material-option {
+        padding: 14px 16px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="header">
+    <h1>🏷️ 數位貼紙價目表</h1>
+    <p>選擇尺寸查看各材質價格</p>
+  </div>
+
   <div class="section size-buttons">
-    <h3>🏷️ 快速選擇尺寸：</h3>
-    <div class="button-grid" id="buttons"></div>
+    <div class="collapsible-header" onclick="toggleCollapse('size-buttons-content')">
+      <h3>快速選擇尺寸</h3>
+      <button 
+        class="collapse-btn" 
+        id="size-collapse-btn"
+        aria-expanded="true"
+        aria-controls="size-buttons-content"
+        aria-label="收合尺寸選擇區域">−</button>
+    </div>
+    <div class="collapsible-content" id="size-buttons-content">
+      <div class="button-grid" id="buttons"></div>
+    </div>
   </div>
 
   <div class="section select-area">
-    <label><strong>📋 下拉選單：</strong></label>
-    <select id="size-select"></select>
+    <label><strong>📋 選擇選單</strong></label>
+    <div class="select-container">
+      <div class="select-group">
+        <label for="size-select">尺寸</label>
+        <select id="size-select"></select>
+      </div>
+      <div class="select-group">
+        <label for="material-input">材質</label>
+        <div class="material-search-container">
+          <input 
+            type="text" 
+            id="material-input" 
+            placeholder="輸入材質名稱或點擊下拉選擇"
+            autocomplete="off"
+            spellcheck="false"
+            aria-describedby="material-help">
+          <button 
+            type="button" 
+            class="material-dropdown-btn" 
+            id="material-dropdown-btn"
+            aria-label="展開材質選單"
+            aria-expanded="false">▼</button>
+          <div 
+            class="material-dropdown" 
+            id="material-dropdown"
+            role="listbox"
+            aria-label="材質選項"></div>
+        </div>
+        <div id="material-help" class="sr-only">使用方向鍵導航，Enter選擇，Escape關閉</div>
+      </div>
+    </div>
   </div>
 
-  <div id="table-container"></div>
+  <div class="table-header" id="table-header">1x1cm</div>
+  <div class="table-wrapper">
+    <div id="table-container" class="loading">正在載入價目表...</div>
+  </div>
+  <div class="scroll-hint">👈👆 可上下左右滑動，標題列會保持固定</div>
 
   <script>
     const quantities = ["500張", "1000張", "2000張", "5000張", "10000張"];
@@ -80,7 +655,7 @@
       if (i < 20) sizes.push(`1x${i}.5cm`);
     }
 
-    // 完整價格數據 - 根據Excel文字檔重新整理
+    // 完整價格數據
     const priceData = {
       "1x1cm": [[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,348,398,468,568],[318,348,398,468,568],[318,348,398,468,568],[318,348,398,468,568],[318,348,398,468,568],[318,358,418,498,587],[332,372,432,512,600],[332,372,432,512,600],[332,372,432,512,600],[332,372,432,512,600]],
       "1x1.5cm": [[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,540],[318,338,378,438,518],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,348,398,468,606],[318,348,398,468,606],[318,348,398,468,637],[318,348,398,468,637],[318,348,398,468,697],[332,372,432,512,728],[332,372,432,512,772],[332,372,432,512,772],[332,372,432,512,772],[332,372,432,512,772]],
@@ -124,71 +699,529 @@
     };
 
     const select = document.getElementById('size-select');
+    const materialInput = document.getElementById('material-input');
+    const materialDropdownBtn = document.getElementById('material-dropdown-btn');
+    const materialDropdown = document.getElementById('material-dropdown');
     const buttonsContainer = document.getElementById('buttons');
     const tableContainer = document.getElementById('table-container');
+    const tableHeader = document.getElementById('table-header');
+    
+    let filteredMaterials = [...materials];
+    let highlightedIndex = -1;
+    let isAnimating = false;
+    let searchTimeout = null;
+    let currentHighlightedRow = null;
+
+    // 防抖動搜尋函數
+    function debounce(func, wait) {
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(searchTimeout);
+          func(...args);
+        };
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(later, wait);
+      };
+    }
+
+    // 收合功能
+    function toggleCollapse(contentId) {
+      try {
+        const content = document.getElementById(contentId);
+        const btn = document.getElementById('size-collapse-btn');
+        
+        if (!content || !btn) return;
+        
+        if (content.classList.contains('collapsed')) {
+          content.classList.remove('collapsed');
+          content.style.maxHeight = content.scrollHeight + 'px';
+          btn.textContent = '−';
+          btn.setAttribute('aria-expanded', 'true');
+        } else {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          setTimeout(() => {
+            content.classList.add('collapsed');
+            content.style.maxHeight = '0';
+          }, 10);
+          btn.textContent = '+';
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      } catch (error) {
+        console.warn('Toggle collapse error:', error);
+      }
+    }
 
     // 初始化UI
     function init() {
-      // 生成選項和按鈕
-      sizes.forEach(size => {
-        // 下拉選單選項
-        const option = document.createElement('option');
-        option.value = option.textContent = size;
-        select.appendChild(option);
+      try {
+        // 檢查必要元素是否存在
+        if (!select || !materialInput || !buttonsContainer || !tableContainer) {
+          throw new Error('Required DOM elements not found');
+        }
+
+        // 生成尺寸選項和按鈕
+        sizes.forEach((size, index) => {
+          // 下拉選單選項
+          const option = document.createElement('option');
+          option.value = option.textContent = size;
+          select.appendChild(option);
+          
+          // 按鈕
+          const btn = document.createElement('button');
+          btn.className = 'size-btn';
+          btn.textContent = size;
+          btn.onclick = () => selectSize(size);
+          btn.setAttribute('aria-label', `選擇尺寸 ${size}`);
+          btn.setAttribute('role', 'button');
+          buttonsContainer.appendChild(btn);
+        });
+
+        // 初始化材質下拉選項
+        renderMaterialOptions();
         
-        // 按鈕
-        const btn = document.createElement('button');
-        btn.className = 'size-btn';
-        btn.textContent = size;
-        btn.onclick = () => selectSize(size);
-        buttonsContainer.appendChild(btn);
-      });
-      
-      // 下拉選單事件
-      select.onchange = () => selectSize(select.value);
-      
-      // 初始選擇
-      selectSize(sizes[0]);
+        // 設置無障礙屬性
+        materialInput.setAttribute('role', 'combobox');
+        materialInput.setAttribute('aria-expanded', 'false');
+        materialInput.setAttribute('aria-haspopup', 'listbox');
+        materialInput.setAttribute('aria-autocomplete', 'list');
+        materialDropdown.setAttribute('role', 'listbox');
+        materialDropdownBtn.setAttribute('aria-label', '展開材質選單');
+        
+        // 事件監聽
+        select.onchange = () => selectSize(select.value);
+        
+        // 材質輸入框事件（使用防抖動）
+        const debouncedHandleMaterialInput = debounce(handleMaterialInput, 200);
+        materialInput.addEventListener('input', debouncedHandleMaterialInput);
+        materialInput.addEventListener('focus', () => showDropdown());
+        materialInput.addEventListener('keydown', handleKeydown);
+        materialInput.addEventListener('blur', handleInputBlur);
+        
+        // 下拉按鈕事件
+        materialDropdownBtn.addEventListener('click', toggleDropdown);
+        
+        // 點擊外部關閉下拉
+        document.addEventListener('click', handleOutsideClick);
+        
+        // 防止表單提交（如果在表單內）
+        const form = document.querySelector('form');
+        if (form) {
+          form.addEventListener('submit', (e) => e.preventDefault());
+        }
+        
+        // 設置初始高度
+        const content = document.getElementById('size-buttons-content');
+        if (content) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+        
+        // 初始選擇
+        selectSize(sizes[0]);
+        
+        console.log('Price table initialized successfully');
+      } catch (error) {
+        console.error('Initialization error:', error);
+        // 顯示錯誤訊息給用戶
+        if (tableContainer) {
+          tableContainer.innerHTML = '<p style="color:red; text-align: center; padding: 20px;">載入失敗，請重新整理頁面</p>';
+        }
+      }
+    }
+
+    // 處理輸入框失焦
+    function handleInputBlur(e) {
+      // 延遲隱藏下拉選單，給點擊選項時間
+      setTimeout(() => {
+        if (!e.relatedTarget || !e.relatedTarget.closest('.material-search-container')) {
+          hideDropdown();
+        }
+      }, 150);
+    }
+
+    // 處理外部點擊
+    function handleOutsideClick(e) {
+      if (!e.target.closest('.material-search-container')) {
+        hideDropdown();
+      }
+    }
+
+    // 渲染材質選項
+    function renderMaterialOptions() {
+      try {
+        if (!materialDropdown) return;
+        
+        materialDropdown.innerHTML = '';
+        
+        if (filteredMaterials.length === 0) {
+          const noResults = document.createElement('div');
+          noResults.className = 'no-results';
+          noResults.textContent = '找不到符合的材質';
+          noResults.setAttribute('role', 'option');
+          materialDropdown.appendChild(noResults);
+          return;
+        }
+        
+        filteredMaterials.forEach((material, index) => {
+          const option = document.createElement('div');
+          option.className = 'material-option';
+          option.textContent = material;
+          option.setAttribute('role', 'option');
+          option.setAttribute('aria-selected', index === highlightedIndex ? 'true' : 'false');
+          option.addEventListener('click', () => selectMaterial(material));
+          option.addEventListener('mouseenter', () => {
+            highlightedIndex = index;
+            updateHighlight();
+          });
+          
+          if (index === highlightedIndex) {
+            option.classList.add('highlighted');
+          }
+          
+          materialDropdown.appendChild(option);
+        });
+      } catch (error) {
+        console.warn('Render material options error:', error);
+      }
+    }
+
+    // 更新高亮顯示
+    function updateHighlight() {
+      try {
+        const options = materialDropdown.querySelectorAll('.material-option');
+        options.forEach((option, index) => {
+          const isHighlighted = index === highlightedIndex;
+          option.classList.toggle('highlighted', isHighlighted);
+          option.setAttribute('aria-selected', isHighlighted ? 'true' : 'false');
+        });
+      } catch (error) {
+        console.warn('Update highlight error:', error);
+      }
+    }
+
+    // 處理材質輸入
+    function handleMaterialInput(e) {
+      try {
+        const query = e.target.value.toLowerCase().trim();
+        filteredMaterials = materials.filter(material => 
+          material.toLowerCase().includes(query)
+        );
+        highlightedIndex = filteredMaterials.length > 0 ? 0 : -1;
+        renderMaterialOptions();
+        showDropdown();
+      } catch (error) {
+        console.warn('Handle material input error:', error);
+      }
+    }
+
+    // 處理鍵盤導航
+    function handleKeydown(e) {
+      try {
+        if (!materialDropdown.classList.contains('show')) {
+          if (e.key === 'ArrowDown' || e.key === 'Enter') {
+            e.preventDefault();
+            showDropdown();
+          }
+          return;
+        }
+
+        const maxIndex = Math.max(0, filteredMaterials.length - 1);
+
+        switch (e.key) {
+          case 'ArrowDown':
+            e.preventDefault();
+            highlightedIndex = highlightedIndex < maxIndex ? highlightedIndex + 1 : 0;
+            updateHighlight();
+            scrollHighlightedIntoView();
+            break;
+          case 'ArrowUp':
+            e.preventDefault();
+            highlightedIndex = highlightedIndex > 0 ? highlightedIndex - 1 : maxIndex;
+            updateHighlight();
+            scrollHighlightedIntoView();
+            break;
+          case 'Enter':
+            e.preventDefault();
+            if (highlightedIndex >= 0 && filteredMaterials[highlightedIndex]) {
+              selectMaterial(filteredMaterials[highlightedIndex]);
+            }
+            break;
+          case 'Escape':
+            e.preventDefault();
+            hideDropdown();
+            materialInput.blur();
+            break;
+          case 'Tab':
+            hideDropdown();
+            break;
+        }
+      } catch (error) {
+        console.warn('Keyboard navigation error:', error);
+      }
+    }
+
+    // 滾動高亮選項到可見區域
+    function scrollHighlightedIntoView() {
+      try {
+        const highlightedOption = materialDropdown.querySelector('.highlighted');
+        if (highlightedOption) {
+          highlightedOption.scrollIntoView({
+            block: 'nearest',
+            behavior: 'smooth'
+          });
+        }
+      } catch (error) {
+        console.warn('Scroll highlighted into view error:', error);
+      }
+    }
+
+    // 顯示下拉選單
+    function showDropdown() {
+      try {
+        if (!materialDropdown || !materialDropdownBtn || !materialInput) return;
+        
+        materialDropdown.classList.add('show');
+        materialDropdownBtn.classList.add('open');
+        materialInput.setAttribute('aria-expanded', 'true');
+        
+        // 確保有選項被高亮
+        if (filteredMaterials.length > 0 && highlightedIndex < 0) {
+          highlightedIndex = 0;
+          updateHighlight();
+        }
+      } catch (error) {
+        console.warn('Show dropdown error:', error);
+      }
+    }
+
+    // 隱藏下拉選單
+    function hideDropdown() {
+      try {
+        if (!materialDropdown || !materialDropdownBtn || !materialInput) return;
+        
+        materialDropdown.classList.remove('show');
+        materialDropdownBtn.classList.remove('open');
+        materialInput.setAttribute('aria-expanded', 'false');
+        highlightedIndex = -1;
+      } catch (error) {
+        console.warn('Hide dropdown error:', error);
+      }
+    }
+
+    // 切換下拉選單
+    function toggleDropdown() {
+      try {
+        if (materialDropdown.classList.contains('show')) {
+          hideDropdown();
+        } else {
+          filteredMaterials = [...materials];
+          highlightedIndex = 0;
+          renderMaterialOptions();
+          showDropdown();
+          materialInput.focus();
+        }
+      } catch (error) {
+        console.warn('Toggle dropdown error:', error);
+      }
     }
 
     function selectSize(size) {
-      // 更新選單
-      select.value = size;
-      
-      // 更新按鈕狀態
-      document.querySelectorAll('.size-btn').forEach(btn => 
-        btn.classList.toggle('active', btn.textContent === size)
-      );
-      
-      // 生成表格
-      generateTable(size);
+      try {
+        if (!size || !sizes.includes(size)) return;
+        
+        // 更新選單
+        if (select) select.value = size;
+        
+        // 更新表格標題
+        if (tableHeader) tableHeader.textContent = size;
+        
+        // 更新按鈕狀態
+        document.querySelectorAll('.size-btn').forEach(btn => 
+          btn.classList.toggle('active', btn.textContent === size)
+        );
+
+        // 重置材質選擇
+        if (materialInput) {
+          materialInput.value = '';
+          materialInput.setAttribute('aria-expanded', 'false');
+        }
+        filteredMaterials = [...materials];
+        hideDropdown();
+        
+        // 清除之前的高亮
+        clearHighlight();
+        
+        // 生成表格
+        generateTable(size);
+        
+      } catch (error) {
+        console.error('Select size error:', error);
+      }
+    }
+
+    function selectMaterial(material) {
+      try {
+        if (!material || !materials.includes(material) || isAnimating) return;
+        
+        // 設置輸入框值
+        if (materialInput) {
+          materialInput.value = material;
+        }
+        hideDropdown();
+        
+        // 防止重複動畫
+        isAnimating = true;
+        
+        // 找到材質對應的行索引
+        const materialIndex = materials.indexOf(material);
+        if (materialIndex === -1) {
+          isAnimating = false;
+          return;
+        }
+
+        // 確保表格已經生成
+        setTimeout(() => {
+          try {
+            const table = document.querySelector('#table-container table');
+            if (!table) {
+              isAnimating = false;
+              return;
+            }
+            
+            const materialRows = table.querySelectorAll('tr');
+            // +1 因為第一行是標題行
+            const targetRow = materialRows[materialIndex + 1];
+            
+            if (targetRow) {
+              // 清除之前的高亮效果
+              clearHighlight();
+              
+              // 滾動到該行
+              targetRow.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+              });
+              
+              // 延遲一下再添加高亮效果，確保滾動完成
+              setTimeout(() => {
+                try {
+                  // 添加閃爍效果到整行
+                  targetRow.classList.add('material-highlight', 'animating');
+                  currentHighlightedRow = targetRow;
+                  
+                  // 1秒後移除高亮效果
+                  setTimeout(() => {
+                    if (targetRow === currentHighlightedRow) {
+                      targetRow.classList.remove('material-highlight', 'animating');
+                      currentHighlightedRow = null;
+                    }
+                    isAnimating = false;
+                  }, 1000);
+                } catch (error) {
+                  console.warn('Animation error:', error);
+                  isAnimating = false;
+                }
+              }, 500);
+            } else {
+              isAnimating = false;
+            }
+          } catch (error) {
+            console.warn('Select material DOM error:', error);
+            isAnimating = false;
+          }
+        }, 200);
+        
+      } catch (error) {
+        console.error('Select material error:', error);
+        isAnimating = false;
+      }
+    }
+
+    // 清除高亮效果
+    function clearHighlight() {
+      try {
+        if (currentHighlightedRow) {
+          currentHighlightedRow.classList.remove('material-highlight', 'animating');
+          currentHighlightedRow = null;
+        }
+        // 清除所有可能殘留的高亮
+        document.querySelectorAll('.material-highlight').forEach(row => {
+          row.classList.remove('material-highlight', 'animating');
+        });
+      } catch (error) {
+        console.warn('Clear highlight error:', error);
+      }
     }
 
     function generateTable(size) {
-      const data = priceData[size];
-      if (!data) {
-        tableContainer.innerHTML = '<p style="color:red;">此尺寸尚無價目表資料。</p>';
-        return;
-      }
+      try {
+        if (!size || !tableContainer) return;
+        
+        // 添加載入狀態
+        tableContainer.classList.add('table-loading');
+        
+        const data = priceData[size];
+        if (!data) {
+          tableContainer.innerHTML = '<p style="color:red; text-align: center; padding: 20px;">此尺寸尚無價目表資料</p>';
+          tableContainer.classList.remove('table-loading');
+          return;
+        }
 
-      let html = '<table><tr><td></td>';
-      quantities.forEach(q => html += `<td style="background:#ffcc00">${q}</td>`);
-      html += '</tr><tr>' + '<td>&nbsp;</td>'.repeat(quantities.length + 1) + '</tr>';
-
-      materials.forEach((mat, i) => {
-        if (!data[i]) return;
-        const even = i % 2 === 0;
-        const bgTitle = even ? '#ffcc66' : '#ffcc00';
-        const bgValue = even ? '#eee' : '#fff';
-        html += `<tr><td style="background:${bgTitle}">${mat}</td>`;
-        data[i].forEach(p => html += `<td style="background:${bgValue}">$${Math.round(p).toLocaleString()}</td>`);
+        let html = '<table role="table" aria-label="價目表">';
+        
+        // 標題行（固定）
+        html += '<tr role="row">';
+        html += '<th class="material-name empty-corner" scope="col" aria-label="材質名稱"></th>';
+        quantities.forEach(q => html += `<th class="qty-header" scope="col" aria-label="${q}">${q}</th>`);
         html += '</tr>';
-      });
 
-      tableContainer.innerHTML = html + '</table>';
+        // 材質價格行
+        materials.forEach((mat, i) => {
+          if (!data[i]) return;
+          const even = i % 2 === 0;
+          const materialBg = even ? 'material-even' : 'material-odd';
+          const priceBg = even ? 'price-even' : 'price-odd';
+          
+          html += `<tr role="row"><th class="material-name ${materialBg}" scope="row" aria-label="材質: ${mat}">${mat}</th>`;
+          data[i].forEach((p, priceIndex) => {
+            const formattedPrice = `${Math.round(p).toLocaleString()}`;
+            const ariaLabel = `${quantities[priceIndex]} ${formattedPrice}`;
+            html += `<td class="${priceBg}" aria-label="${ariaLabel}">${formattedPrice}</td>`;
+          });
+          html += '</tr>';
+        });
+
+        tableContainer.innerHTML = html + '</table>';
+        
+        // 移除載入狀態
+        setTimeout(() => {
+          tableContainer.classList.remove('table-loading');
+        }, 100);
+        
+      } catch (error) {
+        console.error('Generate table error:', error);
+        if (tableContainer) {
+          tableContainer.innerHTML = '<p style="color:red; text-align: center; padding: 20px;">表格生成失敗</p>';
+          tableContainer.classList.remove('table-loading');
+        }
+      }
     }
 
-    init();
+    // 清理函數（可用於頁面卸載時清理）
+    function cleanup() {
+      try {
+        clearTimeout(searchTimeout);
+        clearHighlight();
+        isAnimating = false;
+      } catch (error) {
+        console.warn('Cleanup error:', error);
+      }
+    }
+
+    // 在頁面卸載時清理
+    window.addEventListener('beforeunload', cleanup);
+
+    // 頁面載入完成後初始化
+    document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
