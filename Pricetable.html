@@ -163,7 +163,7 @@
         gap: 8px;
       }
       
-      .size-buttons h3, .select-area label { font-size: 14px; }
+      .size-buttons h3, .select-area h3 { font-size: 14px; }
 
       .select-container {
         gap: 12px;
@@ -791,7 +791,13 @@
     function toggleCollapse(contentId) {
       try {
         const content = document.getElementById(contentId);
-        const btn = document.getElementById('size-collapse-btn');
+        let btn;
+        
+        if (contentId === 'size-buttons-content') {
+          btn = document.getElementById('size-collapse-btn');
+        } else if (contentId === 'select-area-content') {
+          btn = document.getElementById('select-collapse-btn');
+        }
         
         if (!content || !btn) return;
         
@@ -811,6 +817,46 @@
         }
       } catch (error) {
         console.warn('Toggle collapse error:', error);
+      }
+    }
+
+    // 自動收合快速選擇區域
+    function autoCollapseSizeButtons() {
+      try {
+        const content = document.getElementById('size-buttons-content');
+        const btn = document.getElementById('size-collapse-btn');
+        
+        if (!content || !btn || content.classList.contains('collapsed')) return;
+        
+        content.style.maxHeight = content.scrollHeight + 'px';
+        setTimeout(() => {
+          content.classList.add('collapsed');
+          content.style.maxHeight = '0';
+          btn.textContent = '+';
+          btn.setAttribute('aria-expanded', 'false');
+        }, 10);
+      } catch (error) {
+        console.warn('Auto collapse size buttons error:', error);
+      }
+    }
+
+    // 自動收合選擇選單區域
+    function autoCollapseSelectArea() {
+      try {
+        const content = document.getElementById('select-area-content');
+        const btn = document.getElementById('select-collapse-btn');
+        
+        if (!content || !btn || content.classList.contains('collapsed')) return;
+        
+        content.style.maxHeight = content.scrollHeight + 'px';
+        setTimeout(() => {
+          content.classList.add('collapsed');
+          content.style.maxHeight = '0';
+          btn.textContent = '+';
+          btn.setAttribute('aria-expanded', 'false');
+        }, 10);
+      } catch (error) {
+        console.warn('Auto collapse select area error:', error);
       }
     }
 
@@ -872,10 +918,16 @@
           form.addEventListener('submit', (e) => e.preventDefault());
         }
         
-        // 設置初始高度
-        const content = document.getElementById('size-buttons-content');
-        if (content) {
-          content.style.maxHeight = content.scrollHeight + 'px';
+        // 設置初始高度（兩個選單都保持展開）
+        const sizeButtonsContent = document.getElementById('size-buttons-content');
+        const selectAreaContent = document.getElementById('select-area-content');
+        
+        if (sizeButtonsContent) {
+          sizeButtonsContent.style.maxHeight = sizeButtonsContent.scrollHeight + 'px';
+        }
+        
+        if (selectAreaContent) {
+          selectAreaContent.style.maxHeight = selectAreaContent.scrollHeight + 'px';
         }
         
         // 初始選擇
@@ -1190,6 +1242,12 @@
                       currentHighlightedRow = null;
                     }
                     isAnimating = false;
+                    
+                    // 高亮動畫完成後自動收合選擇選單
+                    setTimeout(() => {
+                      autoCollapseSelectArea();
+                    }, 500);
+                    
                   }, 1000);
                 } catch (error) {
                   console.warn('Animation error:', error);
