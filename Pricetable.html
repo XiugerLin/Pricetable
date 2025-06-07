@@ -80,7 +80,7 @@
     }
 
     .collapsible-content {
-      overflow: hidden;
+      overflow: visible; /* 改為visible確保下拉選單不被裁切 */
       transition: max-height 0.3s ease, opacity 0.3s ease;
     }
 
@@ -97,6 +97,10 @@
       }
       
       .size-buttons .collapsible-content {
+        margin-top: 12px;
+      }
+
+      .select-area .collapsible-content {
         margin-top: 12px;
       }
     }
@@ -128,24 +132,43 @@
       gap: 10px;
     }
     
-    /* 手機端優化 */
+    /* 手機端優化 - 減少各區域的間距和padding，為表格騰出更多空間 */
     @media (max-width: 768px) {
-      body { padding: 12px; font-size: 14px; }
+      body { 
+        padding: 8px; 
+        font-size: 14px; 
+      }
       
-      .header h1 { font-size: 20px; }
-      .header p { font-size: 13px; }
+      .header { 
+        margin-bottom: 12px; 
+      }
       
-      .section { padding: 12px; margin-bottom: 16px; }
+      .header h1 { 
+        font-size: 18px; 
+        margin-bottom: 4px;
+      }
+      
+      .header p { 
+        font-size: 12px; 
+      }
+      
+      .section { 
+        padding: 10px; 
+        margin-bottom: 12px; 
+      }
       
       .button-grid {
         grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
-        gap: 8px;
+        gap: 6px;
       }
       
-      .size-buttons h3, .select-area label { font-size: 14px; }
+      .size-buttons h3, .select-area label { 
+        font-size: 14px; 
+        margin-bottom: 8px;
+      }
 
       .select-container {
-        gap: 12px;
+        gap: 10px;
       }
 
       .select-group {
@@ -154,6 +177,7 @@
 
       .select-group label {
         font-size: 13px;
+        margin-bottom: 4px;
       }
       
       #material-input, #size-select {
@@ -183,22 +207,67 @@
         font-size: 15px;
         padding: 10px 8px;
       }
+
+      /* 表格標題高度減少 */
+      .table-header {
+        font-size: 18px;
+        padding: 6px 8px;
+      }
+    }
+
+    /* 平板端優化 */
+    @media (max-width: 1024px) and (min-width: 769px) {
+      body { 
+        padding: 12px; 
+      }
+      
+      .header { 
+        margin-bottom: 16px; 
+      }
+      
+      .section { 
+        padding: 12px; 
+        margin-bottom: 16px; 
+      }
+
+      .table-header {
+        font-size: 20px;
+        padding: 8px 12px;
+      }
     }
     
     /* 更小屏幕優化 */
     @media (max-width: 480px) {
+      body { 
+        padding: 6px; 
+      }
+
+      .header { 
+        margin-bottom: 8px; 
+      }
+
+      .section { 
+        padding: 8px; 
+        margin-bottom: 8px; 
+      }
+
       .button-grid {
         grid-template-columns: repeat(4, 1fr);
-        gap: 6px;
+        gap: 4px;
       }
 
       .select-container {
         flex-direction: column;
-        gap: 12px;
+        gap: 8px;
       }
 
       .select-group {
         min-width: 100%;
+      }
+
+      .table-header {
+        font-size: 16px;
+        padding: 4px 6px;
       }
     }
     
@@ -294,25 +363,6 @@
 
     .material-dropdown-btn.open {
       transform: translateY(-50%) rotate(180deg);
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 24px;
-      height: 24px;
-      border: none;
-      background: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #666;
-      font-size: 14px;
-      transition: transform 0.2s ease;
-    }
-
-    .material-dropdown-btn.open {
-      transform: translateY(-50%) rotate(180deg);
     }
 
     /* 無障礙訪問優化 */
@@ -327,7 +377,7 @@
       border-radius: 0 0 8px 8px;
       max-height: 200px;
       overflow-y: auto;
-      z-index: 1000;
+      z-index: 1001; /* 增加z-index確保在collapsible-content之上 */
       display: none;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
@@ -430,15 +480,8 @@
       border: none;
       background: none;
     }
-
-    @media (max-width: 768px) {
-      .table-header {
-        font-size: 20px;
-        padding: 10px 12px;
-      }
-    }
     
-    /* 表格容器和固定表頭 */
+    /* 表格容器和固定表頭 - 大幅增加高度 */
     .table-wrapper {
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -448,6 +491,43 @@
       -webkit-overflow-scrolling: touch;
       max-height: 70vh;
       margin-top: 12px;
+    }
+
+    /* 平板端表格高度優化 */
+    @media (max-width: 1024px) and (min-width: 769px) {
+      .table-wrapper {
+        max-height: 75vh;
+        margin-top: 8px;
+      }
+    }
+
+    /* 手機端表格高度大幅增加 */
+    @media (max-width: 768px) {
+      .table-wrapper {
+        max-height: 80vh; /* 從60vh增加到80vh */
+        margin-top: 6px;
+      }
+    }
+
+    /* 極小屏幕表格高度進一步優化 */
+    @media (max-width: 480px) {
+      .table-wrapper {
+        max-height: 85vh; /* 進一步增加到85vh */
+        margin-top: 4px;
+      }
+    }
+
+    /* 橫屏模式表格高度優化 */
+    @media (max-height: 600px) and (orientation: landscape) {
+      .table-wrapper {
+        max-height: 65vh;
+      }
+    }
+
+    @media (max-height: 500px) and (orientation: landscape) {
+      .table-wrapper {
+        max-height: 60vh;
+      }
     }
     
     table { 
@@ -520,10 +600,6 @@
         max-width: 140px;
         font-size: 11px;
       }
-
-      .table-wrapper {
-        max-height: 60vh;
-      }
     }
     
     /* 材質名稱列背景 */
@@ -566,7 +642,11 @@
     }
     
     @media (max-width: 768px) {
-      .scroll-hint { display: block; }
+      .scroll-hint { 
+        display: block; 
+        font-size: 11px;
+        margin-top: 4px;
+      }
     }
     
     /* 加載動畫 */
@@ -633,35 +713,45 @@
   </div>
 
   <div class="section select-area">
-    <label><strong>📋 尺寸材質選單</strong></label>
-    <div class="select-container">
-      <div class="select-group">
-        <label for="size-select">尺寸</label>
-        <select id="size-select"></select>
-      </div>
-      <div class="select-group">
-        <label for="material-input">材質</label>
-        <div class="material-search-container">
-          <input 
-            type="text" 
-            id="material-input" 
-            placeholder="輸入材質名稱或點擊下拉選擇"
-            autocomplete="off"
-            spellcheck="false"
-            aria-describedby="material-help">
-          <button 
-            type="button" 
-            class="material-dropdown-btn" 
-            id="material-dropdown-btn"
-            aria-label="展開材質選單"
-            aria-expanded="false">▼</button>
-          <div 
-            class="material-dropdown" 
-            id="material-dropdown"
-            role="listbox"
-            aria-label="材質選項"></div>
+    <div class="collapsible-header" onclick="toggleCollapse('select-area-content')">
+      <label><strong>📋 尺寸材質選單</strong></label>
+      <button 
+        class="collapse-btn" 
+        id="select-collapse-btn"
+        aria-expanded="true"
+        aria-controls="select-area-content"
+        aria-label="收合尺寸材質選單">−</button>
+    </div>
+    <div class="collapsible-content" id="select-area-content">
+      <div class="select-container">
+        <div class="select-group">
+          <label for="size-select">尺寸</label>
+          <select id="size-select"></select>
         </div>
-        <div id="material-help" class="sr-only">使用方向鍵導航，Enter選擇，Escape關閉</div>
+        <div class="select-group">
+          <label for="material-input">材質</label>
+          <div class="material-search-container">
+            <input 
+              type="text" 
+              id="material-input" 
+              placeholder="輸入材質名稱或點擊下拉選擇"
+              autocomplete="off"
+              spellcheck="false"
+              aria-describedby="material-help">
+            <button 
+              type="button" 
+              class="material-dropdown-btn" 
+              id="material-dropdown-btn"
+              aria-label="展開材質選單"
+              aria-expanded="false">▼</button>
+            <div 
+              class="material-dropdown" 
+              id="material-dropdown"
+              role="listbox"
+              aria-label="材質選項"></div>
+          </div>
+          <div id="material-help" class="sr-only">使用方向鍵導航，Enter選擇，Escape關閉</div>
+        </div>
       </div>
     </div>
   </div>
@@ -763,7 +853,14 @@
     function toggleCollapse(contentId) {
       try {
         const content = document.getElementById(contentId);
-        const btn = document.getElementById('size-collapse-btn');
+        let btn;
+        
+        // 根據不同的內容區域確定對應的按鈕
+        if (contentId === 'size-buttons-content') {
+          btn = document.getElementById('size-collapse-btn');
+        } else if (contentId === 'select-area-content') {
+          btn = document.getElementById('select-collapse-btn');
+        }
         
         if (!content || !btn) return;
         
@@ -805,7 +902,7 @@
           const btn = document.createElement('button');
           btn.className = 'size-btn';
           btn.textContent = size;
-          btn.onclick = () => selectSize(size);
+          btn.onclick = () => selectSizeFromButton(size);
           btn.setAttribute('aria-label', `選擇尺寸 ${size}`);
           btn.setAttribute('role', 'button');
           buttonsContainer.appendChild(btn);
@@ -828,12 +925,20 @@
         // 材質輸入框事件（使用防抖動）
         const debouncedHandleMaterialInput = debounce(handleMaterialInput, 200);
         materialInput.addEventListener('input', debouncedHandleMaterialInput);
-        materialInput.addEventListener('focus', () => showDropdown());
+        materialInput.addEventListener('focus', () => {
+          console.log('Material input focused'); // Debug log
+          showDropdown();
+        });
         materialInput.addEventListener('keydown', handleKeydown);
         materialInput.addEventListener('blur', handleInputBlur);
         
         // 下拉按鈕事件
-        materialDropdownBtn.addEventListener('click', toggleDropdown);
+        materialDropdownBtn.addEventListener('click', (e) => {
+          console.log('Material dropdown button clicked'); // Debug log
+          e.preventDefault();
+          e.stopPropagation();
+          toggleDropdown();
+        });
         
         // 點擊外部關閉下拉
         document.addEventListener('click', handleOutsideClick);
@@ -845,15 +950,25 @@
         }
         
         // 設置初始高度
-        const content = document.getElementById('size-buttons-content');
-        if (content) {
-          content.style.maxHeight = content.scrollHeight + 'px';
+        const sizeButtonsContent = document.getElementById('size-buttons-content');
+        const selectAreaContent = document.getElementById('select-area-content');
+        
+        if (sizeButtonsContent) {
+          sizeButtonsContent.style.maxHeight = sizeButtonsContent.scrollHeight + 'px';
+        }
+        
+        if (selectAreaContent) {
+          selectAreaContent.style.maxHeight = selectAreaContent.scrollHeight + 'px';
         }
         
         // 初始選擇
         selectSize(sizes[0]);
         
         console.log('Price table initialized successfully');
+        console.log('Material input:', materialInput);
+        console.log('Material dropdown button:', materialDropdownBtn);
+        console.log('Material dropdown:', materialDropdown);
+        
       } catch (error) {
         console.error('Initialization error:', error);
         // 顯示錯誤訊息給用戶
@@ -875,7 +990,9 @@
 
     // 處理外部點擊
     function handleOutsideClick(e) {
+      console.log('Outside click detected', e.target); // Debug log
       if (!e.target.closest('.material-search-container')) {
+        console.log('Hiding dropdown due to outside click'); // Debug log
         hideDropdown();
       }
     }
@@ -1012,7 +1129,11 @@
     // 顯示下拉選單
     function showDropdown() {
       try {
-        if (!materialDropdown || !materialDropdownBtn || !materialInput) return;
+        console.log('showDropdown called'); // Debug log
+        if (!materialDropdown || !materialDropdownBtn || !materialInput) {
+          console.log('Missing elements:', { materialDropdown, materialDropdownBtn, materialInput }); // Debug log
+          return;
+        }
         
         materialDropdown.classList.add('show');
         materialDropdownBtn.classList.add('open');
@@ -1023,6 +1144,8 @@
           highlightedIndex = 0;
           updateHighlight();
         }
+        
+        console.log('Dropdown shown successfully'); // Debug log
       } catch (error) {
         console.warn('Show dropdown error:', error);
       }
@@ -1031,12 +1154,15 @@
     // 隱藏下拉選單
     function hideDropdown() {
       try {
+        console.log('hideDropdown called'); // Debug log
         if (!materialDropdown || !materialDropdownBtn || !materialInput) return;
         
         materialDropdown.classList.remove('show');
         materialDropdownBtn.classList.remove('open');
         materialInput.setAttribute('aria-expanded', 'false');
         highlightedIndex = -1;
+        
+        console.log('Dropdown hidden successfully'); // Debug log
       } catch (error) {
         console.warn('Hide dropdown error:', error);
       }
@@ -1045,6 +1171,7 @@
     // 切換下拉選單
     function toggleDropdown() {
       try {
+        console.log('toggleDropdown called'); // Debug log
         if (materialDropdown.classList.contains('show')) {
           hideDropdown();
         } else {
@@ -1056,6 +1183,22 @@
         }
       } catch (error) {
         console.warn('Toggle dropdown error:', error);
+      }
+    }
+
+    // 快速選擇按鈕點擊處理
+    function selectSizeFromButton(size) {
+      selectSize(size);
+      
+      // 滾動到尺寸材質選單（僅當點擊快速選擇按鈕時）
+      const selectAreaSection = document.querySelector('.select-area');
+      if (selectAreaSection) {
+        setTimeout(() => {
+          selectAreaSection.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+          });
+        }, 100);
       }
     }
 
