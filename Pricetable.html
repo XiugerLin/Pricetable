@@ -128,6 +128,27 @@
       gap: 10px;
     }
     
+    /* 平板端優化 */
+    @media (max-width: 1024px) and (min-width: 769px) {
+      .material-option {
+        font-size: 16px;
+        padding: 12px 16px;
+      }
+      
+      table {
+        font-size: 15px;
+      }
+      
+      td, th {
+        font-size: 15px;
+        padding: 11px 7px;
+      }
+      
+      .material-name {
+        font-size: 16px;
+      }
+    }
+
     /* 手機端優化 */
     @media (max-width: 768px) {
       body { padding: 12px; font-size: 14px; }
@@ -156,8 +177,8 @@
         font-size: 13px;
       }
       
-      #material-input {
-        font-size: 14px;
+      #material-input, #size-select {
+        font-size: 16px;
       }
       
       .material-dropdown {
@@ -165,7 +186,23 @@
       }
       
       .material-option {
-        font-size: 13px;
+        font-size: 16px;
+        padding: 12px 16px;
+      }
+      
+      /* 手機端價目表字體放大 */
+      table {
+        font-size: 14px;
+      }
+      
+      td, th {
+        font-size: 14px;
+        padding: 10px 6px;
+      }
+      
+      .material-name {
+        font-size: 15px;
+        padding: 10px 8px;
       }
     }
     
@@ -220,13 +257,18 @@
       box-shadow: 0 2px 8px rgba(255, 204, 0, 0.3);
     }
     
-    #size-select { 
+    #size-select, #material-input { 
       padding: 12px 16px; 
       font-size: 16px; 
       border: 2px solid #ccc; 
       border-radius: 8px; 
       width: 100%;
       background: white;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #size-select {
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
@@ -234,6 +276,16 @@
       background-repeat: no-repeat;
       background-position: right 12px center;
       background-size: 16px;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    #size-select:focus, #material-input:focus {
+      border-color: #ff9800;
+      box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+    }
+
+    #material-input {
       padding-right: 40px;
     }
 
@@ -243,22 +295,27 @@
       width: 100%;
     }
 
-    #material-input {
-      padding: 12px 40px 12px 16px; 
-      font-size: 16px; 
-      border: 2px solid #ccc; 
-      border-radius: 8px; 
-      width: 100%;
-      background: white;
-      outline: none;
-    }
-
-    #material-input:focus {
-      border-color: #ff9800;
-      box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
-    }
-
     .material-dropdown-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 14px;
+      transition: transform 0.2s ease;
+    }
+
+    .material-dropdown-btn.open {
+      transform: translateY(-50%) rotate(180deg);
+    }
       position: absolute;
       right: 8px;
       top: 50%;
@@ -353,6 +410,10 @@
     #material-input:focus {
       outline: 2px solid #ff9800;
       outline-offset: 2px;
+    }
+
+    #size-select:hover, #material-input:hover {
+      border-color: #ff9800;
     }
 
     /* 高對比度支援 */
@@ -551,6 +612,7 @@
       #size-select, #material-input {
         min-height: 48px;
         padding: 14px 16px;
+        font-size: 16px;
       }
       
       #size-select {
@@ -572,6 +634,7 @@
         min-height: 48px;
         display: flex;
         align-items: center;
+        font-size: 16px;
       }
     }
   </style>
@@ -1052,6 +1115,18 @@
         
         // 生成表格
         generateTable(size);
+        
+        // 滾動到選擇選單區域（延遲確保表格生成完成）
+        setTimeout(() => {
+          const selectArea = document.querySelector('.select-area');
+          if (selectArea) {
+            selectArea.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'start',
+              inline: 'nearest'
+            });
+          }
+        }, 200);
         
       } catch (error) {
         console.error('Select size error:', error);
