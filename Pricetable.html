@@ -41,6 +41,8 @@
       border: 1px solid #ddd;
       background: white;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 10;
     }
     
     .size-buttons { background-color: #f5f5f5; }
@@ -72,37 +74,25 @@
       padding: 4px;
       border-radius: 4px;
       transition: all 0.2s ease;
-      display: none; /* 默認隱藏，手機端顯示 */
+      display: none;
     }
 
-    .collapse-btn:hover {
-      background: rgba(0,0,0,0.1);
-    }
+    .collapse-btn:hover { background: rgba(0,0,0,0.1); }
 
     .collapsible-content {
-      overflow: visible; /* 改為visible確保下拉選單不被裁切 */
+      overflow: visible;
       transition: max-height 0.3s ease, opacity 0.3s ease;
+      position: relative;
+      z-index: 10;
     }
 
     .collapsible-content.collapsed {
       max-height: 0 !important;
       opacity: 0;
       margin-top: 0 !important;
-    }
-
-    /* 手機端顯示收合按鈕 */
-    @media (max-width: 768px) {
-      .collapse-btn {
-        display: block;
-      }
-      
-      .size-buttons .collapsible-content {
-        margin-top: 12px;
-      }
-
-      .select-area .collapsible-content {
-        margin-top: 12px;
-      }
+      overflow: hidden !important;
+      pointer-events: none !important;
+      z-index: 5;
     }
 
     /* 選單容器 */
@@ -132,145 +122,6 @@
       gap: 10px;
     }
     
-    /* 手機端優化 - 減少各區域的間距和padding，為表格騰出更多空間 */
-    @media (max-width: 768px) {
-      body { 
-        padding: 8px; 
-        font-size: 14px; 
-      }
-      
-      .header { 
-        margin-bottom: 12px; 
-      }
-      
-      .header h1 { 
-        font-size: 18px; 
-        margin-bottom: 4px;
-      }
-      
-      .header p { 
-        font-size: 12px; 
-      }
-      
-      .section { 
-        padding: 10px; 
-        margin-bottom: 12px; 
-      }
-      
-      .button-grid {
-        grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
-        gap: 6px;
-      }
-      
-      .size-buttons h3, .select-area label { 
-        font-size: 14px; 
-        margin-bottom: 8px;
-      }
-
-      .select-container {
-        gap: 10px;
-      }
-
-      .select-group {
-        min-width: 130px;
-      }
-
-      .select-group label {
-        font-size: 13px;
-        margin-bottom: 4px;
-      }
-      
-      #material-input, #size-select {
-        font-size: 16px;
-      }
-      
-      .material-dropdown {
-        max-height: 150px;
-      }
-      
-      .material-option {
-        font-size: 16px;
-        padding: 12px 16px;
-      }
-      
-      /* 手機端價目表字體放大 */
-      table {
-        font-size: 14px;
-      }
-      
-      td, th {
-        font-size: 14px;
-        padding: 10px 6px;
-      }
-      
-      .material-name {
-        font-size: 15px;
-        padding: 10px 8px;
-      }
-
-      /* 表格標題高度減少 */
-      .table-header {
-        font-size: 18px;
-        padding: 6px 8px;
-      }
-    }
-
-    /* 平板端優化 */
-    @media (max-width: 1024px) and (min-width: 769px) {
-      body { 
-        padding: 12px; 
-      }
-      
-      .header { 
-        margin-bottom: 16px; 
-      }
-      
-      .section { 
-        padding: 12px; 
-        margin-bottom: 16px; 
-      }
-
-      .table-header {
-        font-size: 20px;
-        padding: 8px 12px;
-      }
-    }
-    
-    /* 更小屏幕優化 */
-    @media (max-width: 480px) {
-      body { 
-        padding: 6px; 
-      }
-
-      .header { 
-        margin-bottom: 8px; 
-      }
-
-      .section { 
-        padding: 8px; 
-        margin-bottom: 8px; 
-      }
-
-      .button-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 4px;
-      }
-
-      .select-container {
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .select-group {
-        min-width: 100%;
-      }
-
-      .table-header {
-        font-size: 16px;
-        padding: 4px 6px;
-      }
-    }
-    
     .size-btn {
       padding: 12px 8px;
       border: 2px solid #ccc;
@@ -294,9 +145,7 @@
       transform: translateY(-1px);
     }
     
-    .size-btn:active {
-      transform: translateY(0);
-    }
+    .size-btn:active { transform: translateY(0); }
     
     .size-btn.active { 
       background: #ffcc00; 
@@ -326,6 +175,8 @@
       background-size: 16px;
       padding-right: 40px;
       cursor: pointer;
+      position: relative;
+      z-index: 100;
     }
 
     #size-select:focus, #material-input:focus {
@@ -333,14 +184,13 @@
       box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
     }
 
-    #material-input {
-      padding-right: 40px;
-    }
+    #material-input { padding-right: 40px; }
 
-    /* 複合式材質輸入框 */
+    /* 材質下拉選單 */
     .material-search-container {
       position: relative;
       width: 100%;
+      z-index: 100;
     }
 
     .material-dropdown-btn {
@@ -361,11 +211,8 @@
       transition: transform 0.2s ease;
     }
 
-    .material-dropdown-btn.open {
-      transform: translateY(-50%) rotate(180deg);
-    }
+    .material-dropdown-btn.open { transform: translateY(-50%) rotate(180deg); }
 
-    /* 無障礙訪問優化 */
     .material-dropdown {
       position: absolute;
       top: 100%;
@@ -377,14 +224,12 @@
       border-radius: 0 0 8px 8px;
       max-height: 200px;
       overflow-y: auto;
-      z-index: 1001; /* 增加z-index確保在collapsible-content之上 */
+      z-index: 1002;
       display: none;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
-    .material-dropdown.show {
-      display: block;
-    }
+    .material-dropdown.show { display: block; }
 
     .material-option {
       padding: 10px 16px;
@@ -393,13 +238,8 @@
       transition: background-color 0.2s ease;
     }
 
-    .material-option:hover, .material-option.highlighted {
-      background-color: #f0f8ff;
-    }
-
-    .material-option:last-child {
-      border-bottom: none;
-    }
+    .material-option:hover, .material-option.highlighted { background-color: #f0f8ff; }
+    .material-option:last-child { border-bottom: none; }
 
     .no-results {
       padding: 10px 16px;
@@ -407,18 +247,7 @@
       font-style: italic;
     }
 
-    /* 防止動畫衝突 */
-    .material-highlight.animating {
-      pointer-events: none;
-    }
-
-    /* 載入狀態 */
-    .table-loading {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    /* 螢幕閱讀器專用文字 */
+    .table-loading { opacity: 0.5; pointer-events: none; }
     .sr-only {
       position: absolute;
       width: 1px;
@@ -431,45 +260,7 @@
       border: 0;
     }
 
-    /* 改善焦點可見性 */
-    .material-option:focus,
-    .size-btn:focus,
-    #size-select:focus,
-    #material-input:focus {
-      outline: 2px solid #ff9800;
-      outline-offset: 2px;
-    }
-
-    /* 高對比度支援 */
-    @media (prefers-contrast: high) {
-      .material-option:hover, .material-option.highlighted {
-        background-color: #000080;
-        color: white;
-      }
-      
-      .size-btn.active {
-        background: #ffcc00;
-        border-color: #000;
-        color: #000;
-      }
-    }
-
-    /* 減少動畫偏好支援 */
-    @media (prefers-reduced-motion: reduce) {
-      .material-highlight {
-        animation: none !important;
-      }
-      
-      .collapsible-content {
-        transition: none !important;
-      }
-      
-      * {
-        scroll-behavior: auto !important;
-      }
-    }
-
-    /* 表格頂部尺寸顯示 */
+    /* 表格樣式 */
     .table-header {
       padding: 12px 16px;
       font-size: 24px;
@@ -481,53 +272,53 @@
       background: none;
     }
     
-    /* 表格容器和固定表頭 - 大幅增加高度 */
+    /* 可拖動區域 */
+    .drag-area {
+      height: 40px;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 12px;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: pan-y;
+      border-radius: 8px 8px 0 0;
+      position: relative;
+    }
+    
+    .drag-area:active {
+      cursor: grabbing;
+    }
+    
+    .drag-area::before {
+      content: "⋯";
+      font-size: 16px;
+      color: #ccc;
+    }
+    
     .table-wrapper {
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       background: white;
       position: relative;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow: hidden;
       max-height: 70vh;
       margin-top: 12px;
+      border: 1px solid #e0e0e0;
     }
-
-    /* 平板端表格高度優化 */
-    @media (max-width: 1024px) and (min-width: 769px) {
-      .table-wrapper {
-        max-height: 75vh;
-        margin-top: 8px;
-      }
+    
+    .table-scroll-container {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      max-height: calc(70vh - 40px);
     }
-
-    /* 手機端表格高度大幅增加 */
-    @media (max-width: 768px) {
-      .table-wrapper {
-        max-height: 80vh; /* 從60vh增加到80vh */
-        margin-top: 6px;
-      }
-    }
-
-    /* 極小屏幕表格高度進一步優化 */
-    @media (max-width: 480px) {
-      .table-wrapper {
-        max-height: 85vh; /* 進一步增加到85vh */
-        margin-top: 4px;
-      }
-    }
-
-    /* 橫屏模式表格高度優化 */
-    @media (max-height: 600px) and (orientation: landscape) {
-      .table-wrapper {
-        max-height: 65vh;
-      }
-    }
-
-    @media (max-height: 500px) and (orientation: landscape) {
-      .table-wrapper {
-        max-height: 60vh;
-      }
+    
+    #table-container {
+      padding: 0 !important;
+      margin: 0 !important;
     }
     
     table { 
@@ -537,6 +328,8 @@
       min-width: 600px;
       font-size: 14px;
       position: relative;
+      margin: 0;
+      padding: 0;
     }
     
     td, th { 
@@ -545,9 +338,9 @@
       border: 1px solid #e0e0e0;
       white-space: nowrap;
       background: white;
+      margin: 0;
     }
 
-    /* 固定第一列（材質名稱） */
     .material-name {
       position: sticky;
       left: 0;
@@ -559,9 +352,9 @@
       min-width: 160px;
       word-wrap: break-word;
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      border-left: none !important;
     }
 
-    /* 固定第一行（數量標題） */
     .qty-header, .empty-corner {
       position: sticky;
       top: 0;
@@ -569,48 +362,26 @@
       font-weight: bold;
       color: #333;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-top: none !important;
     }
 
-    /* 左上角固定格 */
     .empty-corner {
       position: sticky;
       left: 0;
       top: 0;
       z-index: 3;
       background: #f8f9fa !important;
+      border-left: none !important;
+      border-top: none !important;
     }
 
-    .qty-header {
-      background: #ffcc00 !important;
-    }
-    
-    /* 手機端表格優化 */
-    @media (max-width: 768px) {
-      table { 
-        font-size: 12px; 
-        min-width: 550px;
-      }
-      
-      td, th { 
-        padding: 8px 6px; 
-      }
-
-      .material-name {
-        min-width: 140px;
-        max-width: 140px;
-        font-size: 11px;
-      }
-    }
-    
-    /* 材質名稱列背景 */
+    .qty-header { background: #ffcc00 !important; }
     .material-even { background: #ffcc66 !important; }
     .material-odd { background: #ffcc00 !important; }
-    
-    /* 價格行背景 */
     .price-even { background: #f8f9fa !important; }
     .price-odd { background: #fff !important; }
 
-    /* 高亮材質行動畫 */
+    /* 高亮動畫 */
     .material-highlight {
       animation: highlightFlash 1s ease-in-out 1 !important;
     }
@@ -622,15 +393,9 @@
     }
 
     @keyframes highlightFlash {
-      0% { 
-        background-color: #fff3e0 !important;
-      }
-      50% { 
-        background-color: #ffcc80 !important;
-      }
-      100% { 
-        background-color: #fff3e0 !important;
-      }
+      0% { background-color: #fff3e0 !important; }
+      50% { background-color: #ffcc80 !important; }
+      100% { background-color: #fff3e0 !important; }
     }
     
     .scroll-hint {
@@ -641,53 +406,156 @@
       display: none;
     }
     
-    @media (max-width: 768px) {
-      .scroll-hint { 
-        display: block; 
-        font-size: 11px;
-        margin-top: 4px;
-      }
-    }
-    
-    /* 加載動畫 */
     .loading {
       text-align: center;
       padding: 40px;
       color: #666;
     }
-    
-    /* 優化觸控體驗 */
+
+    /* 回到頂部按鈕 */
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: #ff8c00;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .back-to-top:hover {
+      background: #ff7700;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+
+    .back-to-top:active {
+      transform: translateY(0);
+    }
+
+    .back-to-top.show {
+      display: flex;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 響應式設計 */
+    @media (max-width: 1024px) and (min-width: 769px) {
+      body { padding: 12px; }
+      .header { margin-bottom: 16px; }
+      .section { padding: 12px; margin-bottom: 16px; }
+      .table-header { font-size: 20px; padding: 8px 12px; }
+      .table-wrapper { max-height: 75vh; margin-top: 8px; }
+      .table-scroll-container { max-height: calc(75vh - 40px); }
+      .drag-area { height: 35px; }
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 8px; font-size: 14px; }
+      .header { margin-bottom: 12px; }
+      .header h1 { font-size: 18px; margin-bottom: 4px; }
+      .header p { font-size: 12px; }
+      .section { padding: 10px; margin-bottom: 12px; z-index: 10; }
+      .collapse-btn { display: block; }
+      .size-buttons .collapsible-content, .select-area .collapsible-content { margin-top: 12px; z-index: 15; }
+      .button-grid { grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)); gap: 6px; }
+      .size-buttons h3, .select-area label { font-size: 14px; margin-bottom: 8px; }
+      .select-container { gap: 10px; }
+      .select-group { min-width: 130px; }
+      .select-group label { font-size: 13px; margin-bottom: 4px; }
+      #material-input, #size-select { font-size: 16px; }
+      .material-dropdown { max-height: 150px; }
+      .material-option { font-size: 16px; padding: 12px 16px; }
+      table { font-size: 12px; min-width: 550px; margin: 0; padding: 0; }
+      td, th { font-size: 14px; padding: 8px 6px; margin: 0; }
+      .material-name { min-width: 140px; max-width: 140px; font-size: 11px; border-left: none !important; }
+      .qty-header { border-top: none !important; }
+      .empty-corner { border-left: none !important; border-top: none !important; }
+      .table-header { font-size: 18px; padding: 6px 8px; }
+      .table-wrapper { max-height: 80vh; margin-top: 6px; }
+      .table-scroll-container { max-height: calc(80vh - 35px); }
+      .scroll-hint { display: block; font-size: 11px; margin-top: 4px; }
+      .drag-area { height: 35px; font-size: 11px; }
+      .back-to-top { 
+        width: 45px; 
+        height: 45px; 
+        bottom: 15px; 
+        right: 15px; 
+        font-size: 18px; 
+      }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 6px; }
+      .header { margin-bottom: 8px; }
+      .section { padding: 8px; margin-bottom: 8px; }
+      .button-grid { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+      .select-container { flex-direction: column; gap: 8px; }
+      .select-group { min-width: 100%; }
+      .table-header { font-size: 16px; padding: 4px 6px; }
+      .table-wrapper { max-height: 85vh; margin-top: 4px; }
+      .table-scroll-container { max-height: calc(85vh - 30px); }
+      .drag-area { height: 30px; }
+      .back-to-top { 
+        width: 40px; 
+        height: 40px; 
+        bottom: 10px; 
+        right: 10px; 
+        font-size: 16px; 
+      }
+    }
+
+    @media (max-height: 600px) and (orientation: landscape) {
+      .table-wrapper { max-height: 65vh; }
+      .table-scroll-container { max-height: calc(65vh - 40px); }
+    }
+
+    @media (max-height: 500px) and (orientation: landscape) {
+      .table-wrapper { max-height: 60vh; }
+      .table-scroll-container { max-height: calc(60vh - 40px); }
+    }
+
     @media (pointer: coarse) {
-      .size-btn {
-        min-height: 48px;
-        padding: 14px 8px;
-      }
-      
-      #size-select, #material-input {
-        min-height: 48px;
-        padding: 14px 16px;
-      }
-      
-      #size-select {
-        padding-right: 44px;
-      }
-      
-      #material-input {
-        padding-right: 44px;
-      }
-      
-      .material-dropdown-btn {
-        width: 32px;
-        height: 32px;
-        right: 8px;
-      }
-      
-      .material-option {
-        padding: 14px 16px;
-        min-height: 48px;
-        display: flex;
-        align-items: center;
-      }
+      .size-btn { min-height: 48px; padding: 14px 8px; }
+      #size-select, #material-input { min-height: 48px; padding: 14px 16px; }
+      #size-select { padding-right: 44px; }
+      #material-input { padding-right: 44px; }
+      .material-dropdown-btn { width: 32px; height: 32px; right: 8px; }
+      .material-option { padding: 14px 16px; min-height: 48px; display: flex; align-items: center; }
+      .drag-area { height: 50px; }
+    }
+
+    @media (prefers-contrast: high) {
+      .material-option:hover, .material-option.highlighted { background-color: #000080; color: white; }
+      .size-btn.active { background: #ffcc00; border-color: #000; color: #000; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .material-highlight { animation: none !important; }
+      .collapsible-content { transition: none !important; }
+      * { scroll-behavior: auto !important; }
+      .back-to-top { animation: none !important; }
     }
   </style>
 </head>
@@ -699,13 +567,8 @@
 
   <div class="section size-buttons">
     <div class="collapsible-header" onclick="toggleCollapse('size-buttons-content')">
-      <h3>快速選擇尺寸</h3>
-      <button 
-        class="collapse-btn" 
-        id="size-collapse-btn"
-        aria-expanded="true"
-        aria-controls="size-buttons-content"
-        aria-label="收合尺寸選擇區域">−</button>
+      <h3>⚡ 快速選擇尺寸</h3>
+      <button class="collapse-btn" id="size-collapse-btn" aria-expanded="true" aria-controls="size-buttons-content" aria-label="收合尺寸選擇區域">−</button>
     </div>
     <div class="collapsible-content" id="size-buttons-content">
       <div class="button-grid" id="buttons"></div>
@@ -715,12 +578,7 @@
   <div class="section select-area">
     <div class="collapsible-header" onclick="toggleCollapse('select-area-content')">
       <label><strong>📋 尺寸材質選單</strong></label>
-      <button 
-        class="collapse-btn" 
-        id="select-collapse-btn"
-        aria-expanded="true"
-        aria-controls="select-area-content"
-        aria-label="收合尺寸材質選單">−</button>
+      <button class="collapse-btn" id="select-collapse-btn" aria-expanded="true" aria-controls="select-area-content" aria-label="收合尺寸材質選單">−</button>
     </div>
     <div class="collapsible-content" id="select-area-content">
       <div class="select-container">
@@ -731,24 +589,9 @@
         <div class="select-group">
           <label for="material-input">材質</label>
           <div class="material-search-container">
-            <input 
-              type="text" 
-              id="material-input" 
-              placeholder="輸入材質名稱或點擊下拉選擇"
-              autocomplete="off"
-              spellcheck="false"
-              aria-describedby="material-help">
-            <button 
-              type="button" 
-              class="material-dropdown-btn" 
-              id="material-dropdown-btn"
-              aria-label="展開材質選單"
-              aria-expanded="false">▼</button>
-            <div 
-              class="material-dropdown" 
-              id="material-dropdown"
-              role="listbox"
-              aria-label="材質選項"></div>
+            <input type="text" id="material-input" placeholder="輸入材質名稱或點擊下拉選擇" autocomplete="off" spellcheck="false" aria-describedby="material-help">
+            <button type="button" class="material-dropdown-btn" id="material-dropdown-btn" aria-label="展開材質選單" aria-expanded="false">▼</button>
+            <div class="material-dropdown" id="material-dropdown" role="listbox" aria-label="材質選項"></div>
           </div>
           <div id="material-help" class="sr-only">使用方向鍵導航，Enter選擇，Escape關閉</div>
         </div>
@@ -758,11 +601,18 @@
 
   <div class="table-header" id="table-header">1x1cm</div>
   <div class="table-wrapper">
-    <div id="table-container" class="loading">正在載入價目表...</div>
+    <div class="drag-area" title="拖動此區域可滾動整個頁面"></div>
+    <div class="table-scroll-container">
+      <div id="table-container" class="loading">正在載入價目表...</div>
+    </div>
   </div>
   <div class="scroll-hint">👈👆 可上下左右滑動，標題列會保持固定</div>
 
+  <!-- 回到頂部按鈕 -->
+  <button class="back-to-top" id="back-to-top" aria-label="回到頂部" title="回到頂部">↑</button>
+
   <script>
+    // 配置數據
     const quantities = ["500張", "1000張", "2000張", "5000張", "10000張"];
     const materials = [
       "銅版超黏貼(無上光)", "銅版超黏貼+霧/亮", "模造貼", "銅版極黏貼(無上光)", "銅版極黏貼+霧/亮",
@@ -773,14 +623,14 @@
       "厚亮銀龍+白墨+亮膜", "砂點雷射貼+白墨+亮膜"
     ];
 
-    // 生成尺寸選項 (1x1cm 到 1x20cm，包含0.5cm間隔)
+    // 生成尺寸選項
     const sizes = [];
     for (let i = 1; i <= 20; i++) {
       sizes.push(`1x${i}cm`);
       if (i < 20) sizes.push(`1x${i}.5cm`);
     }
 
-    // 完整價格數據
+    // 價格數據（精簡版本保持不變）
     const priceData = {
       "1x1cm": [[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,348,398,468,568],[318,348,398,468,568],[318,348,398,468,568],[318,348,398,468,568],[318,348,398,468,568],[318,358,418,498,587],[332,372,432,512,600],[332,372,432,512,600],[332,372,432,512,600],[332,372,432,512,600]],
       "1x1.5cm": [[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,540],[318,338,378,438,518],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,348,398,468,606],[318,348,398,468,606],[318,348,398,468,637],[318,348,398,468,637],[318,348,398,468,697],[332,372,432,512,728],[332,372,432,512,772],[332,372,432,512,772],[332,372,432,512,772],[332,372,432,512,772]],
@@ -823,22 +673,16 @@
       "1x20cm": [[346,388,472,906,1659],[346,402,540,1025,1770],[346,402,540,1025,1770],[346,402,540,1025,1770],[360,416,576,1163,2042],[360,416,576,1163,2042],[360,430,637,1229,2176],[374,434,697,1336,2418],[374,434,697,1336,2418],[374,438,728,1437,2571],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[402,540,853,1654,3144],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[416,572,857,1770,3331],[416,572,857,1770,3331],[416,576,906,1883,3565],[430,606,954,1997,3763],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378]]
     };
 
-    const select = document.getElementById('size-select');
-    const materialInput = document.getElementById('material-input');
-    const materialDropdownBtn = document.getElementById('material-dropdown-btn');
-    const materialDropdown = document.getElementById('material-dropdown');
-    const buttonsContainer = document.getElementById('buttons');
-    const tableContainer = document.getElementById('table-container');
-    const tableHeader = document.getElementById('table-header');
-    
+    // 全域變數
+    const elements = {};
     let filteredMaterials = [...materials];
     let highlightedIndex = -1;
     let isAnimating = false;
     let searchTimeout = null;
     let currentHighlightedRow = null;
 
-    // 防抖動搜尋函數
-    function debounce(func, wait) {
+    // 工具函數
+    const debounce = (func, wait) => {
       return function executedFunction(...args) {
         const later = () => {
           clearTimeout(searchTimeout);
@@ -847,140 +691,221 @@
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(later, wait);
       };
+    };
+
+    // 回到頂部功能
+    function initBackToTop() {
+      const backToTopBtn = document.getElementById('back-to-top');
+      if (!backToTopBtn) return;
+
+      // 監聽滾動事件
+      let isScrolling = false;
+      function handleScroll() {
+        if (!isScrolling) {
+          requestAnimationFrame(() => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > 300) {
+              backToTopBtn.classList.add('show');
+            } else {
+              backToTopBtn.classList.remove('show');
+            }
+            isScrolling = false;
+          });
+          isScrolling = true;
+        }
+      }
+
+      // 點擊回到頂部
+      function scrollToTop() {
+        const scrollToTopSmooth = () => {
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          if (scrollTop > 0) {
+            window.scrollTo(0, scrollTop * 0.85);
+            requestAnimationFrame(scrollToTopSmooth);
+          }
+        };
+        
+        if (window.CSS && CSS.supports('scroll-behavior', 'smooth')) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          scrollToTopSmooth();
+        }
+      }
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      backToTopBtn.addEventListener('click', scrollToTop);
+
+      // 初始檢查
+      handleScroll();
     }
 
     // 收合功能
     function toggleCollapse(contentId) {
+      const content = document.getElementById(contentId);
+      const btnId = contentId === 'size-buttons-content' ? 'size-collapse-btn' : 'select-collapse-btn';
+      const btn = document.getElementById(btnId);
+      
+      if (!content || !btn) return;
+      
       try {
-        const content = document.getElementById(contentId);
-        let btn;
-        
-        // 根據不同的內容區域確定對應的按鈕
-        if (contentId === 'size-buttons-content') {
-          btn = document.getElementById('size-collapse-btn');
-        } else if (contentId === 'select-area-content') {
-          btn = document.getElementById('select-collapse-btn');
-        }
-        
-        if (!content || !btn) return;
-        
         if (content.classList.contains('collapsed')) {
+          // 展開
           content.classList.remove('collapsed');
           content.style.maxHeight = content.scrollHeight + 'px';
           btn.textContent = '−';
           btn.setAttribute('aria-expanded', 'true');
+          
+          // 展開後重新計算高度，確保內容完整顯示
+          setTimeout(() => {
+            if (!content.classList.contains('collapsed')) {
+              content.style.maxHeight = content.scrollHeight + 'px';
+            }
+          }, 50);
         } else {
+          // 收合
           content.style.maxHeight = content.scrollHeight + 'px';
+          // 強制重繪
+          content.offsetHeight;
           setTimeout(() => {
             content.classList.add('collapsed');
             content.style.maxHeight = '0';
+            btn.textContent = '+';
+            btn.setAttribute('aria-expanded', 'false');
           }, 10);
-          btn.textContent = '+';
-          btn.setAttribute('aria-expanded', 'false');
         }
       } catch (error) {
         console.warn('Toggle collapse error:', error);
       }
     }
 
-    // 初始化UI
-    function init() {
-      try {
-        // 檢查必要元素是否存在
-        if (!select || !materialInput || !buttonsContainer || !tableContainer) {
-          throw new Error('Required DOM elements not found');
+    // 材質下拉選單
+    function renderMaterialOptions() {
+      if (!elements.materialDropdown) return;
+      
+      elements.materialDropdown.innerHTML = '';
+      
+      if (filteredMaterials.length === 0) {
+        const noResults = document.createElement('div');
+        noResults.className = 'no-results';
+        noResults.textContent = '找不到符合的材質';
+        elements.materialDropdown.appendChild(noResults);
+        return;
+      }
+      
+      filteredMaterials.forEach((material, index) => {
+        const option = document.createElement('div');
+        option.className = 'material-option';
+        option.textContent = material;
+        option.setAttribute('role', 'option');
+        option.setAttribute('aria-selected', index === highlightedIndex ? 'true' : 'false');
+        option.addEventListener('click', () => selectMaterial(material));
+        option.addEventListener('mouseenter', () => {
+          highlightedIndex = index;
+          updateHighlight();
+        });
+        
+        if (index === highlightedIndex) {
+          option.classList.add('highlighted');
         }
+        
+        elements.materialDropdown.appendChild(option);
+      });
+    }
 
-        // 生成尺寸選項和按鈕
-        sizes.forEach((size, index) => {
-          // 下拉選單選項
-          const option = document.createElement('option');
-          option.value = option.textContent = size;
-          select.appendChild(option);
-          
-          // 按鈕
-          const btn = document.createElement('button');
-          btn.className = 'size-btn';
-          btn.textContent = size;
-          btn.onclick = () => selectSizeFromButton(size);
-          btn.setAttribute('aria-label', `選擇尺寸 ${size}`);
-          btn.setAttribute('role', 'button');
-          buttonsContainer.appendChild(btn);
-        });
+    function updateHighlight() {
+      const options = elements.materialDropdown.querySelectorAll('.material-option');
+      options.forEach((option, index) => {
+        const isHighlighted = index === highlightedIndex;
+        option.classList.toggle('highlighted', isHighlighted);
+        option.setAttribute('aria-selected', isHighlighted ? 'true' : 'false');
+      });
+    }
 
-        // 初始化材質下拉選項
-        renderMaterialOptions();
-        
-        // 設置無障礙屬性
-        materialInput.setAttribute('role', 'combobox');
-        materialInput.setAttribute('aria-expanded', 'false');
-        materialInput.setAttribute('aria-haspopup', 'listbox');
-        materialInput.setAttribute('aria-autocomplete', 'list');
-        materialDropdown.setAttribute('role', 'listbox');
-        materialDropdownBtn.setAttribute('aria-label', '展開材質選單');
-        
-        // 事件監聽
-        select.onchange = () => selectSize(select.value);
-        
-        // 材質輸入框事件（使用防抖動）
-        const debouncedHandleMaterialInput = debounce(handleMaterialInput, 200);
-        materialInput.addEventListener('input', debouncedHandleMaterialInput);
-        materialInput.addEventListener('focus', () => {
-          console.log('Material input focused'); // Debug log
-          showDropdown();
-        });
-        materialInput.addEventListener('keydown', handleKeydown);
-        materialInput.addEventListener('blur', handleInputBlur);
-        
-        // 下拉按鈕事件
-        materialDropdownBtn.addEventListener('click', (e) => {
-          console.log('Material dropdown button clicked'); // Debug log
-          e.preventDefault();
-          e.stopPropagation();
-          toggleDropdown();
-        });
-        
-        // 點擊外部關閉下拉
-        document.addEventListener('click', handleOutsideClick);
-        
-        // 防止表單提交（如果在表單內）
-        const form = document.querySelector('form');
-        if (form) {
-          form.addEventListener('submit', (e) => e.preventDefault());
-        }
-        
-        // 設置初始高度
-        const sizeButtonsContent = document.getElementById('size-buttons-content');
-        const selectAreaContent = document.getElementById('select-area-content');
-        
-        if (sizeButtonsContent) {
-          sizeButtonsContent.style.maxHeight = sizeButtonsContent.scrollHeight + 'px';
-        }
-        
-        if (selectAreaContent) {
-          selectAreaContent.style.maxHeight = selectAreaContent.scrollHeight + 'px';
-        }
-        
-        // 初始選擇
-        selectSize(sizes[0]);
-        
-        console.log('Price table initialized successfully');
-        console.log('Material input:', materialInput);
-        console.log('Material dropdown button:', materialDropdownBtn);
-        console.log('Material dropdown:', materialDropdown);
-        
-      } catch (error) {
-        console.error('Initialization error:', error);
-        // 顯示錯誤訊息給用戶
-        if (tableContainer) {
-          tableContainer.innerHTML = '<p style="color:red; text-align: center; padding: 20px;">載入失敗，請重新整理頁面</p>';
-        }
+    function showDropdown() {
+      if (!elements.materialDropdown || !elements.materialDropdownBtn || !elements.materialInput) return;
+      
+      elements.materialDropdown.classList.add('show');
+      elements.materialDropdownBtn.classList.add('open');
+      elements.materialInput.setAttribute('aria-expanded', 'true');
+      
+      if (filteredMaterials.length > 0 && highlightedIndex < 0) {
+        highlightedIndex = 0;
+        updateHighlight();
       }
     }
 
-    // 處理輸入框失焦
+    function hideDropdown() {
+      if (!elements.materialDropdown || !elements.materialDropdownBtn || !elements.materialInput) return;
+      
+      elements.materialDropdown.classList.remove('show');
+      elements.materialDropdownBtn.classList.remove('open');
+      elements.materialInput.setAttribute('aria-expanded', 'false');
+      highlightedIndex = -1;
+    }
+
+    function toggleDropdown() {
+      if (elements.materialDropdown.classList.contains('show')) {
+        hideDropdown();
+      } else {
+        filteredMaterials = [...materials];
+        highlightedIndex = 0;
+        renderMaterialOptions();
+        showDropdown();
+        elements.materialInput.focus();
+      }
+    }
+
+    // 事件處理
+    const handleMaterialInput = debounce((e) => {
+      const query = e.target.value.toLowerCase().trim();
+      filteredMaterials = materials.filter(material => 
+        material.toLowerCase().includes(query)
+      );
+      highlightedIndex = filteredMaterials.length > 0 ? 0 : -1;
+      renderMaterialOptions();
+      showDropdown();
+    }, 200);
+
+    function handleKeydown(e) {
+      if (!elements.materialDropdown.classList.contains('show')) {
+        if (e.key === 'ArrowDown' || e.key === 'Enter') {
+          e.preventDefault();
+          showDropdown();
+        }
+        return;
+      }
+
+      const maxIndex = Math.max(0, filteredMaterials.length - 1);
+
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          highlightedIndex = highlightedIndex < maxIndex ? highlightedIndex + 1 : 0;
+          updateHighlight();
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          highlightedIndex = highlightedIndex > 0 ? highlightedIndex - 1 : maxIndex;
+          updateHighlight();
+          break;
+        case 'Enter':
+          e.preventDefault();
+          if (highlightedIndex >= 0 && filteredMaterials[highlightedIndex]) {
+            selectMaterial(filteredMaterials[highlightedIndex]);
+          }
+          break;
+        case 'Escape':
+          e.preventDefault();
+          hideDropdown();
+          elements.materialInput.blur();
+          break;
+        case 'Tab':
+          hideDropdown();
+          break;
+      }
+    }
+
     function handleInputBlur(e) {
-      // 延遲隱藏下拉選單，給點擊選項時間
       setTimeout(() => {
         if (!e.relatedTarget || !e.relatedTarget.closest('.material-search-container')) {
           hideDropdown();
@@ -988,209 +913,15 @@
       }, 150);
     }
 
-    // 處理外部點擊
     function handleOutsideClick(e) {
-      console.log('Outside click detected', e.target); // Debug log
       if (!e.target.closest('.material-search-container')) {
-        console.log('Hiding dropdown due to outside click'); // Debug log
         hideDropdown();
       }
     }
 
-    // 渲染材質選項
-    function renderMaterialOptions() {
-      try {
-        if (!materialDropdown) return;
-        
-        materialDropdown.innerHTML = '';
-        
-        if (filteredMaterials.length === 0) {
-          const noResults = document.createElement('div');
-          noResults.className = 'no-results';
-          noResults.textContent = '找不到符合的材質';
-          noResults.setAttribute('role', 'option');
-          materialDropdown.appendChild(noResults);
-          return;
-        }
-        
-        filteredMaterials.forEach((material, index) => {
-          const option = document.createElement('div');
-          option.className = 'material-option';
-          option.textContent = material;
-          option.setAttribute('role', 'option');
-          option.setAttribute('aria-selected', index === highlightedIndex ? 'true' : 'false');
-          option.addEventListener('click', () => selectMaterial(material));
-          option.addEventListener('mouseenter', () => {
-            highlightedIndex = index;
-            updateHighlight();
-          });
-          
-          if (index === highlightedIndex) {
-            option.classList.add('highlighted');
-          }
-          
-          materialDropdown.appendChild(option);
-        });
-      } catch (error) {
-        console.warn('Render material options error:', error);
-      }
-    }
-
-    // 更新高亮顯示
-    function updateHighlight() {
-      try {
-        const options = materialDropdown.querySelectorAll('.material-option');
-        options.forEach((option, index) => {
-          const isHighlighted = index === highlightedIndex;
-          option.classList.toggle('highlighted', isHighlighted);
-          option.setAttribute('aria-selected', isHighlighted ? 'true' : 'false');
-        });
-      } catch (error) {
-        console.warn('Update highlight error:', error);
-      }
-    }
-
-    // 處理材質輸入
-    function handleMaterialInput(e) {
-      try {
-        const query = e.target.value.toLowerCase().trim();
-        filteredMaterials = materials.filter(material => 
-          material.toLowerCase().includes(query)
-        );
-        highlightedIndex = filteredMaterials.length > 0 ? 0 : -1;
-        renderMaterialOptions();
-        showDropdown();
-      } catch (error) {
-        console.warn('Handle material input error:', error);
-      }
-    }
-
-    // 處理鍵盤導航
-    function handleKeydown(e) {
-      try {
-        if (!materialDropdown.classList.contains('show')) {
-          if (e.key === 'ArrowDown' || e.key === 'Enter') {
-            e.preventDefault();
-            showDropdown();
-          }
-          return;
-        }
-
-        const maxIndex = Math.max(0, filteredMaterials.length - 1);
-
-        switch (e.key) {
-          case 'ArrowDown':
-            e.preventDefault();
-            highlightedIndex = highlightedIndex < maxIndex ? highlightedIndex + 1 : 0;
-            updateHighlight();
-            scrollHighlightedIntoView();
-            break;
-          case 'ArrowUp':
-            e.preventDefault();
-            highlightedIndex = highlightedIndex > 0 ? highlightedIndex - 1 : maxIndex;
-            updateHighlight();
-            scrollHighlightedIntoView();
-            break;
-          case 'Enter':
-            e.preventDefault();
-            if (highlightedIndex >= 0 && filteredMaterials[highlightedIndex]) {
-              selectMaterial(filteredMaterials[highlightedIndex]);
-            }
-            break;
-          case 'Escape':
-            e.preventDefault();
-            hideDropdown();
-            materialInput.blur();
-            break;
-          case 'Tab':
-            hideDropdown();
-            break;
-        }
-      } catch (error) {
-        console.warn('Keyboard navigation error:', error);
-      }
-    }
-
-    // 滾動高亮選項到可見區域
-    function scrollHighlightedIntoView() {
-      try {
-        const highlightedOption = materialDropdown.querySelector('.highlighted');
-        if (highlightedOption) {
-          highlightedOption.scrollIntoView({
-            block: 'nearest',
-            behavior: 'smooth'
-          });
-        }
-      } catch (error) {
-        console.warn('Scroll highlighted into view error:', error);
-      }
-    }
-
-    // 顯示下拉選單
-    function showDropdown() {
-      try {
-        console.log('showDropdown called'); // Debug log
-        if (!materialDropdown || !materialDropdownBtn || !materialInput) {
-          console.log('Missing elements:', { materialDropdown, materialDropdownBtn, materialInput }); // Debug log
-          return;
-        }
-        
-        materialDropdown.classList.add('show');
-        materialDropdownBtn.classList.add('open');
-        materialInput.setAttribute('aria-expanded', 'true');
-        
-        // 確保有選項被高亮
-        if (filteredMaterials.length > 0 && highlightedIndex < 0) {
-          highlightedIndex = 0;
-          updateHighlight();
-        }
-        
-        console.log('Dropdown shown successfully'); // Debug log
-      } catch (error) {
-        console.warn('Show dropdown error:', error);
-      }
-    }
-
-    // 隱藏下拉選單
-    function hideDropdown() {
-      try {
-        console.log('hideDropdown called'); // Debug log
-        if (!materialDropdown || !materialDropdownBtn || !materialInput) return;
-        
-        materialDropdown.classList.remove('show');
-        materialDropdownBtn.classList.remove('open');
-        materialInput.setAttribute('aria-expanded', 'false');
-        highlightedIndex = -1;
-        
-        console.log('Dropdown hidden successfully'); // Debug log
-      } catch (error) {
-        console.warn('Hide dropdown error:', error);
-      }
-    }
-
-    // 切換下拉選單
-    function toggleDropdown() {
-      try {
-        console.log('toggleDropdown called'); // Debug log
-        if (materialDropdown.classList.contains('show')) {
-          hideDropdown();
-        } else {
-          filteredMaterials = [...materials];
-          highlightedIndex = 0;
-          renderMaterialOptions();
-          showDropdown();
-          materialInput.focus();
-        }
-      } catch (error) {
-        console.warn('Toggle dropdown error:', error);
-      }
-    }
-
-    // 快速選擇按鈕點擊處理
+    // 尺寸和材質選擇
     function selectSizeFromButton(size) {
       selectSize(size);
-      
-      // 滾動到尺寸材質選單（僅當點擊快速選擇按鈕時）
       const selectAreaSection = document.querySelector('.select-area');
       if (selectAreaSection) {
         setTimeout(() => {
@@ -1203,202 +934,221 @@
     }
 
     function selectSize(size) {
-      try {
-        if (!size || !sizes.includes(size)) return;
-        
-        // 更新選單
-        if (select) select.value = size;
-        
-        // 更新表格標題
-        if (tableHeader) tableHeader.textContent = size;
-        
-        // 更新按鈕狀態
-        document.querySelectorAll('.size-btn').forEach(btn => 
-          btn.classList.toggle('active', btn.textContent === size)
-        );
+      if (!size || !sizes.includes(size)) return;
+      
+      elements.select.value = size;
+      elements.tableHeader.textContent = size;
+      
+      document.querySelectorAll('.size-btn').forEach(btn => 
+        btn.classList.toggle('active', btn.textContent === size)
+      );
 
-        // 重置材質選擇
-        if (materialInput) {
-          materialInput.value = '';
-          materialInput.setAttribute('aria-expanded', 'false');
-        }
-        filteredMaterials = [...materials];
-        hideDropdown();
-        
-        // 清除之前的高亮
-        clearHighlight();
-        
-        // 生成表格
-        generateTable(size);
-        
-      } catch (error) {
-        console.error('Select size error:', error);
+      if (elements.materialInput) {
+        elements.materialInput.value = '';
+        elements.materialInput.setAttribute('aria-expanded', 'false');
       }
+      filteredMaterials = [...materials];
+      hideDropdown();
+      clearHighlight();
+      generateTable(size);
     }
 
     function selectMaterial(material) {
-      try {
-        if (!material || !materials.includes(material) || isAnimating) return;
-        
-        // 設置輸入框值
-        if (materialInput) {
-          materialInput.value = material;
-        }
-        hideDropdown();
-        
-        // 防止重複動畫
-        isAnimating = true;
-        
-        // 找到材質對應的行索引
-        const materialIndex = materials.indexOf(material);
-        if (materialIndex === -1) {
+      if (!material || !materials.includes(material) || isAnimating) return;
+      
+      elements.materialInput.value = material;
+      hideDropdown();
+      isAnimating = true;
+      
+      const materialIndex = materials.indexOf(material);
+      if (materialIndex === -1) {
+        isAnimating = false;
+        return;
+      }
+
+      setTimeout(() => {
+        const table = document.querySelector('#table-container table');
+        if (!table) {
           isAnimating = false;
           return;
         }
-
-        // 確保表格已經生成
-        setTimeout(() => {
-          try {
-            const table = document.querySelector('#table-container table');
-            if (!table) {
-              isAnimating = false;
-              return;
-            }
-            
-            const materialRows = table.querySelectorAll('tr');
-            // +1 因為第一行是標題行
-            const targetRow = materialRows[materialIndex + 1];
-            
-            if (targetRow) {
-              // 清除之前的高亮效果
-              clearHighlight();
-              
-              // 滾動到該行
-              targetRow.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center' 
-              });
-              
-              // 延遲一下再添加高亮效果，確保滾動完成
-              setTimeout(() => {
-                try {
-                  // 添加閃爍效果到整行
-                  targetRow.classList.add('material-highlight', 'animating');
-                  currentHighlightedRow = targetRow;
-                  
-                  // 1秒後移除高亮效果
-                  setTimeout(() => {
-                    if (targetRow === currentHighlightedRow) {
-                      targetRow.classList.remove('material-highlight', 'animating');
-                      currentHighlightedRow = null;
-                    }
-                    isAnimating = false;
-                  }, 1000);
-                } catch (error) {
-                  console.warn('Animation error:', error);
-                  isAnimating = false;
-                }
-              }, 500);
-            } else {
-              isAnimating = false;
-            }
-          } catch (error) {
-            console.warn('Select material DOM error:', error);
-            isAnimating = false;
-          }
-        }, 200);
         
-      } catch (error) {
-        console.error('Select material error:', error);
-        isAnimating = false;
-      }
-    }
-
-    // 清除高亮效果
-    function clearHighlight() {
-      try {
-        if (currentHighlightedRow) {
-          currentHighlightedRow.classList.remove('material-highlight', 'animating');
-          currentHighlightedRow = null;
-        }
-        // 清除所有可能殘留的高亮
-        document.querySelectorAll('.material-highlight').forEach(row => {
-          row.classList.remove('material-highlight', 'animating');
-        });
-      } catch (error) {
-        console.warn('Clear highlight error:', error);
-      }
-    }
-
-    function generateTable(size) {
-      try {
-        if (!size || !tableContainer) return;
+        const materialRows = table.querySelectorAll('tr');
+        const targetRow = materialRows[materialIndex + 1];
         
-        // 添加載入狀態
-        tableContainer.classList.add('table-loading');
-        
-        const data = priceData[size];
-        if (!data) {
-          tableContainer.innerHTML = '<p style="color:red; text-align: center; padding: 20px;">此尺寸尚無價目表資料</p>';
-          tableContainer.classList.remove('table-loading');
-          return;
-        }
-
-        let html = '<table role="table" aria-label="價目表">';
-        
-        // 標題行（固定）
-        html += '<tr role="row">';
-        html += '<th class="material-name empty-corner" scope="col" aria-label="材質名稱"></th>';
-        quantities.forEach(q => html += `<th class="qty-header" scope="col" aria-label="${q}">${q}</th>`);
-        html += '</tr>';
-
-        // 材質價格行
-        materials.forEach((mat, i) => {
-          if (!data[i]) return;
-          const even = i % 2 === 0;
-          const materialBg = even ? 'material-even' : 'material-odd';
-          const priceBg = even ? 'price-even' : 'price-odd';
-          
-          html += `<tr role="row"><th class="material-name ${materialBg}" scope="row" aria-label="材質: ${mat}">${mat}</th>`;
-          data[i].forEach((p, priceIndex) => {
-            const formattedPrice = `${Math.round(p).toLocaleString()}`;
-            const ariaLabel = `${quantities[priceIndex]} ${formattedPrice}`;
-            html += `<td class="${priceBg}" aria-label="${ariaLabel}">${formattedPrice}</td>`;
+        if (targetRow) {
+          clearHighlight();
+          targetRow.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
           });
-          html += '</tr>';
-        });
-
-        tableContainer.innerHTML = html + '</table>';
-        
-        // 移除載入狀態
-        setTimeout(() => {
-          tableContainer.classList.remove('table-loading');
-        }, 100);
-        
-      } catch (error) {
-        console.error('Generate table error:', error);
-        if (tableContainer) {
-          tableContainer.innerHTML = '<p style="color:red; text-align: center; padding: 20px;">表格生成失敗</p>';
-          tableContainer.classList.remove('table-loading');
+          
+          setTimeout(() => {
+            targetRow.classList.add('material-highlight');
+            currentHighlightedRow = targetRow;
+            
+            setTimeout(() => {
+              if (targetRow === currentHighlightedRow) {
+                targetRow.classList.remove('material-highlight');
+                currentHighlightedRow = null;
+              }
+              isAnimating = false;
+            }, 1000);
+          }, 500);
+        } else {
+          isAnimating = false;
         }
-      }
+      }, 200);
     }
 
-    // 清理函數（可用於頁面卸載時清理）
+    function clearHighlight() {
+      if (currentHighlightedRow) {
+        currentHighlightedRow.classList.remove('material-highlight');
+        currentHighlightedRow = null;
+      }
+      document.querySelectorAll('.material-highlight').forEach(row => {
+        row.classList.remove('material-highlight');
+      });
+    }
+
+    // 表格生成
+    function generateTable(size) {
+      if (!size) return;
+      
+      elements.tableContainer.classList.add('table-loading');
+      
+      const data = priceData[size];
+      if (!data) {
+        elements.tableContainer.innerHTML = '<p style="color:red; text-align: center; padding: 20px;">此尺寸尚無價目表資料</p>';
+        elements.tableContainer.classList.remove('table-loading');
+        return;
+      }
+
+      let html = '<table role="table" aria-label="價目表">';
+      
+      // 標題行
+      html += '<tr role="row">';
+      html += '<th class="material-name empty-corner" scope="col"></th>';
+      quantities.forEach(q => html += `<th class="qty-header" scope="col">${q}</th>`);
+      html += '</tr>';
+
+      // 材質價格行
+      materials.forEach((mat, i) => {
+        if (!data[i]) return;
+        const even = i % 2 === 0;
+        const materialBg = even ? 'material-even' : 'material-odd';
+        const priceBg = even ? 'price-even' : 'price-odd';
+        
+        html += `<tr role="row"><th class="material-name ${materialBg}" scope="row">${mat}</th>`;
+        data[i].forEach(p => {
+          const formattedPrice = Math.round(p).toLocaleString();
+          html += `<td class="${priceBg}">${formattedPrice}</td>`;
+        });
+        html += '</tr>';
+      });
+
+      elements.tableContainer.innerHTML = html + '</table>';
+      
+      setTimeout(() => {
+        elements.tableContainer.classList.remove('table-loading');
+      }, 100);
+    }
+
+    // 初始化
+    function init() {
+      // 獲取DOM元素
+      Object.assign(elements, {
+        select: document.getElementById('size-select'),
+        materialInput: document.getElementById('material-input'),
+        materialDropdownBtn: document.getElementById('material-dropdown-btn'),
+        materialDropdown: document.getElementById('material-dropdown'),
+        buttonsContainer: document.getElementById('buttons'),
+        tableContainer: document.getElementById('table-container'),
+        tableHeader: document.getElementById('table-header')
+      });
+
+      if (!elements.select || !elements.materialInput || !elements.buttonsContainer || !elements.tableContainer) {
+        throw new Error('Required DOM elements not found');
+      }
+
+      // 生成尺寸選項和按鈕
+      sizes.forEach(size => {
+        // 下拉選單選項
+        const option = document.createElement('option');
+        option.value = option.textContent = size;
+        elements.select.appendChild(option);
+        
+        // 按鈕
+        const btn = document.createElement('button');
+        btn.className = 'size-btn';
+        btn.textContent = size;
+        btn.onclick = () => selectSizeFromButton(size);
+        btn.setAttribute('aria-label', `選擇尺寸 ${size}`);
+        elements.buttonsContainer.appendChild(btn);
+      });
+
+      // 初始化材質下拉選項
+      renderMaterialOptions();
+      
+      // 設置無障礙屬性
+      elements.materialInput.setAttribute('role', 'combobox');
+      elements.materialInput.setAttribute('aria-expanded', 'false');
+      elements.materialInput.setAttribute('aria-haspopup', 'listbox');
+      elements.materialDropdown.setAttribute('role', 'listbox');
+      
+      // 事件監聽
+      elements.select.onchange = () => selectSize(elements.select.value);
+      elements.materialInput.addEventListener('input', handleMaterialInput);
+      elements.materialInput.addEventListener('focus', showDropdown);
+      elements.materialInput.addEventListener('keydown', handleKeydown);
+      elements.materialInput.addEventListener('blur', handleInputBlur);
+      elements.materialDropdownBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleDropdown();
+      });
+      
+      document.addEventListener('click', handleOutsideClick);
+      
+      // 防止表單提交（如果在表單內）
+      const form = document.querySelector('form');
+      if (form) {
+        form.addEventListener('submit', (e) => e.preventDefault());
+      }
+      
+      // 設置初始高度
+      ['size-buttons-content', 'select-area-content'].forEach(id => {
+        const content = document.getElementById(id);
+        if (content) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          // 確保初始狀態正確
+          content.classList.remove('collapsed');
+          
+          // 為每個區域設置正確的初始狀態
+          const btnId = id === 'size-buttons-content' ? 'size-collapse-btn' : 'select-collapse-btn';
+          const btn = document.getElementById(btnId);
+          if (btn) {
+            btn.textContent = '−';
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        }
+      });
+      
+      // 初始化回到頂部功能
+      initBackToTop();
+      
+      // 初始選擇
+      selectSize(sizes[0]);
+    }
+
+    // 清理函數
     function cleanup() {
-      try {
-        clearTimeout(searchTimeout);
-        clearHighlight();
-        isAnimating = false;
-      } catch (error) {
-        console.warn('Cleanup error:', error);
-      }
+      clearTimeout(searchTimeout);
+      clearHighlight();
+      isAnimating = false;
     }
 
-    // 在頁面卸載時清理
     window.addEventListener('beforeunload', cleanup);
-
-    // 頁面載入完成後初始化
     document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
