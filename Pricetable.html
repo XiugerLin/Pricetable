@@ -266,8 +266,7 @@ body {
 
 /* 當表格在視窗頂部附近時的特殊樣式 */
 .table-wrapper.near-top .table-scroll-container {
-  height: calc(100vh - 100px) !important;
-  max-height: 90vh !important;
+  transition: height 0.3s ease !important;
 }
 
 /* 恢復拖動區域 */
@@ -484,7 +483,33 @@ td, th {
   .back-to-top { width: 40px !important; height: 40px !important; bottom: 10px !important; right: 10px !important; font-size: 16px !important; }
 }
 
-/* 平板裝置優化 */
+/* iPad 直向模式特殊優化 */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .table-scroll-container { 
+    height: 75vh !important; 
+    min-height: 400px !important;
+    max-height: 90vh !important;
+  }
+  .table-wrapper.near-top .table-scroll-container {
+    height: calc(100vh - 80px) !important;
+    max-height: 95vh !important;
+  }
+}
+
+/* iPad 橫向模式 */
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+  .table-scroll-container { 
+    height: 70vh !important; 
+    min-height: 400px !important;
+    max-height: 85vh !important;
+  }
+  .table-wrapper.near-top .table-scroll-container {
+    height: calc(100vh - 90px) !important;
+    max-height: 90vh !important;
+  }
+}
+
+/* 平板裝置優化（通用） */
 @media (min-width: 769px) and (max-width: 1024px) {
   .table-scroll-container { 
     height: 65vh !important; 
@@ -493,6 +518,19 @@ td, th {
   }
   .section { margin-bottom: 16px !important; }
   table { font-size: 13px !important; }
+}
+
+/* 桌面版優化 */
+@media (min-width: 1367px) {
+  .table-scroll-container { 
+    height: 60vh !important; 
+    min-height: 450px !important;
+    max-height: 80vh !important;
+  }
+  .table-wrapper.near-top .table-scroll-container {
+    height: calc(100vh - 100px) !important;
+    max-height: 88vh !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -504,6 +542,10 @@ td, th {
   #size-select, #material-input { min-height: 48px !important; padding: 14px 16px !important; }
   .material-option { padding: 14px 16px !important; min-height: 48px !important; }
   .drag-area { height: 50px !important; }
+  /* 觸控裝置的表格高度優化 */
+  .table-scroll-container {
+    min-height: 350px !important;
+  }
 }
 ```
 
@@ -825,44 +867,100 @@ td, th {
         if (!tableScrollContainer) return;
 
         const windowHeight = window.innerHeight;
+        const windowWidth = window.innerWidth;
         const tableWrapper = document.querySelector('.table-wrapper');
         if (!tableWrapper) return;
 
         // 獲取表格容器的位置
         const tableWrapperRect = tableWrapper.getBoundingClientRect();
-        const dragAreaHeight = window.innerWidth <= 768 ? 35 : 40;
-        const scrollHintHeight = 30;
         
-        // 檢查是否為移動裝置
-        const isMobile = window.innerWidth <= 768;
-        const isSmallMobile = window.innerWidth <= 480;
+        // 更智能的裝置判斷（考慮寬高比和實際尺寸）
+        const aspectRatio = windowWidth / windowHeight;
+        const isPortrait = aspectRatio < 1; // 直向
+        const isLandscape = aspectRatio >= 1; // 橫向
+        
+        // 判斷裝置類型
+        const isSmallPhone = windowWidth <= 480 && windowHeight <= 900;
+        const isPhone = windowWidth <= 768 && windowHeight <= 1024 && !isTablet();
+        const isTablet = () => {
+          // iPad 或其他平板的判斷
+          return (windowWidth >= 768 && windowWidth <= 1366) || 
+                 (windowHeight >= 1024 && windowHeight <= 1366);
+        };
+        const isDesktop = windowWidth > 1366 || (windowWidth > 1024 && windowHeight > 768);
+        
+        // 根據裝置和方向調整參數
+        let dragAreaHeight = 40;
+        let bottomMargin = 20;
+        let minHeightRatio = 0.5; // 最小高度比例
+        let maxHeightRatio = 0.8; // 最大高度比例
+        
+        if (isSmallPhone) {
+          dragAreaHeight = 30;
+          bottomMargin = 10;
+          minHeightRatio = 0.4;
+          maxHeightRatio = 0.9;
+        } else if (isPhone) {
+          dragAreaHeight = 35;
+          bottomMargin = 10;
+          minHeightRatio = 0.45;
+          maxHeightRatio = 0.88;
+        } else if (isTablet()) {
+          dragAreaHeight = 38;
+          bottomMargin = 15;
+          // iPad 直向時給予更大的高度
+          if (isPortrait) {
+            minHeightRatio = 0.6;
+            maxHeightRatio = 0.9;
+          } else {
+            minHeightRatio = 0.55;
+            maxHeightRatio = 0.85;
+          }
+        } else {
+          // 桌面版
+          minHeightRatio = 0.5;
+          maxHeightRatio = 0.8;
+        }
+        
+        const scrollHintHeight = 30;
         
         // 計算表格上方的實際高度
         const tableTop = Math.max(0, tableWrapperRect.top);
-        
-        // 底部保留空間（移動裝置較少）
-        const bottomMargin = isMobile ? 10 : 20;
         
         // 計算可用高度
         let availableHeight = windowHeight - tableTop - dragAreaHeight - scrollHintHeight - bottomMargin;
         
         // 如果表格已經在視窗頂部或接近頂部，給予更多高度
-        if (tableTop < 100) {
+        if (tableTop < 80) {
           availableHeight = windowHeight - dragAreaHeight - scrollHintHeight - bottomMargin - Math.max(0, tableTop);
           tableWrapper.classList.add('near-top');
+          // 在頂部時提高最大高度比例
+          maxHeightRatio = Math.min(0.95, maxHeightRatio + 0.1);
         } else {
           tableWrapper.classList.remove('near-top');
         }
         
-        // 設定最小和最大高度限制
-        let minHeight = isSmallMobile ? 250 : (isMobile ? 300 : 400);
-        let maxHeight = isSmallMobile ? windowHeight * 0.9 : (isMobile ? windowHeight * 0.85 : windowHeight * 0.8);
+        // 設定最小和最大高度
+        const minHeight = Math.max(250, windowHeight * minHeightRatio);
+        const maxHeight = windowHeight * maxHeightRatio;
         
         // 確保高度在合理範圍內
         availableHeight = Math.max(minHeight, Math.min(availableHeight, maxHeight));
         
         // 設置高度
-        tableScrollContainer.style.height = availableHeight + 'px';
+        tableScrollContainer.style.setProperty('height', availableHeight + 'px', 'important');
+        
+        // 調試資訊（開發時可啟用）
+        // console.log('Height calculation:', {
+        //   windowHeight,
+        //   windowWidth,
+        //   tableTop,
+        //   availableHeight,
+        //   minHeight,
+        //   maxHeight,
+        //   deviceType: isTablet() ? 'tablet' : (isPhone ? 'phone' : 'desktop'),
+        //   orientation: isPortrait ? 'portrait' : 'landscape'
+        // });
       }
 
       // 監測表格是否在視窗中並調整高度
@@ -872,20 +970,28 @@ td, th {
 
         const observerOptions = {
           root: null,
-          rootMargin: '-50px 0px -50px 0px',
-          threshold: [0, 0.1, 0.5, 0.9, 1]
+          rootMargin: '-30px 0px -30px 0px',
+          threshold: [0, 0.1, 0.3, 0.5, 0.7, 0.9, 1]
         };
 
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
-            if (entry.isIntersecting) {
+            if (entry.isIntersecting || entry.intersectionRatio > 0) {
               // 當表格進入視窗時調整高度
-              adjustTableHeight();
+              requestAnimationFrame(() => {
+                adjustTableHeight();
+              });
             }
           });
         }, observerOptions);
 
         observer.observe(tableWrapper);
+        
+        // 也監測表格標題
+        const tableHeader = document.querySelector('.table-header');
+        if (tableHeader) {
+          observer.observe(tableHeader);
+        }
         
         // 儲存 observer 以便清理
         window.tableIntersectionObserver = observer;
@@ -1230,6 +1336,17 @@ td, th {
         window.debouncedAdjustHeight = debounceResize(adjustTableHeight, 250);
         window.addEventListener('resize', window.debouncedAdjustHeight);
         
+        // 添加方向改變事件監聽（主要針對平板和手機）
+        window.orientationHandler = () => {
+          setTimeout(() => {
+            adjustTableHeight();
+            // 方向改變後可能需要多次調整
+            setTimeout(adjustTableHeight, 300);
+            setTimeout(adjustTableHeight, 600);
+          }, 100);
+        };
+        window.addEventListener('orientationchange', window.orientationHandler);
+        
         // 設置 Intersection Observer
         setupIntersectionObserver();
         
@@ -1261,6 +1378,7 @@ td, th {
           window.removeEventListener('scroll', window.scrollHandler);
           window.removeEventListener('touchmove', window.scrollHandler);
         }
+        window.removeEventListener('orientationchange', window.orientationHandler);
         
         // 斷開 Intersection Observer
         if (window.tableIntersectionObserver) {
