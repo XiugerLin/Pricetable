@@ -1,1093 +1,1235 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>數位貼紙價目表</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<style type="text/css">
     /* 基礎樣式 */
-    * { box-sizing: border-box; }
-    
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; 
-      margin: 0; 
-      padding: 16px; 
-      background: #f8f9fa;
-      font-size: 16px;
-      line-height: 1.5;
+    * {
+        box-sizing: border-box !important;
     }
-    
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif !important;
+        margin: 0 !important;
+        padding: 16px !important;
+        background: #f8f9fa !important;
+        font-size: 16px !important;
+        line-height: 1.5 !important;
+    }
+
     /* 共用樣式 */
     .header {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
+        text-align: center !important;
+        margin-bottom: 20px !important;
+        color: #333 !important;
     }
-    
+
     .header h1 {
-      margin: 0 0 8px 0;
-      font-size: 24px;
-      font-weight: bold;
+        margin: 0 0 8px 0 !important;
+        font-size: 24px !important;
+        font-weight: bold !important;
     }
-    
+
     .header p {
-      margin: 0;
-      color: #666;
-      font-size: 14px;
+        margin: 0 !important;
+        color: #666 !important;
+        font-size: 14px !important;
     }
-    
+
     .section {
-      margin-bottom: 20px;
-      padding: 16px;
-      border-radius: 12px;
-      border: 1px solid #ddd;
-      background: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      position: relative;
-      z-index: 10;
+        margin-bottom: 20px !important;
+        padding: 16px !important;
+        border-radius: 12px !important;
+        border: 1px solid #ddd !important;
+        background: white !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+        position: relative !important;
+        z-index: 10 !important;
     }
-    
-    .size-buttons { background-color: #f5f5f5; }
-    .select-area { background-color: #fafafa; border-color: #e0e0e0; }
-    
+
+    .size-buttons {
+        background-color: #f5f5f5 !important;
+    }
+
+    .select-area {
+        background-color: #fafafa !important;
+        border-color: #e0e0e0 !important;
+    }
+
     /* 收合功能樣式 */
     .collapsible-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        cursor: pointer !important;
+        user-select: none !important;
+        -webkit-tap-highlight-color: transparent !important;
     }
 
     .collapse-btn {
-      background: none;
-      border: none;
-      font-size: 18px;
-      color: #666;
-      cursor: pointer;
-      padding: 4px;
-      border-radius: 4px;
-      transition: all 0.2s ease;
-      display: none;
+        background: none !important;
+        border: none !important;
+        font-size: 18px !important;
+        color: #666 !important;
+        cursor: pointer !important;
+        padding: 4px !important;
+        border-radius: 4px !important;
+        transition: all 0.2s ease !important;
+        display: none !important;
     }
 
-    .collapse-btn:hover { background: rgba(0,0,0,0.1); }
+    .collapse-btn:hover {
+        background: rgba(0, 0, 0, 0.1) !important;
+    }
 
     .collapsible-content {
-      overflow: visible;
-      transition: max-height 0.3s ease, opacity 0.3s ease;
-      position: relative;
-      z-index: 10;
+        overflow: visible !important;
+        transition: max-height 0.3s ease, opacity 0.3s ease !important;
+        position: relative !important;
+        z-index: 10 !important;
     }
 
     .collapsible-content.collapsed {
-      max-height: 0 !important;
-      opacity: 0;
-      margin-top: 0 !important;
-      overflow: hidden !important;
-      pointer-events: none !important;
-      z-index: 5;
+        max-height: 0 !important;
+        opacity: 0 !important;
+        margin-top: 0 !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
+        z-index: 5 !important;
     }
 
     /* 按鈕網格 */
     .button-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-      gap: 10px;
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important;
+        gap: 10px !important;
     }
-    
+
     .size-btn {
-      padding: 12px 8px;
-      border: 2px solid #ccc;
-      background: #fff;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      text-align: center;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      -webkit-tap-highlight-color: transparent;
+        padding: 12px 8px !important;
+        border: 2px solid #ccc !important;
+        background: #fff !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        transition: all 0.2s ease !important;
+        text-align: center !important;
+        min-height: 44px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        -webkit-tap-highlight-color: transparent !important;
+        color: #666 !important;
     }
-    
-    .size-btn:hover { 
-      background: #e0e0e0; 
-      border-color: #999; 
-      transform: translateY(-1px);
+
+    .size-btn:hover {
+        background: #e0e0e0 !important;
+        border-color: #999 !important;
+        transform: translateY(-1px) !important;
     }
-    
-    .size-btn:active { transform: translateY(0); }
-    
-    .size-btn.active { 
-      background: #ffcc00; 
-      border-color: #ffaa00; 
-      font-weight: bold;
-      box-shadow: 0 2px 8px rgba(255, 204, 0, 0.3);
+
+    .size-btn:active {
+        transform: translateY(0) !important;
     }
-    
+
+    .size-btn.active {
+        background: #ffcc00 !important;
+        border-color: #ffaa00 !important;
+        font-weight: bold !important;
+        box-shadow: 0 2px 8px rgba(255, 204, 0, 0.3) !important;
+    }
+
     /* 選單容器 */
     .select-container {
-      display: flex;
-      gap: 16px;
-      align-items: flex-end;
-      flex-wrap: wrap;
+        display: flex !important;
+        gap: 16px !important;
+        align-items: flex-end !important;
+        flex-wrap: wrap !important;
     }
 
     .select-group {
-      flex: 1;
-      min-width: 150px;
+        flex: 1 !important;
+        min-width: 150px !important;
     }
 
     .select-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 16px;
-      font-weight: 600;
-      color: #333;
+        display: block !important;
+        margin-bottom: 6px !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        color: #333 !important;
     }
-    
+
     /* 輸入框樣式 */
-    #size-select, #material-input { 
-      padding: 12px 16px; 
-      font-size: 16px; 
-      border: 2px solid #ccc; 
-      border-radius: 8px; 
-      width: 100%;
-      background: white;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    #size-select,
+    #material-input {
+        padding: 12px 16px !important;
+        font-size: 16px !important;
+        border: 2px solid #ccc !important;
+        border-radius: 8px !important;
+        width: 100% !important;
+        background: white !important;
+        outline: none !important;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
     }
 
     #size-select {
-      appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      background-size: 16px;
-      padding-right: 40px;
-      cursor: pointer;
-      position: relative;
-      z-index: 100;
+        appearance: none !important;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+        background-repeat: no-repeat !important;
+        background-position: right 12px center !important;
+        background-size: 16px !important;
+        padding-right: 40px !important;
+        cursor: pointer !important;
+        position: relative !important;
+        z-index: 100 !important;
     }
 
-    #size-select:focus, #material-input:focus {
-      border-color: #ff9800;
-      box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+    #size-select:focus,
+    #material-input:focus {
+        border-color: #ff9800 !important;
+        box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2) !important;
     }
 
-    #material-input { padding-right: 40px; }
+    #material-input {
+        padding-right: 40px !important;
+    }
 
     /* 材質下拉選單 */
     .material-search-container {
-      position: relative;
-      width: 100%;
-      z-index: 100;
+        position: relative !important;
+        width: 100% !important;
+        z-index: 100 !important;
     }
 
     .material-dropdown-btn {
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 24px;
-      height: 24px;
-      border: none;
-      background: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #666;
-      font-size: 14px;
-      transition: transform 0.2s ease;
+        position: absolute !important;
+        right: 8px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        width: 24px !important;
+        height: 24px !important;
+        border: none !important;
+        background: none !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #666 !important;
+        font-size: 14px !important;
+        transition: transform 0.2s ease !important;
     }
 
-    .material-dropdown-btn.open { transform: translateY(-50%) rotate(180deg); }
+    .material-dropdown-btn.open {
+        transform: translateY(-50%) rotate(180deg) !important;
+    }
 
     .material-dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: white;
-      border: 2px solid #ccc;
-      border-top: none;
-      border-radius: 0 0 8px 8px;
-      max-height: 200px;
-      overflow-y: auto;
-      z-index: 1002;
-      display: none;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: white !important;
+        border: 2px solid #ccc !important;
+        border-top: none !important;
+        border-radius: 0 0 8px 8px !important;
+        max-height: 200px !important;
+        overflow-y: auto !important;
+        z-index: 1002 !important;
+        display: none !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
     }
 
-    .material-dropdown.show { display: block; }
+    .material-dropdown.show {
+        display: block !important;
+    }
 
     .material-option {
-      padding: 10px 16px;
-      cursor: pointer;
-      border-bottom: 1px solid #eee;
-      transition: background-color 0.2s ease;
+        padding: 10px 16px !important;
+        cursor: pointer !important;
+        border-bottom: 1px solid #eee !important;
+        transition: background-color 0.2s ease !important;
     }
 
-    .material-option:hover, .material-option.highlighted { background-color: #f0f8ff; }
-    .material-option:last-child { border-bottom: none; }
+    .material-option:hover,
+    .material-option.highlighted {
+        background-color: #f0f8ff !important;
+    }
+
+    .material-option:last-child {
+        border-bottom: none !important;
+    }
 
     .no-results {
-      padding: 10px 16px;
-      color: #999;
-      font-style: italic;
+        padding: 10px 16px !important;
+        color: #999 !important;
+        font-style: italic !important;
     }
 
     /* 表格樣式 */
     .table-header {
-      padding: 12px 16px;
-      font-size: 24px;
-      color: #ff8c00;
-      text-align: center;
-      font-weight: bold;
-      margin: 0;
+        padding: 12px 16px !important;
+        font-size: 24px !important;
+        color: #ff8c00 !important;
+        text-align: center !important;
+        font-weight: bold !important;
+        margin: 0 !important;
     }
-    
+
     .table-wrapper {
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      background: white;
-      position: relative;
-      overflow: hidden;
-      max-height: 70vh;
-      margin-top: 12px;
-      border: 1px solid #e0e0e0;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        background: white !important;
+        position: relative !important;
+        overflow: visible !important;
+        margin-top: 12px !important;
+        border: 1px solid #e0e0e0 !important;
     }
-    
+
+    /* 移除拖動區域（不再需要） */
     .drag-area {
-      height: 40px;
-      background: #f0f0f0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #999;
-      font-size: 12px;
-      cursor: grab;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: pan-y;
-      border-radius: 8px 8px 0 0;
-      position: relative;
+        display: none !important;
     }
-    
-    .drag-area:active { cursor: grabbing; }
-    .drag-area::before { content: "⋯"; font-size: 16px; color: #ccc; }
-    
+
+    /* 修改表格滾動容器 - 移除高度限制 */
     .table-scroll-container {
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-      max-height: calc(70vh - 40px);
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        -webkit-overflow-scrolling: touch !important;
     }
-    
-    table { 
-      border-collapse: separate;
-      border-spacing: 0;
-      width: 100%; 
-      min-width: 580px;
-      font-size: 14px;
-      position: relative;
-      margin: 0;
-      padding: 0;
+
+    table {
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+        width: 100% !important;
+        min-width: 580px !important;
+        font-size: 14px !important;
+        position: relative !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
-    
-    td, th { 
-      padding: 10px 6px; 
-      text-align: center; 
-      border: 1px solid #e0e0e0;
-      white-space: nowrap;
-      background: white;
-      margin: 0;
+
+    td,
+    th {
+        padding: 10px 6px !important;
+        text-align: center !important;
+        border: 1px solid #e0e0e0 !important;
+        white-space: nowrap !important;
+        background: white !important;
+        margin: 0 !important;
     }
 
     .material-name {
-      position: sticky;
-      left: 0;
-      z-index: 2;
-      font-weight: 600;
-      text-align: left !important;
-      padding: 10px 8px 10px 10px !important;
-      max-width: 130px;
-      min-width: 120px;
-      word-wrap: break-word;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      border-left: none !important;
-      font-size: 15px;
-      line-height: 1.3;
+        position: sticky !important;
+        left: 0 !important;
+        z-index: 2 !important;
+        font-weight: 600 !important;
+        text-align: left !important;
+        padding: 10px 8px 10px 10px !important;
+        max-width: 130px !important;
+        min-width: 120px !important;
+        word-wrap: break-word !important;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1) !important;
+        border-left: none !important;
+        font-size: 15px !important;
+        line-height: 1.3 !important;
+        color: #666;
     }
 
-    .qty-header, .empty-corner {
-      position: sticky;
-      top: 0;
-      z-index: 2;
-      font-weight: bold;
-      color: #333;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      border-top: none !important;
+    .qty-header,
+    .empty-corner {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 2 !important;
+        font-weight: bold !important;
+        color: #333 !important;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+        border-top: none !important;
     }
 
     .empty-corner {
-      position: sticky;
-      left: 0;
-      top: 0;
-      z-index: 3;
-      background: #f8f9fa !important;
-      border-left: none !important;
-      border-top: none !important;
+        position: sticky !important;
+        left: 0 !important;
+        top: 0 !important;
+        z-index: 3 !important;
+        background: #f8f9fa !important;
+        border-left: none !important;
+        border-top: none !important;
     }
 
-    .qty-header { background: #ffcc00 !important; }
-    .material-even { background: #ffcc66 !important; }
-    .material-odd { background: #ffcc00 !important; }
-    .price-even { background: #f8f9fa !important; }
-    .price-odd { background: #fff !important; }
+    .qty-header {
+        background: #ffcc00 !important;
+    }
+
+    .material-even {
+        background: #ffcc66 !important;
+    }
+
+    .material-odd {
+        background: #ffcc00 !important;
+    }
+
+    .price-even {
+        background: #f8f9fa !important;
+    }
+
+    .price-odd {
+        background: #fff !important;
+    }
 
     /* 高亮動畫 */
     .material-highlight {
-      animation: highlightFlash 1s ease-in-out 1 !important;
+        animation: highlightFlash 1s ease-in-out 1 !important;
     }
 
     .material-highlight td {
-      animation: highlightFlash 1s ease-in-out 1 !important;
-      background-color: #fff3e0 !important;
-      border-left: 3px solid #ff9800 !important;
+        animation: highlightFlash 1s ease-in-out 1 !important;
+        background-color: #fff3e0 !important;
+        border-left: 3px solid #ff9800 !important;
     }
 
     @keyframes highlightFlash {
-      0%, 100% { background-color: #fff3e0 !important; }
-      50% { background-color: #ffcc80 !important; }
+
+        0%,
+        100% {
+            background-color: #fff3e0 !important;
+        }
+
+        50% {
+            background-color: #ffcc80 !important;
+        }
     }
-    
+
     .scroll-hint {
-      text-align: center;
-      color: #666;
-      font-size: 12px;
-      margin-top: 8px;
-      display: none;
+        text-align: center !important;
+        color: #666 !important;
+        font-size: 12px !important;
+        margin-top: 8px !important;
+        display: none !important;
     }
-    
+
     .loading {
-      text-align: center;
-
-      color: #666;
+        text-align: center !important;
+        color: #666 !important;
     }
 
-    .table-loading { opacity: 0.5; pointer-events: none; }
-    
+    .table-loading {
+        opacity: 0.5 !important;
+        pointer-events: none !important;
+    }
+
     .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
     }
 
     /* 回到頂部按鈕 */
     .back-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      background: #ff8c00;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      -webkit-tap-highlight-color: transparent;
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        width: 50px !important;
+        height: 50px !important;
+        background: #ff8c00 !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 50% !important;
+        cursor: pointer !important;
+        display: none !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 20px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+        transition: all 0.3s ease !important;
+        z-index: 1000 !important;
+        -webkit-tap-highlight-color: transparent !important;
     }
 
     .back-to-top:hover {
-      background: #ff7700;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        background: #ff7700 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3) !important;
     }
 
-    .back-to-top:active { transform: translateY(0); }
-    .back-to-top.show { display: flex; animation: fadeInUp 0.3s ease; }
+    .back-to-top:active {
+        transform: translateY(0) !important;
+    }
+
+    .back-to-top.show {
+        display: flex !important;
+        animation: fadeInUp 0.3s ease !important;
+    }
 
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0 !important;
+            transform: translateY(20px) !important;
+        }
+
+        to {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
     }
 
     /* 響應式設計 */
     @media (max-width: 768px) {
-      body { padding: 8px; font-size: 14px; }
-      .header { margin-bottom: 12px; }
-      .header h1 { font-size: 18px; margin-bottom: 4px; }
-      .header p { font-size: 12px; }
-      .section { padding: 10px; margin-bottom: 12px; }
-      .collapse-btn { display: block; }
-      .size-buttons .collapsible-content, .select-area .collapsible-content { margin-top: 12px; }
-      .button-grid { grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)); gap: 6px; }
-      .select-container { gap: 10px; flex-direction: column; }
-      .select-group { min-width: 100%; }
-      table { font-size: 12px; min-width: 520px; }
-      td, th { padding: 8px 4px; }
-      .material-name { min-width: 110px; max-width: 110px; font-size: 13px; }
-      .table-header { font-size: 18px; padding: 6px 8px; }
-      .table-wrapper { max-height: 80vh; margin-top: 6px; }
-      .table-scroll-container { max-height: calc(80vh - 35px); }
-      .scroll-hint { display: block; }
-      .drag-area { height: 35px; }
-      .back-to-top { width: 45px; height: 45px; bottom: 15px; right: 15px; font-size: 18px; }
+        body {
+            padding: 8px !important;
+            font-size: 14px !important;
+        }
+
+        .header {
+            margin-bottom: 12px !important;
+        }
+
+        .header h1 {
+            font-size: 18px !important;
+            margin-bottom: 4px !important;
+        }
+
+        .header p {
+            font-size: 12px !important;
+        }
+
+        .section {
+            padding: 10px !important;
+            margin-bottom: 12px !important;
+        }
+
+        .collapse-btn {
+            display: block !important;
+        }
+
+        .size-buttons .collapsible-content,
+        .select-area .collapsible-content {
+            margin-top: 12px !important;
+        }
+
+        .button-grid {
+            grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)) !important;
+            gap: 6px !important;
+        }
+
+        .select-container {
+            gap: 10px !important;
+            flex-direction: column !important;
+        }
+
+        .select-group {
+            min-width: 100% !important;
+        }
+
+        table {
+            font-size: 12px !important;
+            min-width: 520px !important;
+        }
+
+        td,
+        th {
+            padding: 8px 4px !important;
+        }
+
+        .material-name {
+            min-width: 110px !important;
+            max-width: 110px !important;
+            font-size: 13px !important;
+        }
+
+        .table-header {
+            font-size: 18px !important;
+            padding: 6px 8px !important;
+        }
+
+        .table-wrapper {
+            margin-top: 6px !important;
+        }
+
+        .scroll-hint {
+            display: block !important;
+        }
+
+        .back-to-top {
+            width: 45px !important;
+            height: 45px !important;
+            bottom: 15px !important;
+            right: 15px !important;
+            font-size: 18px !important;
+        }
     }
 
     @media (max-width: 480px) {
-      body { padding: 6px; }
-      .section { padding: 8px; margin-bottom: 8px; }
-      .button-grid { grid-template-columns: repeat(4, 1fr); gap: 4px; }
-      .table-wrapper { max-height: 85vh; }
-      .table-scroll-container { max-height: calc(85vh - 30px); }
-      .drag-area { height: 30px; }
-      .back-to-top { width: 40px; height: 40px; bottom: 10px; right: 10px; font-size: 16px; }
+        body {
+            padding: 6px !important;
+        }
+
+        .section {
+            padding: 8px !important;
+            margin-bottom: 8px !important;
+        }
+
+        .button-grid {
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 4px !important;
+        }
+
+        .back-to-top {
+            width: 40px !important;
+            height: 40px !important;
+            bottom: 10px !important;
+            right: 10px !important;
+            font-size: 16px !important;
+        }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+        * {
+            animation: none !important;
+            transition: none !important;
+            scroll-behavior: auto !important;
+        }
     }
 
     @media (pointer: coarse) {
-      .size-btn { min-height: 48px; padding: 14px 8px; }
-      #size-select, #material-input { min-height: 48px; padding: 14px 16px; }
-      .material-option { padding: 14px 16px; min-height: 48px; }
-      .drag-area { height: 50px; }
+        .size-btn {
+            min-height: 48px !important;
+            padding: 14px 8px !important;
+        }
+
+        #size-select,
+        #material-input {
+            min-height: 48px !important;
+            padding: 14px 16px !important;
+        }
+
+        .material-option {
+            padding: 14px 16px !important;
+            min-height: 48px !important;
+        }
     }
-  </style>
-</head>
-<body>
-  <div class="header">
+</style>
+<div class="header">
     <h1>🏷️ 數位貼紙價目表</h1>
-    <p>選擇尺寸查看各材質價格</p>
-  </div>
+</div>
 
-  <div class="section size-buttons">
+<div class="section size-buttons">
     <div class="collapsible-header" onclick="toggleCollapse('size-buttons-content')">
-      <h3>⚡ 快速選擇尺寸</h3>
-      <button class="collapse-btn" id="size-collapse-btn" aria-expanded="true" aria-controls="size-buttons-content" aria-label="收合尺寸選擇區域">−</button>
+        <h3>⚡ <span style="font-size:18px">快速選擇尺寸</span></h3>
+        <button aria-controls="size-buttons-content" aria-expanded="true" aria-label="收合尺寸選擇區域" class="collapse-btn"
+            id="size-collapse-btn">&minus;</button>
     </div>
+
     <div class="collapsible-content" id="size-buttons-content">
-      <div class="button-grid" id="buttons"></div>
+        <div class="button-grid" id="buttons">&nbsp;</div>
     </div>
-  </div>
+</div>
 
-  <div class="section select-area">
+<div class="section select-area">
     <div class="collapsible-header" onclick="toggleCollapse('select-area-content')">
-      <h3>📋 尺寸材質選單</h3>
-      <button class="collapse-btn" id="select-collapse-btn" aria-expanded="true" aria-controls="select-area-content" aria-label="收合尺寸材質選單">−</button>
+        <h3>📋 <span style="font-size:18px">尺寸材質選單</span></h3>
+        <button aria-controls="select-area-content" aria-expanded="true" aria-label="收合尺寸材質選單" class="collapse-btn"
+            id="select-collapse-btn">&minus;</button>
     </div>
+
     <div class="collapsible-content" id="select-area-content">
-      <div class="select-container">
-        <div class="select-group">
-          <label for="size-select">尺寸</label>
-          <select id="size-select"></select>
-        </div>
-        <div class="select-group">
-          <label for="material-input">材質</label>
-          <div class="material-search-container">
-            <input type="text" id="material-input" placeholder="輸入材質名稱或點擊下拉選擇" autocomplete="off" spellcheck="false" aria-describedby="material-help">
-            <button type="button" class="material-dropdown-btn" id="material-dropdown-btn" aria-label="展開材質選單" aria-expanded="false">▼</button>
-            <div class="material-dropdown" id="material-dropdown" role="listbox" aria-label="材質選項"></div>
-          </div>
-          <div id="material-help" class="sr-only">使用方向鍵導航，Enter選擇，Escape關閉</div>
-        </div>
-      </div>
-    </div>
-  </div>
+        <div class="select-container">
+            <div class="select-group"><label for="size-select">尺寸</label> <select id="size-select"></select></div>
 
-  <div class="table-header" id="table-header">1x1cm</div>
-  <div class="table-wrapper">
-    <div class="drag-area" title="拖動此區域可滾動整個頁面"></div>
+            <div class="select-group"><label for="material-input">材質</label>
+
+                <div class="material-search-container"><input aria-describedby="material-help" autocomplete="off"
+                        id="material-input" placeholder="輸入材質名稱或點擊下拉選擇" spellcheck="false" type="text" /><button
+                        aria-expanded="false" aria-label="展開材質選單" class="material-dropdown-btn"
+                        id="material-dropdown-btn" type="button">▼</button>
+
+                    <div aria-label="材質選項" class="material-dropdown" id="material-dropdown" role="listbox">&nbsp;</div>
+                </div>
+
+                <div class="sr-only" id="material-help">使用方向鍵導航，Enter選擇，Escape關閉</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-header" id="table-header">1x1cm</div>
+
+<div class="table-wrapper">
+    <div class="drag-area" title="拖動此區域可滾動整個頁面">&nbsp;</div>
+
     <div class="table-scroll-container">
-      <div id="table-container" class="loading">正在載入價目表...</div>
+        <div class="loading" id="table-container">正在載入價目表...</div>
     </div>
-  </div>
-  <div class="scroll-hint">👈👆 可上下左右滑動，標題列會保持固定</div>
+</div>
 
-  <button class="back-to-top" id="back-to-top" aria-label="回到頂部" title="回到頂部">↑</button>
-
-  <script>
+<div class="scroll-hint">👈 可左右滑動查看完整價格</div>
+<button aria-label="回到頂部" class="back-to-top" id="back-to-top" title="回到頂部">&uarr;</button>
+<script>
     // 價目表系統
     const PriceTableSystem = (() => {
-      // 配置數據
-      const CONFIG = {
-        quantities: ["500張", "1000張", "2000張", "5000張", "10000張"],
-        materials: [
-          "銅版超黏貼(無上光)", "銅版超黏貼+霧/亮", "模造貼", "銅版極黏貼(無上光)", "銅版極黏貼+霧/亮",
-          "合成貼(無上光)", "合成貼+霧/亮", "赤牛皮貼", "合成冷凍膠(無上光)", "合成冷凍膠+亮/霧",
-          "銅版R膠(無上光)", "銅版R膠+亮/霧", "透明貼(無上光)", "合成R膠(無上光)", "透明貼+亮/霧",
-          "亮銀龍+白墨+亮膜", "合成R膠+亮/霧", "透明貼+白墨+亮/霧", "銀箔貼+白墨+亮", "反(消)銀龍貼+亮",
-          "合成極黏貼(無上光)", "合成極黏貼+亮/霧", "反(消)金龍貼+亮", "鑽石雷射貼+白墨+亮膜", "素面雷射貼+白墨+亮膜",
-          "厚亮銀龍+白墨+亮膜", "砂點雷射貼+白墨+亮膜"
-        ],
-        sizes: (() => {
-          const sizes = [];
-          for (let i = 1; i <= 20; i++) {
-            sizes.push(`1x${i}cm`);
-            if (i < 20) sizes.push(`1x${i}.5cm`);
-          }
-          return sizes;
-        })()
-      };
+        // 配置數據
+        const CONFIG = {
+            quantities: ["500張", "1000張", "2000張", "5000張", "10000張"],
+            materials: [
+                "銅版超黏貼(無上光)", "銅版超黏貼+霧/亮", "模造貼", "銅版極黏貼(無上光)", "銅版極黏貼+霧/亮",
+                "合成貼(無上光)", "合成貼+霧/亮", "赤牛皮貼", "合成冷凍膠(無上光)", "合成冷凍膠+亮/霧",
+                "銅版R膠(無上光)", "銅版R膠+亮/霧", "透明貼(無上光)", "合成R膠(無上光)", "透明貼+亮/霧",
+                "亮銀龍+白墨+亮膜", "合成R膠+亮/霧", "透明貼+白墨+亮/霧", "銀箔貼+白墨+亮", "反(消)銀龍貼+亮",
+                "合成極黏貼(無上光)", "合成極黏貼+亮/霧", "反(消)金龍貼+亮", "鑽石雷射貼+白墨+亮膜", "素面雷射貼+白墨+亮膜",
+                "厚亮銀龍+白墨+亮膜", "砂點雷射貼+白墨+亮膜"
+            ],
+            sizes: (() => {
+                const sizes = [];
+                for (let i = 1; i <= 20; i++) {
+                    sizes.push(`1x${i}cm`);
+                    if (i < 20) sizes.push(`1x${i}.5cm`);
+                }
+                return sizes;
+            })()
+        };
 
-      // 價格數據（保持原有數據）
-      const priceData = {
-        "1x1cm": [[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,348,398,468,568],[318,348,398,468,568],[318,348,398,468,568],[318,348,398,468,568],[318,348,398,468,568],[318,358,418,498,587],[332,372,432,512,600],[332,372,432,512,600],[332,372,432,512,600],[332,372,432,512,600]],
-        "1x1.5cm": [[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,540],[318,338,378,438,518],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,348,398,468,606],[318,348,398,468,606],[318,348,398,468,637],[318,348,398,468,637],[318,348,398,468,697],[332,372,432,512,728],[332,372,432,512,772],[332,372,432,512,772],[332,372,432,512,772],[332,372,432,512,772]],
-        "1x2cm": [[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,540],[318,338,378,438,540],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,348,398,468,606],[318,348,398,468,606],[318,348,398,468,637],[318,348,398,468,637],[318,348,398,468,697],[332,372,432,512,728],[332,372,432,512,772],[332,372,432,512,772],[332,372,432,512,772],[332,372,432,512,772]],
-        "1x2.5cm": [[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,518],[318,338,378,438,572],[318,338,378,438,572],[318,338,378,438,576],[318,338,378,438,606],[318,338,378,438,637],[318,338,378,438,637],[318,338,378,438,637],[318,338,378,438,697],[318,338,378,438,697],[318,338,378,438,697],[318,348,398,468,697],[318,348,398,468,697],[332,362,412,482,756],[332,362,412,482,756],[332,362,412,482,745],[332,372,432,512,799],[332,372,432,572,857],[332,372,432,572,857],[332,372,432,572,857],[332,372,432,572,857]],
-        "1x3cm": [[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[300,320,360,420,500],[318,338,378,438,540],[318,338,378,438,540],[318,338,378,438,576],[318,338,378,438,637],[318,338,378,438,637],[318,338,378,438,667],[318,338,378,438,667],[318,338,378,446,728],[318,346,386,446,728],[318,346,386,446,728],[318,346,386,446,745],[318,346,386,446,745],[318,346,386,446,745],[332,362,412,482,772],[332,362,412,482,772],[332,362,412,506,799],[332,362,412,506,799],[332,362,412,540,853],[332,372,432,572,857],[332,372,432,606,978],[332,372,432,606,978],[332,372,432,606,978],[332,372,432,606,978]],
-        "1x3.5cm": [[300,320,360,420,500],[318,338,378,438,540],[318,338,378,438,540],[318,338,378,438,540],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,637],[318,338,378,438,697],[318,338,378,438,697],[318,338,378,438,728],[318,346,386,446,747],[332,352,392,472,772],[332,352,392,472,772],[332,352,392,472,772],[332,352,392,506,826],[332,352,392,506,826],[332,352,392,506,826],[332,362,412,540,853],[332,362,412,540,853],[332,362,412,572,857],[332,362,412,572,857],[332,362,412,576,906],[332,372,432,606,954],[346,386,446,667,1073],[346,386,446,667,1073],[346,386,446,667,1073],[346,386,446,667,1073]],
-        "1x4cm": [[318,338,378,438,540],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,576],[318,338,378,438,637],[318,338,378,438,637],[318,338,378,438,697],[318,338,378,438,756],[318,338,378,438,756],[318,346,386,472,772],[318,346,386,446,747],[332,352,392,472,799],[332,352,392,472,799],[332,352,392,472,799],[332,352,392,572,857],[332,352,392,572,857],[332,352,392,572,857],[332,362,412,572,881],[332,362,412,572,881],[332,362,412,576,930],[332,362,412,576,930],[332,362,412,606,978],[346,386,446,667,1049],[346,386,446,756,1185],[346,386,446,756,1185],[346,386,446,756,1185],[346,386,446,756,1185]],
-        "1x4.5cm": [[318,338,378,438,572],[318,338,378,438,637],[318,338,378,438,637],[318,338,378,438,637],[318,338,378,438,697],[318,338,378,438,697],[318,338,378,438,756],[318,346,386,472,799],[318,346,386,472,799],[318,346,386,472,799],[318,346,386,446,747],[332,352,392,540,853],[332,352,392,540,853],[332,352,392,576,881],[332,352,402,576,930],[332,352,402,576,930],[332,352,402,576,930],[332,362,412,606,954],[332,362,412,606,954],[332,362,416,637,1001],[332,362,416,637,1001],[332,362,416,667,1073],[346,386,446,728,1141],[346,386,446,772,1273],[346,386,446,772,1273],[346,386,446,772,1273],[346,386,446,772,1273]],
-        "1x5cm": [[318,338,378,438,637],[318,338,378,438,728],[318,338,378,438,728],[318,338,378,438,728],[318,338,378,472,772],[318,338,378,472,772],[318,346,386,506,826],[332,352,392,572,881],[332,352,392,572,881],[332,352,392,576,930],[332,360,402,576,930],[332,360,416,637,1025],[332,360,416,637,1025],[332,360,416,637,1025],[332,360,416,667,1073],[332,360,416,667,1073],[332,360,416,667,1073],[332,362,416,697,1119],[332,362,416,697,1119],[346,376,430,728,1163],[346,376,430,728,1163],[346,376,430,745,1251],[346,386,446,799,1294],[360,400,472,857,1486],[360,400,472,857,1486],[360,400,472,857,1486],[360,400,472,857,1486]],
-        "1x5.5cm": [[318,338,378,438,637],[318,338,378,438,728],[318,338,378,438,728],[318,338,378,438,728],[318,338,378,472,772],[318,338,378,472,772],[318,346,386,506,826],[332,352,392,572,881],[332,352,392,572,881],[332,352,392,576,930],[332,360,402,576,930],[332,360,416,637,1025],[332,360,416,637,1025],[332,360,416,637,1025],[332,360,416,667,1073],[332,360,416,667,1073],[332,360,416,667,1073],[332,362,416,697,1119],[332,362,416,697,1119],[346,376,430,728,1163],[346,376,430,728,1163],[346,376,430,745,1251],[346,386,446,799,1294],[360,400,472,857,1486],[360,400,472,857,1486],[360,400,472,857,1486],[360,400,472,857,1486]],
-        "1x6cm": [[318,338,378,438,728],[318,338,378,472,799],[318,338,378,472,799],[318,338,378,472,799],[318,346,388,540,880],[318,346,388,540,880],[332,352,392,572,906],[332,360,402,606,978],[332,360,402,606,978],[332,360,416,637,1049],[332,374,430,728,1163],[332,374,430,728,1163],[332,374,430,728,1163],[346,374,430,756,1207],[346,374,430,756,1207],[346,374,430,756,1207],[346,374,430,756,1207],[346,376,434,745,1251],[346,376,434,745,1251],[346,376,434,799,1316],[346,376,434,799,1316],[346,388,438,853,1411],[346,388,472,880,1486],[360,402,540,954,1608],[360,402,540,954,1608],[360,402,540,954,1608],[360,402,540,954,1608]],
-        "1x6.5cm": [[318,338,378,438,728],[318,338,378,472,799],[318,338,378,472,799],[318,338,378,472,799],[318,346,388,540,880],[318,346,388,540,880],[332,352,392,572,906],[332,360,402,606,978],[332,360,402,606,978],[332,360,416,637,1049],[332,374,430,728,1163],[332,374,430,728,1163],[332,374,430,728,1163],[346,374,430,756,1207],[346,374,430,756,1207],[346,374,430,756,1207],[346,374,430,756,1207],[346,376,434,745,1251],[346,376,434,745,1251],[346,376,434,799,1316],[346,376,434,799,1316],[346,388,438,853,1411],[346,388,472,880,1486],[360,402,540,954,1608],[360,402,540,954,1608],[360,402,540,954,1608],[360,402,540,954,1608]],
-        "1x7cm": [[318,338,378,472,772],[318,346,386,540,880],[318,346,386,540,880],[318,346,386,540,880],[332,352,392,576,930],[332,352,392,576,930],[332,360,402,606,1001],[332,360,416,697,1095],[332,360,416,697,1095],[332,374,430,756,1207],[346,374,430,756,1185],[346,374,434,772,1273],[346,374,434,772,1273],[346,374,434,772,1273],[346,374,434,799,1362],[346,374,434,799,1362],[346,374,434,799,1362],[346,388,438,853,1411],[346,388,438,853,1411],[346,388,472,880,1486],[346,388,472,880,1486],[346,388,472,881,1586],[360,402,506,930,1685],[360,416,576,1073,1814],[360,416,576,1073,1814],[360,416,576,1073,1814],[360,416,576,1073,1814]],
-        "1x7.5cm": [[318,338,378,472,772],[318,346,386,540,880],[318,346,386,540,880],[318,346,386,540,880],[332,352,392,576,930],[332,352,392,576,930],[332,360,402,606,1001],[332,360,416,697,1095],[332,360,416,697,1095],[332,374,430,756,1207],[346,374,430,756,1185],[346,374,434,772,1273],[346,374,434,772,1273],[346,374,434,772,1273],[346,374,434,799,1362],[346,374,434,799,1362],[346,374,434,799,1362],[346,388,438,853,1411],[346,388,438,853,1411],[346,388,472,880,1486],[346,388,472,880,1486],[346,388,472,881,1586],[360,402,506,930,1685],[360,416,576,1073,1814],[360,416,576,1073,1814],[360,416,576,1073,1814],[360,416,576,1073,1814]],
-        "1x8cm": [[318,346,386,540,853],[318,346,388,576,930],[318,346,388,576,930],[318,346,388,576,930],[332,360,402,637,1025],[332,360,402,637,1025],[332,360,416,697,1095],[332,374,430,756,1207],[332,374,430,756,1207],[346,374,434,772,1273],[346,374,434,772,1294],[346,388,438,853,1411],[346,388,438,853,1411],[346,388,438,853,1411],[346,388,472,857,1511],[346,388,472,857,1511],[346,388,472,857,1511],[346,388,472,881,1561],[346,388,472,881,1561],[360,402,506,930,1659],[360,402,506,930,1659],[360,402,540,978,1678],[374,430,606,1119,1952],[374,430,606,1163,2042],[374,430,606,1163,2042],[374,430,606,1163,2042],[374,430,606,1163,2042]],
-        "1x8.5cm": [[318,346,386,540,853],[318,346,388,576,930],[318,346,388,576,930],[318,346,388,576,930],[332,360,402,637,1025],[332,360,402,637,1025],[332,360,416,697,1095],[332,374,430,756,1207],[332,374,430,756,1207],[346,374,434,772,1273],[346,374,434,772,1294],[346,388,438,853,1411],[346,388,438,853,1411],[346,388,438,853,1411],[346,388,472,857,1511],[346,388,472,857,1511],[346,388,472,857,1511],[346,388,472,881,1561],[346,388,472,881,1561],[360,402,506,930,1659],[360,402,506,930,1659],[360,402,540,978,1678],[374,430,606,1119,1952],[374,430,606,1163,2042],[374,430,606,1163,2042],[374,430,606,1163,2042],[374,430,606,1163,2042]],
-        "1x9cm": [[318,346,388,572,906],[332,352,402,606,1001],[332,352,402,606,1001],[332,352,402,606,1001],[332,360,416,697,1049],[332,360,416,697,1049],[332,360,430,756,1207],[346,374,434,799,1316],[346,374,434,799,1316],[346,374,438,826,1411],[346,388,472,857,1537],[360,402,506,954,1632],[360,402,506,954,1632],[360,402,506,954,1632],[360,402,540,1001,1723],[360,402,540,1001,1723],[360,402,540,1001,1723],[360,416,572,1025,1792],[360,416,572,1025,1792],[360,416,576,1095,1883],[360,416,576,1095,1883],[374,430,606,1163,2019],[374,430,637,1207,2131],[388,438,728,1362,2462],[388,438,728,1362,2462],[388,438,728,1362,2462],[388,438,728,1362,2462]],
-        "1x9.5cm": [[318,346,388,572,906],[332,352,402,606,1001],[332,352,402,606,1001],[332,352,402,606,1001],[332,360,416,697,1049],[332,360,416,697,1049],[332,360,430,756,1207],[346,374,434,799,1316],[346,374,434,799,1316],[346,374,438,826,1411],[346,388,472,857,1537],[360,402,506,954,1632],[360,402,506,954,1632],[360,402,506,954,1632],[360,402,540,1001,1723],[360,402,540,1001,1723],[360,402,540,1001,1723],[360,416,572,1025,1792],[360,416,572,1025,1792],[360,416,576,1095,1883],[360,416,576,1095,1883],[374,430,606,1163,2019],[374,430,637,1207,2131],[388,438,728,1362,2462],[388,438,728,1362,2462],[388,438,728,1362,2462],[388,438,728,1362,2462]],
-        "1x10cm": [[318,346,402,606,978],[332,360,416,667,1095],[332,360,416,667,1095],[332,360,416,667,1095],[332,360,430,756,1229],[332,360,430,756,1229],[332,374,434,772,1294],[346,388,438,853,1437],[346,388,438,853,1437],[346,388,472,857,1537],[346,388,472,881,1561],[360,402,506,954,1632],[360,402,506,954,1632],[360,402,506,954,1632],[360,402,540,1001,1723],[360,402,540,1001,1723],[360,402,540,1001,1723],[360,416,572,1025,1792],[360,416,572,1025,1792],[360,416,576,1095,1883],[360,416,576,1095,1883],[374,430,606,1163,2019],[374,430,637,1207,2131],[402,472,772,1537,2765],[402,472,772,1537,2765],[402,472,772,1537,2765],[402,472,772,1537,2765]],
-        "1x10.5cm": [[318,346,402,606,978],[332,360,416,667,1095],[332,360,416,667,1095],[332,360,416,667,1095],[332,360,430,756,1229],[332,360,430,756,1229],[332,374,434,772,1294],[346,388,438,853,1437],[346,388,438,853,1437],[346,388,472,857,1537],[346,388,472,881,1561],[360,402,506,954,1632],[360,402,506,954,1632],[360,402,506,954,1632],[360,402,540,1001,1723],[360,402,540,1001,1723],[360,402,540,1001,1723],[360,416,572,1025,1792],[360,416,572,1025,1792],[360,416,576,1095,1883],[360,416,576,1095,1883],[374,430,606,1163,2019],[374,430,637,1207,2131],[402,472,772,1537,2765],[402,472,772,1537,2765],[402,472,772,1537,2765],[402,472,772,1537,2765]],
-        "1x11cm": [[332,360,402,667,1095],[346,374,434,799,1362],[346,374,434,799,1362],[346,374,434,799,1362],[346,374,438,880,1511],[346,374,438,880,1511],[346,388,472,881,1635],[346,388,472,906,1635],[346,388,472,906,1635],[346,402,506,954,1632],[360,402,540,978,1701],[360,416,572,1049,1814],[360,416,572,1049,1814],[360,416,572,1049,1814],[374,430,637,1207,2154],[374,430,637,1207,2154],[374,430,637,1207,2154],[374,434,667,1251,2242],[374,434,667,1251,2242],[374,434,697,1316,2352],[374,434,697,1316,2352],[388,438,728,1411,2528],[388,438,697,1336,2397],[402,540,826,1608,3061],[402,540,826,1608,3061],[402,540,826,1608,3061],[402,540,826,1608,3061]],
-        "1x11.5cm": [[332,360,402,667,1095],[346,374,434,799,1362],[346,374,434,799,1362],[346,374,434,799,1362],[346,374,438,880,1511],[346,374,438,880,1511],[346,388,472,881,1635],[346,388,472,906,1635],[346,388,472,906,1635],[346,402,506,954,1632],[360,402,540,978,1701],[360,416,572,1049,1814],[360,416,572,1049,1814],[360,416,572,1049,1814],[374,430,637,1207,2154],[374,430,637,1207,2154],[374,430,637,1207,2154],[374,434,667,1251,2242],[374,434,667,1251,2242],[374,434,697,1316,2352],[374,434,697,1316,2352],[388,438,728,1411,2528],[388,438,697,1336,2397],[402,540,826,1608,3061],[402,540,826,1608,3061],[402,540,826,1608,3061],[402,540,826,1608,3061]],
-        "1x12cm": [[332,360,402,667,1095],[346,374,434,799,1362],[346,374,434,799,1362],[346,374,434,799,1362],[346,374,438,880,1511],[346,374,438,880,1511],[346,388,472,881,1635],[346,388,472,906,1635],[346,388,472,906,1635],[346,402,506,954,1632],[360,402,540,978,1701],[360,416,572,1049,1814],[360,416,572,1049,1814],[360,416,572,1049,1814],[374,430,637,1207,2154],[374,430,637,1207,2154],[374,430,637,1207,2154],[374,434,667,1251,2242],[374,434,667,1251,2242],[374,434,697,1316,2352],[374,434,697,1316,2352],[388,438,728,1411,2528],[388,438,697,1336,2397],[402,540,826,1608,3061],[402,540,826,1608,3061],[402,540,826,1608,3061],[402,540,826,1608,3061]],
-        "1x12.5cm": [[332,360,416,728,1185],[332,374,434,772,1316],[332,374,434,772,1316],[332,374,434,772,1316],[346,388,438,880,1511],[346,388,438,880,1511],[346,388,472,881,1586],[360,402,540,978,1701],[360,402,540,978,1701],[360,402,572,1025,1814],[360,416,572,1049,1861],[374,430,606,1141,2019],[374,430,606,1141,2019],[374,430,606,1141,2019],[374,430,637,1207,2154],[374,430,637,1207,2154],[374,430,637,1207,2154],[374,434,728,1362,2440],[374,434,728,1362,2440],[388,438,756,1437,2592],[388,438,756,1437,2592],[388,438,728,1411,2571],[388,472,745,1486,2658],[416,572,857,1770,3352],[416,572,857,1770,3352],[416,572,857,1770,3352],[416,572,857,1770,3352]],
-        "1x13cm": [[332,360,416,728,1185],[332,374,434,772,1316],[332,374,434,772,1316],[332,374,434,772,1316],[346,388,438,880,1511],[346,388,438,880,1511],[346,388,472,881,1586],[360,402,540,978,1701],[360,402,540,978,1701],[360,402,572,1025,1814],[360,416,572,1049,1861],[374,430,606,1141,2019],[374,430,606,1141,2019],[374,430,606,1141,2019],[374,430,637,1207,2154],[374,430,637,1207,2154],[374,430,637,1207,2154],[374,434,728,1362,2440],[374,434,728,1362,2440],[388,438,756,1437,2592],[388,438,756,1437,2592],[388,438,728,1411,2571],[388,472,745,1486,2658],[416,572,857,1770,3352],[416,572,857,1770,3352],[416,572,857,1770,3352],[416,572,857,1770,3352]],
-        "1x13.5cm": [[332,360,416,728,1185],[332,374,434,772,1316],[332,374,434,772,1316],[332,374,434,772,1316],[346,388,438,880,1511],[346,388,438,880,1511],[346,388,472,881,1586],[360,402,540,978,1701],[360,402,540,978,1701],[360,402,572,1025,1814],[360,416,572,1049,1861],[374,430,606,1141,2019],[374,430,606,1141,2019],[374,430,606,1141,2019],[374,430,637,1207,2154],[374,430,637,1207,2154],[374,430,637,1207,2154],[374,434,728,1362,2440],[374,434,728,1362,2440],[388,438,756,1437,2592],[388,438,756,1437,2592],[388,438,728,1411,2571],[388,472,745,1486,2658],[416,572,857,1770,3352],[416,572,857,1770,3352],[416,572,857,1770,3352],[416,572,857,1770,3352]],
-        "1x14cm": [[372,374,430,772,1294],[346,374,438,853,1462],[346,374,438,853,1462],[346,374,438,853,1462],[346,388,472,906,1659],[346,388,472,906,1659],[346,402,506,978,1678],[360,416,572,1073,1861],[360,416,572,1073,1861],[360,416,606,1141,2042],[374,430,637,1229,2198],[374,430,667,1251,2219],[374,430,667,1251,2219],[374,430,667,1251,2219],[374,434,697,1316,2352],[374,434,697,1316,2352],[374,434,697,1316,2352],[388,438,756,1486,2658],[388,438,756,1486,2658],[388,438,756,1437,2614],[388,438,756,1437,2614],[388,472,772,1537,2765],[402,506,799,1635,2914],[430,576,930,1928,3653],[430,576,930,1928,3653],[430,576,930,1928,3653],[430,576,930,1928,3653]],
-        "1x14.5cm": [[372,374,430,772,1294],[346,374,438,853,1462],[346,374,438,853,1462],[346,374,438,853,1462],[346,388,472,906,1659],[346,388,472,906,1659],[346,402,506,978,1678],[360,416,572,1073,1861],[360,416,572,1073,1861],[360,416,606,1141,2042],[374,430,637,1229,2198],[374,430,667,1251,2219],[374,430,667,1251,2219],[374,430,667,1251,2219],[374,434,697,1316,2352],[374,434,697,1316,2352],[374,434,697,1316,2352],[388,438,756,1486,2658],[388,438,756,1486,2658],[388,438,756,1437,2614],[388,438,756,1437,2614],[388,472,772,1537,2765],[402,506,799,1635,2914],[430,576,930,1928,3653],[430,576,930,1928,3653],[430,576,930,1928,3653],[430,576,930,1928,3653]],
-        "1x15cm": [[372,374,430,772,1294],[346,374,438,853,1462],[346,374,438,853,1462],[346,374,438,853,1462],[346,388,472,906,1659],[346,388,472,906,1659],[346,402,506,978,1678],[360,416,572,1073,1861],[360,416,572,1073,1861],[360,416,606,1141,2042],[374,430,637,1229,2198],[374,430,667,1251,2219],[374,430,667,1251,2219],[374,430,667,1251,2219],[374,434,697,1316,2352],[374,434,697,1316,2352],[374,434,697,1316,2352],[388,438,756,1486,2658],[388,438,756,1486,2658],[388,438,756,1437,2614],[388,438,756,1437,2614],[388,472,772,1537,2765],[402,506,799,1635,2914],[430,576,930,1928,3653],[430,576,930,1928,3653],[430,576,930,1928,3653],[430,576,930,1928,3653]],
-        "1x15.5cm": [[332,374,434,826,1387],[346,388,472,881,1586],[346,388,472,881,1586],[346,388,472,881,1586],[346,402,540,978,1701],[346,402,540,978,1701],[360,402,572,1049,1838],[374,430,637,1229,2198],[374,430,637,1229,2198],[374,434,697,1336,2418],[388,438,756,1462,2635],[388,472,772,1610,2870],[388,472,772,1610,2870],[388,472,772,1610,2870],[388,472,745,1537,2765],[388,472,745,1537,2765],[388,472,745,1537,2765],[388,472,772,1586,2870],[388,472,772,1586,2870],[402,506,826,1685,3040],[402,506,826,1685,3040],[402,540,880,1701,3248],[402,540,853,1654,3165],[430,637,1001,2064,3962],[430,637,1001,2064,3962],[430,637,1001,2064,3962],[430,637,1001,2064,3962]],
-        "1x16cm": [[332,374,434,826,1387],[346,388,472,881,1586],[346,388,472,881,1586],[346,388,472,881,1586],[346,402,540,978,1701],[346,402,540,978,1701],[360,402,572,1049,1838],[374,430,637,1229,2198],[374,430,637,1229,2198],[374,434,697,1336,2418],[388,438,756,1462,2635],[388,472,772,1610,2870],[388,472,772,1610,2870],[388,472,772,1610,2870],[388,472,745,1537,2765],[388,472,745,1537,2765],[388,472,745,1537,2765],[388,472,772,1586,2870],[388,472,772,1586,2870],[402,506,826,1685,3040],[402,506,826,1685,3040],[402,540,880,1701,3248],[402,540,853,1654,3165],[430,637,1001,2064,3962],[430,637,1001,2064,3962],[430,637,1001,2064,3962],[430,637,1001,2064,3962]],
-        "1x16.5cm": [[332,374,434,826,1387],[346,388,472,881,1586],[346,388,472,881,1586],[346,388,472,881,1586],[346,402,540,978,1701],[346,402,540,978,1701],[360,402,572,1049,1838],[374,430,637,1229,2198],[374,430,637,1229,2198],[374,434,697,1336,2418],[388,438,756,1462,2635],[388,472,772,1610,2870],[388,472,772,1610,2870],[388,472,772,1610,2870],[388,472,745,1537,2765],[388,472,745,1537,2765],[388,472,745,1537,2765],[388,472,772,1586,2870],[388,472,772,1586,2870],[402,506,826,1685,3040],[402,506,826,1685,3040],[402,540,880,1701,3248],[402,540,853,1654,3165],[430,637,1001,2064,3962],[430,637,1001,2064,3962],[430,637,1001,2064,3962],[430,637,1001,2064,3962]],
-        "1x17cm": [[346,374,438,880,1511],[346,388,506,976,1608],[346,388,506,976,1608],[346,388,506,976,1608],[360,402,572,1049,1838],[360,402,572,1049,1838],[360,416,576,1119,1974],[374,430,637,1229,2198],[374,430,637,1229,2198],[374,434,667,1294,2331],[388,438,756,1462,2635],[388,472,772,1610,2870],[388,472,772,1610,2870],[388,472,772,1610,2870],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[416,572,857,1770,3331],[416,572,857,1770,3331],[416,576,906,1883,3565],[416,572,881,1792,3413],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378]],
-        "1x17.5cm": [[346,374,438,880,1511],[346,388,506,976,1608],[346,388,506,976,1608],[346,388,506,976,1608],[360,402,572,1049,1838],[360,402,572,1049,1838],[360,416,576,1119,1974],[374,430,637,1229,2198],[374,430,637,1229,2198],[374,434,667,1294,2331],[388,438,756,1462,2635],[388,472,772,1610,2870],[388,472,772,1610,2870],[388,472,772,1610,2870],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[416,572,857,1770,3331],[416,572,857,1770,3331],[416,576,906,1883,3565],[416,572,881,1792,3413],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378]],
-        "1x18cm": [[346,374,438,880,1511],[346,388,506,976,1608],[346,388,506,976,1608],[346,388,506,976,1608],[360,402,572,1049,1838],[360,402,572,1049,1838],[360,416,576,1119,1974],[374,430,637,1229,2198],[374,430,637,1229,2198],[374,434,667,1294,2331],[388,438,756,1462,2635],[388,472,772,1610,2870],[388,472,772,1610,2870],[388,472,772,1610,2870],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[416,572,857,1770,3331],[416,572,857,1770,3331],[416,576,906,1883,3565],[416,572,881,1792,3413],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378]],
-        "1x18.5cm": [[346,388,472,906,1659],[346,402,540,1025,1770],[346,402,540,1025,1770],[346,402,540,1025,1770],[360,416,576,1163,2042],[360,416,576,1163,2042],[360,430,637,1229,2176],[374,434,697,1336,2418],[374,434,697,1336,2418],[374,438,728,1437,2571],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[402,540,853,1654,3144],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[416,572,857,1770,3331],[416,572,857,1770,3331],[416,576,906,1883,3565],[430,606,954,1997,3763],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378]],
-        "1x19cm": [[346,388,472,906,1659],[346,402,540,1025,1770],[346,402,540,1025,1770],[346,402,540,1025,1770],[360,416,576,1163,2042],[360,416,576,1163,2042],[360,430,637,1229,2176],[374,434,697,1336,2418],[374,434,697,1336,2418],[374,438,728,1437,2571],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[402,540,853,1654,3144],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[416,572,857,1770,3331],[416,572,857,1770,3331],[416,576,906,1883,3565],[430,606,954,1997,3763],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378]],
-        "1x19.5cm": [[346,388,472,906,1659],[346,402,540,1025,1770],[346,402,540,1025,1770],[346,402,540,1025,1770],[360,416,576,1163,2042],[360,416,576,1163,2042],[360,430,637,1229,2176],[374,434,697,1336,2418],[374,434,697,1336,2418],[374,438,728,1437,2571],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[402,540,853,1654,3144],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[416,572,857,1770,3331],[416,572,857,1770,3331],[416,576,906,1883,3565],[430,606,954,1997,3763],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378]],
-        "1x20cm": [[346,388,472,906,1659],[346,402,540,1025,1770],[346,402,540,1025,1770],[346,402,540,1025,1770],[360,416,576,1163,2042],[360,416,576,1163,2042],[360,430,637,1229,2176],[374,434,697,1336,2418],[374,434,697,1336,2418],[374,438,728,1437,2571],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[402,540,853,1654,3144],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,506,826,1608,3040],[402,540,853,1654,3144],[402,540,853,1654,3144],[416,572,857,1770,3331],[416,572,857,1770,3331],[416,576,906,1883,3565],[430,606,954,1997,3763],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378],[434,697,1073,2309,4378]]
-      };
+        // 價格數據（保持原有數據）
+        const priceData = {
+            "1x1cm": [[300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 348, 398, 468, 568], [318, 348, 398, 468, 568], [318, 348, 398, 468, 568], [318, 348, 398, 468, 568], [318, 348, 398, 468, 568], [318, 358, 418, 498, 587], [332, 372, 432, 512, 600], [332, 372, 432, 512, 600], [332, 372, 432, 512, 600], [332, 372, 432, 512, 600]],
+            "1x1.5cm": [[300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 540], [318, 338, 378, 438, 518], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 348, 398, 468, 606], [318, 348, 398, 468, 606], [318, 348, 398, 468, 637], [318, 348, 398, 468, 637], [318, 348, 398, 468, 697], [332, 372, 432, 512, 728], [332, 372, 432, 512, 772], [332, 372, 432, 512, 772], [332, 372, 432, 512, 772], [332, 372, 432, 512, 772]],
+            "1x2cm": [[300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 540], [318, 338, 378, 438, 540], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 348, 398, 468, 606], [318, 348, 398, 468, 606], [318, 348, 398, 468, 637], [318, 348, 398, 468, 637], [318, 348, 398, 468, 697], [332, 372, 432, 512, 728], [332, 372, 432, 512, 772], [332, 372, 432, 512, 772], [332, 372, 432, 512, 772], [332, 372, 432, 512, 772]],
+            "1x2.5cm": [[300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 518], [318, 338, 378, 438, 572], [318, 338, 378, 438, 572], [318, 338, 378, 438, 576], [318, 338, 378, 438, 606], [318, 338, 378, 438, 637], [318, 338, 378, 438, 637], [318, 338, 378, 438, 637], [318, 338, 378, 438, 697], [318, 338, 378, 438, 697], [318, 338, 378, 438, 697], [318, 348, 398, 468, 697], [318, 348, 398, 468, 697], [332, 362, 412, 482, 756], [332, 362, 412, 482, 756], [332, 362, 412, 482, 745], [332, 372, 432, 512, 799], [332, 372, 432, 572, 857], [332, 372, 432, 572, 857], [332, 372, 432, 572, 857], [332, 372, 432, 572, 857]],
+            "1x3cm": [[300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [300, 320, 360, 420, 500], [318, 338, 378, 438, 540], [318, 338, 378, 438, 540], [318, 338, 378, 438, 576], [318, 338, 378, 438, 637], [318, 338, 378, 438, 637], [318, 338, 378, 438, 667], [318, 338, 378, 438, 667], [318, 338, 378, 446, 728], [318, 346, 386, 446, 728], [318, 346, 386, 446, 728], [318, 346, 386, 446, 745], [318, 346, 386, 446, 745], [318, 346, 386, 446, 745], [332, 362, 412, 482, 772], [332, 362, 412, 482, 772], [332, 362, 412, 506, 799], [332, 362, 412, 506, 799], [332, 362, 412, 540, 853], [332, 372, 432, 572, 857], [332, 372, 432, 606, 978], [332, 372, 432, 606, 978], [332, 372, 432, 606, 978], [332, 372, 432, 606, 978]],
+            "1x3.5cm": [[300, 320, 360, 420, 500], [318, 338, 378, 438, 540], [318, 338, 378, 438, 540], [318, 338, 378, 438, 540], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 338, 378, 438, 637], [318, 338, 378, 438, 697], [318, 338, 378, 438, 697], [318, 338, 378, 438, 728], [318, 346, 386, 446, 747], [332, 352, 392, 472, 772], [332, 352, 392, 472, 772], [332, 352, 392, 472, 772], [332, 352, 392, 506, 826], [332, 352, 392, 506, 826], [332, 352, 392, 506, 826], [332, 362, 412, 540, 853], [332, 362, 412, 540, 853], [332, 362, 412, 572, 857], [332, 362, 412, 572, 857], [332, 362, 412, 576, 906], [332, 372, 432, 606, 954], [346, 386, 446, 667, 1073], [346, 386, 446, 667, 1073], [346, 386, 446, 667, 1073], [346, 386, 446, 667, 1073]],
+            "1x4cm": [[318, 338, 378, 438, 540], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 338, 378, 438, 576], [318, 338, 378, 438, 637], [318, 338, 378, 438, 637], [318, 338, 378, 438, 697], [318, 338, 378, 438, 756], [318, 338, 378, 438, 756], [318, 346, 386, 472, 772], [318, 346, 386, 446, 747], [332, 352, 392, 472, 799], [332, 352, 392, 472, 799], [332, 352, 392, 472, 799], [332, 352, 392, 572, 857], [332, 352, 392, 572, 857], [332, 352, 392, 572, 857], [332, 362, 412, 572, 881], [332, 362, 412, 572, 881], [332, 362, 412, 576, 930], [332, 362, 412, 576, 930], [332, 362, 412, 606, 978], [346, 386, 446, 667, 1049], [346, 386, 446, 756, 1185], [346, 386, 446, 756, 1185], [346, 386, 446, 756, 1185], [346, 386, 446, 756, 1185]],
+            "1x4.5cm": [[318, 338, 378, 438, 572], [318, 338, 378, 438, 637], [318, 338, 378, 438, 637], [318, 338, 378, 438, 637], [318, 338, 378, 438, 697], [318, 338, 378, 438, 697], [318, 338, 378, 438, 756], [318, 346, 386, 472, 799], [318, 346, 386, 472, 799], [318, 346, 386, 472, 799], [318, 346, 386, 446, 747], [332, 352, 392, 540, 853], [332, 352, 392, 540, 853], [332, 352, 392, 576, 881], [332, 352, 402, 576, 930], [332, 352, 402, 576, 930], [332, 352, 402, 576, 930], [332, 362, 412, 606, 954], [332, 362, 412, 606, 954], [332, 362, 416, 637, 1001], [332, 362, 416, 637, 1001], [332, 362, 416, 667, 1073], [346, 386, 446, 728, 1141], [346, 386, 446, 772, 1273], [346, 386, 446, 772, 1273], [346, 386, 446, 772, 1273], [346, 386, 446, 772, 1273]],
+            "1x5cm": [[318, 338, 378, 438, 637], [318, 338, 378, 438, 728], [318, 338, 378, 438, 728], [318, 338, 378, 438, 728], [318, 338, 378, 472, 772], [318, 338, 378, 472, 772], [318, 346, 386, 506, 826], [332, 352, 392, 572, 881], [332, 352, 392, 572, 881], [332, 352, 392, 576, 930], [332, 360, 402, 576, 930], [332, 360, 416, 637, 1025], [332, 360, 416, 637, 1025], [332, 360, 416, 637, 1025], [332, 360, 416, 667, 1073], [332, 360, 416, 667, 1073], [332, 360, 416, 667, 1073], [332, 362, 416, 697, 1119], [332, 362, 416, 697, 1119], [346, 376, 430, 728, 1163], [346, 376, 430, 728, 1163], [346, 376, 430, 745, 1251], [346, 386, 446, 799, 1294], [360, 400, 472, 857, 1486], [360, 400, 472, 857, 1486], [360, 400, 472, 857, 1486], [360, 400, 472, 857, 1486]],
+            "1x5.5cm": [[318, 338, 378, 438, 637], [318, 338, 378, 438, 728], [318, 338, 378, 438, 728], [318, 338, 378, 438, 728], [318, 338, 378, 472, 772], [318, 338, 378, 472, 772], [318, 346, 386, 506, 826], [332, 352, 392, 572, 881], [332, 352, 392, 572, 881], [332, 352, 392, 576, 930], [332, 360, 402, 576, 930], [332, 360, 416, 637, 1025], [332, 360, 416, 637, 1025], [332, 360, 416, 637, 1025], [332, 360, 416, 667, 1073], [332, 360, 416, 667, 1073], [332, 360, 416, 667, 1073], [332, 362, 416, 697, 1119], [332, 362, 416, 697, 1119], [346, 376, 430, 728, 1163], [346, 376, 430, 728, 1163], [346, 376, 430, 745, 1251], [346, 386, 446, 799, 1294], [360, 400, 472, 857, 1486], [360, 400, 472, 857, 1486], [360, 400, 472, 857, 1486], [360, 400, 472, 857, 1486]],
+            "1x6cm": [[318, 338, 378, 438, 728], [318, 338, 378, 472, 799], [318, 338, 378, 472, 799], [318, 338, 378, 472, 799], [318, 346, 388, 540, 880], [318, 346, 388, 540, 880], [332, 352, 392, 572, 906], [332, 360, 402, 606, 978], [332, 360, 402, 606, 978], [332, 360, 416, 637, 1049], [332, 374, 430, 728, 1163], [332, 374, 430, 728, 1163], [332, 374, 430, 728, 1163], [346, 374, 430, 756, 1207], [346, 374, 430, 756, 1207], [346, 374, 430, 756, 1207], [346, 374, 430, 756, 1207], [346, 376, 434, 745, 1251], [346, 376, 434, 745, 1251], [346, 376, 434, 799, 1316], [346, 376, 434, 799, 1316], [346, 388, 438, 853, 1411], [346, 388, 472, 880, 1486], [360, 402, 540, 954, 1608], [360, 402, 540, 954, 1608], [360, 402, 540, 954, 1608], [360, 402, 540, 954, 1608]],
+            "1x6.5cm": [[318, 338, 378, 438, 728], [318, 338, 378, 472, 799], [318, 338, 378, 472, 799], [318, 338, 378, 472, 799], [318, 346, 388, 540, 880], [318, 346, 388, 540, 880], [332, 352, 392, 572, 906], [332, 360, 402, 606, 978], [332, 360, 402, 606, 978], [332, 360, 416, 637, 1049], [332, 374, 430, 728, 1163], [332, 374, 430, 728, 1163], [332, 374, 430, 728, 1163], [346, 374, 430, 756, 1207], [346, 374, 430, 756, 1207], [346, 374, 430, 756, 1207], [346, 374, 430, 756, 1207], [346, 376, 434, 745, 1251], [346, 376, 434, 745, 1251], [346, 376, 434, 799, 1316], [346, 376, 434, 799, 1316], [346, 388, 438, 853, 1411], [346, 388, 472, 880, 1486], [360, 402, 540, 954, 1608], [360, 402, 540, 954, 1608], [360, 402, 540, 954, 1608], [360, 402, 540, 954, 1608]],
+            "1x7cm": [[318, 338, 378, 472, 772], [318, 346, 386, 540, 880], [318, 346, 386, 540, 880], [318, 346, 386, 540, 880], [332, 352, 392, 576, 930], [332, 352, 392, 576, 930], [332, 360, 402, 606, 1001], [332, 360, 416, 697, 1095], [332, 360, 416, 697, 1095], [332, 374, 430, 756, 1207], [346, 374, 430, 756, 1185], [346, 374, 434, 772, 1273], [346, 374, 434, 772, 1273], [346, 374, 434, 772, 1273], [346, 374, 434, 799, 1362], [346, 374, 434, 799, 1362], [346, 374, 434, 799, 1362], [346, 388, 438, 853, 1411], [346, 388, 438, 853, 1411], [346, 388, 472, 880, 1486], [346, 388, 472, 880, 1486], [346, 388, 472, 881, 1586], [360, 402, 506, 930, 1685], [360, 416, 576, 1073, 1814], [360, 416, 576, 1073, 1814], [360, 416, 576, 1073, 1814], [360, 416, 576, 1073, 1814]],
+            "1x7.5cm": [[318, 338, 378, 472, 772], [318, 346, 386, 540, 880], [318, 346, 386, 540, 880], [318, 346, 386, 540, 880], [332, 352, 392, 576, 930], [332, 352, 392, 576, 930], [332, 360, 402, 606, 1001], [332, 360, 416, 697, 1095], [332, 360, 416, 697, 1095], [332, 374, 430, 756, 1207], [346, 374, 430, 756, 1185], [346, 374, 434, 772, 1273], [346, 374, 434, 772, 1273], [346, 374, 434, 772, 1273], [346, 374, 434, 799, 1362], [346, 374, 434, 799, 1362], [346, 374, 434, 799, 1362], [346, 388, 438, 853, 1411], [346, 388, 438, 853, 1411], [346, 388, 472, 880, 1486], [346, 388, 472, 880, 1486], [346, 388, 472, 881, 1586], [360, 402, 506, 930, 1685], [360, 416, 576, 1073, 1814], [360, 416, 576, 1073, 1814], [360, 416, 576, 1073, 1814], [360, 416, 576, 1073, 1814]],
+            "1x8cm": [[318, 346, 386, 540, 853], [318, 346, 388, 576, 930], [318, 346, 388, 576, 930], [318, 346, 388, 576, 930], [332, 360, 402, 637, 1025], [332, 360, 402, 637, 1025], [332, 360, 416, 697, 1095], [332, 374, 430, 756, 1207], [332, 374, 430, 756, 1207], [346, 374, 434, 772, 1273], [346, 374, 434, 772, 1294], [346, 388, 438, 853, 1411], [346, 388, 438, 853, 1411], [346, 388, 438, 853, 1411], [346, 388, 472, 857, 1511], [346, 388, 472, 857, 1511], [346, 388, 472, 857, 1511], [346, 388, 472, 881, 1561], [346, 388, 472, 881, 1561], [360, 402, 506, 930, 1659], [360, 402, 506, 930, 1659], [360, 402, 540, 978, 1678], [374, 430, 606, 1119, 1952], [374, 430, 606, 1163, 2042], [374, 430, 606, 1163, 2042], [374, 430, 606, 1163, 2042], [374, 430, 606, 1163, 2042]],
+            "1x8.5cm": [[318, 346, 386, 540, 853], [318, 346, 388, 576, 930], [318, 346, 388, 576, 930], [318, 346, 388, 576, 930], [332, 360, 402, 637, 1025], [332, 360, 402, 637, 1025], [332, 360, 416, 697, 1095], [332, 374, 430, 756, 1207], [332, 374, 430, 756, 1207], [346, 374, 434, 772, 1273], [346, 374, 434, 772, 1294], [346, 388, 438, 853, 1411], [346, 388, 438, 853, 1411], [346, 388, 438, 853, 1411], [346, 388, 472, 857, 1511], [346, 388, 472, 857, 1511], [346, 388, 472, 857, 1511], [346, 388, 472, 881, 1561], [346, 388, 472, 881, 1561], [360, 402, 506, 930, 1659], [360, 402, 506, 930, 1659], [360, 402, 540, 978, 1678], [374, 430, 606, 1119, 1952], [374, 430, 606, 1163, 2042], [374, 430, 606, 1163, 2042], [374, 430, 606, 1163, 2042], [374, 430, 606, 1163, 2042]],
+            "1x9cm": [[318, 346, 388, 572, 906], [332, 352, 402, 606, 1001], [332, 352, 402, 606, 1001], [332, 352, 402, 606, 1001], [332, 360, 416, 697, 1049], [332, 360, 416, 697, 1049], [332, 360, 430, 756, 1207], [346, 374, 434, 799, 1316], [346, 374, 434, 799, 1316], [346, 374, 438, 826, 1411], [346, 388, 472, 857, 1537], [360, 402, 506, 954, 1632], [360, 402, 506, 954, 1632], [360, 402, 506, 954, 1632], [360, 402, 540, 1001, 1723], [360, 402, 540, 1001, 1723], [360, 402, 540, 1001, 1723], [360, 416, 572, 1025, 1792], [360, 416, 572, 1025, 1792], [360, 416, 576, 1095, 1883], [360, 416, 576, 1095, 1883], [374, 430, 606, 1163, 2019], [374, 430, 637, 1207, 2131], [388, 438, 728, 1362, 2462], [388, 438, 728, 1362, 2462], [388, 438, 728, 1362, 2462], [388, 438, 728, 1362, 2462]],
+            "1x9.5cm": [[318, 346, 388, 572, 906], [332, 352, 402, 606, 1001], [332, 352, 402, 606, 1001], [332, 352, 402, 606, 1001], [332, 360, 416, 697, 1049], [332, 360, 416, 697, 1049], [332, 360, 430, 756, 1207], [346, 374, 434, 799, 1316], [346, 374, 434, 799, 1316], [346, 374, 438, 826, 1411], [346, 388, 472, 857, 1537], [360, 402, 506, 954, 1632], [360, 402, 506, 954, 1632], [360, 402, 506, 954, 1632], [360, 402, 540, 1001, 1723], [360, 402, 540, 1001, 1723], [360, 402, 540, 1001, 1723], [360, 416, 572, 1025, 1792], [360, 416, 572, 1025, 1792], [360, 416, 576, 1095, 1883], [360, 416, 576, 1095, 1883], [374, 430, 606, 1163, 2019], [374, 430, 637, 1207, 2131], [388, 438, 728, 1362, 2462], [388, 438, 728, 1362, 2462], [388, 438, 728, 1362, 2462], [388, 438, 728, 1362, 2462]],
+            "1x10cm": [[318, 346, 402, 606, 978], [332, 360, 416, 667, 1095], [332, 360, 416, 667, 1095], [332, 360, 416, 667, 1095], [332, 360, 430, 756, 1229], [332, 360, 430, 756, 1229], [332, 374, 434, 772, 1294], [346, 388, 438, 853, 1437], [346, 388, 438, 853, 1437], [346, 388, 472, 857, 1537], [346, 388, 472, 881, 1561], [360, 402, 506, 954, 1632], [360, 402, 506, 954, 1632], [360, 402, 506, 954, 1632], [360, 402, 540, 1001, 1723], [360, 402, 540, 1001, 1723], [360, 402, 540, 1001, 1723], [360, 416, 572, 1025, 1792], [360, 416, 572, 1025, 1792], [360, 416, 576, 1095, 1883], [360, 416, 576, 1095, 1883], [374, 430, 606, 1163, 2019], [374, 430, 637, 1207, 2131], [402, 472, 772, 1537, 2765], [402, 472, 772, 1537, 2765], [402, 472, 772, 1537, 2765], [402, 472, 772, 1537, 2765]],
+            "1x10.5cm": [[318, 346, 402, 606, 978], [332, 360, 416, 667, 1095], [332, 360, 416, 667, 1095], [332, 360, 416, 667, 1095], [332, 360, 430, 756, 1229], [332, 360, 430, 756, 1229], [332, 374, 434, 772, 1294], [346, 388, 438, 853, 1437], [346, 388, 438, 853, 1437], [346, 388, 472, 857, 1537], [346, 388, 472, 881, 1561], [360, 402, 506, 954, 1632], [360, 402, 506, 954, 1632], [360, 402, 506, 954, 1632], [360, 402, 540, 1001, 1723], [360, 402, 540, 1001, 1723], [360, 402, 540, 1001, 1723], [360, 416, 572, 1025, 1792], [360, 416, 572, 1025, 1792], [360, 416, 576, 1095, 1883], [360, 416, 576, 1095, 1883], [374, 430, 606, 1163, 2019], [374, 430, 637, 1207, 2131], [402, 472, 772, 1537, 2765], [402, 472, 772, 1537, 2765], [402, 472, 772, 1537, 2765], [402, 472, 772, 1537, 2765]],
+            "1x11cm": [[332, 360, 402, 667, 1095], [346, 374, 434, 799, 1362], [346, 374, 434, 799, 1362], [346, 374, 434, 799, 1362], [346, 374, 438, 880, 1511], [346, 374, 438, 880, 1511], [346, 388, 472, 881, 1635], [346, 388, 472, 906, 1635], [346, 388, 472, 906, 1635], [346, 402, 506, 954, 1632], [360, 402, 540, 978, 1701], [360, 416, 572, 1049, 1814], [360, 416, 572, 1049, 1814], [360, 416, 572, 1049, 1814], [374, 430, 637, 1207, 2154], [374, 430, 637, 1207, 2154], [374, 430, 637, 1207, 2154], [374, 434, 667, 1251, 2242], [374, 434, 667, 1251, 2242], [374, 434, 697, 1316, 2352], [374, 434, 697, 1316, 2352], [388, 438, 728, 1411, 2528], [388, 438, 697, 1336, 2397], [402, 540, 826, 1608, 3061], [402, 540, 826, 1608, 3061], [402, 540, 826, 1608, 3061], [402, 540, 826, 1608, 3061]],
+            "1x11.5cm": [[332, 360, 402, 667, 1095], [346, 374, 434, 799, 1362], [346, 374, 434, 799, 1362], [346, 374, 434, 799, 1362], [346, 374, 438, 880, 1511], [346, 374, 438, 880, 1511], [346, 388, 472, 881, 1635], [346, 388, 472, 906, 1635], [346, 388, 472, 906, 1635], [346, 402, 506, 954, 1632], [360, 402, 540, 978, 1701], [360, 416, 572, 1049, 1814], [360, 416, 572, 1049, 1814], [360, 416, 572, 1049, 1814], [374, 430, 637, 1207, 2154], [374, 430, 637, 1207, 2154], [374, 430, 637, 1207, 2154], [374, 434, 667, 1251, 2242], [374, 434, 667, 1251, 2242], [374, 434, 697, 1316, 2352], [374, 434, 697, 1316, 2352], [388, 438, 728, 1411, 2528], [388, 438, 697, 1336, 2397], [402, 540, 826, 1608, 3061], [402, 540, 826, 1608, 3061], [402, 540, 826, 1608, 3061], [402, 540, 826, 1608, 3061]],
+            "1x12cm": [[332, 360, 402, 667, 1095], [346, 374, 434, 799, 1362], [346, 374, 434, 799, 1362], [346, 374, 434, 799, 1362], [346, 374, 438, 880, 1511], [346, 374, 438, 880, 1511], [346, 388, 472, 881, 1635], [346, 388, 472, 906, 1635], [346, 388, 472, 906, 1635], [346, 402, 506, 954, 1632], [360, 402, 540, 978, 1701], [360, 416, 572, 1049, 1814], [360, 416, 572, 1049, 1814], [360, 416, 572, 1049, 1814], [374, 430, 637, 1207, 2154], [374, 430, 637, 1207, 2154], [374, 430, 637, 1207, 2154], [374, 434, 667, 1251, 2242], [374, 434, 667, 1251, 2242], [374, 434, 697, 1316, 2352], [374, 434, 697, 1316, 2352], [388, 438, 728, 1411, 2528], [388, 438, 697, 1336, 2397], [402, 540, 826, 1608, 3061], [402, 540, 826, 1608, 3061], [402, 540, 826, 1608, 3061], [402, 540, 826, 1608, 3061]],
+            "1x12.5cm": [[332, 360, 416, 728, 1185], [332, 374, 434, 772, 1316], [332, 374, 434, 772, 1316], [332, 374, 434, 772, 1316], [346, 388, 438, 880, 1511], [346, 388, 438, 880, 1511], [346, 388, 472, 881, 1586], [360, 402, 540, 978, 1701], [360, 402, 540, 978, 1701], [360, 402, 572, 1025, 1814], [360, 416, 572, 1049, 1861], [374, 430, 606, 1141, 2019], [374, 430, 606, 1141, 2019], [374, 430, 606, 1141, 2019], [374, 430, 637, 1207, 2154], [374, 430, 637, 1207, 2154], [374, 430, 637, 1207, 2154], [374, 434, 728, 1362, 2440], [374, 434, 728, 1362, 2440], [388, 438, 756, 1437, 2592], [388, 438, 756, 1437, 2592], [388, 438, 728, 1411, 2571], [388, 472, 745, 1486, 2658], [416, 572, 857, 1770, 3352], [416, 572, 857, 1770, 3352], [416, 572, 857, 1770, 3352], [416, 572, 857, 1770, 3352]],
+            "1x13cm": [[332, 360, 416, 728, 1185], [332, 374, 434, 772, 1316], [332, 374, 434, 772, 1316], [332, 374, 434, 772, 1316], [346, 388, 438, 880, 1511], [346, 388, 438, 880, 1511], [346, 388, 472, 881, 1586], [360, 402, 540, 978, 1701], [360, 402, 540, 978, 1701], [360, 402, 572, 1025, 1814], [360, 416, 572, 1049, 1861], [374, 430, 606, 1141, 2019], [374, 430, 606, 1141, 2019], [374, 430, 606, 1141, 2019], [374, 430, 637, 1207, 2154], [374, 430, 637, 1207, 2154], [374, 430, 637, 1207, 2154], [374, 434, 728, 1362, 2440], [374, 434, 728, 1362, 2440], [388, 438, 756, 1437, 2592], [388, 438, 756, 1437, 2592], [388, 438, 728, 1411, 2571], [388, 472, 745, 1486, 2658], [416, 572, 857, 1770, 3352], [416, 572, 857, 1770, 3352], [416, 572, 857, 1770, 3352], [416, 572, 857, 1770, 3352]],
+            "1x13.5cm": [[332, 360, 416, 728, 1185], [332, 374, 434, 772, 1316], [332, 374, 434, 772, 1316], [332, 374, 434, 772, 1316], [346, 388, 438, 880, 1511], [346, 388, 438, 880, 1511], [346, 388, 472, 881, 1586], [360, 402, 540, 978, 1701], [360, 402, 540, 978, 1701], [360, 402, 572, 1025, 1814], [360, 416, 572, 1049, 1861], [374, 430, 606, 1141, 2019], [374, 430, 606, 1141, 2019], [374, 430, 606, 1141, 2019], [374, 430, 637, 1207, 2154], [374, 430, 637, 1207, 2154], [374, 430, 637, 1207, 2154], [374, 434, 728, 1362, 2440], [374, 434, 728, 1362, 2440], [388, 438, 756, 1437, 2592], [388, 438, 756, 1437, 2592], [388, 438, 728, 1411, 2571], [388, 472, 745, 1486, 2658], [416, 572, 857, 1770, 3352], [416, 572, 857, 1770, 3352], [416, 572, 857, 1770, 3352], [416, 572, 857, 1770, 3352]],
+            "1x14cm": [[372, 374, 430, 772, 1294], [346, 374, 438, 853, 1462], [346, 374, 438, 853, 1462], [346, 374, 438, 853, 1462], [346, 388, 472, 906, 1659], [346, 388, 472, 906, 1659], [346, 402, 506, 978, 1678], [360, 416, 572, 1073, 1861], [360, 416, 572, 1073, 1861], [360, 416, 606, 1141, 2042], [374, 430, 637, 1229, 2198], [374, 430, 667, 1251, 2219], [374, 430, 667, 1251, 2219], [374, 430, 667, 1251, 2219], [374, 434, 697, 1316, 2352], [374, 434, 697, 1316, 2352], [374, 434, 697, 1316, 2352], [388, 438, 756, 1486, 2658], [388, 438, 756, 1486, 2658], [388, 438, 756, 1437, 2614], [388, 438, 756, 1437, 2614], [388, 472, 772, 1537, 2765], [402, 506, 799, 1635, 2914], [430, 576, 930, 1928, 3653], [430, 576, 930, 1928, 3653], [430, 576, 930, 1928, 3653], [430, 576, 930, 1928, 3653]],
+            "1x14.5cm": [[372, 374, 430, 772, 1294], [346, 374, 438, 853, 1462], [346, 374, 438, 853, 1462], [346, 374, 438, 853, 1462], [346, 388, 472, 906, 1659], [346, 388, 472, 906, 1659], [346, 402, 506, 978, 1678], [360, 416, 572, 1073, 1861], [360, 416, 572, 1073, 1861], [360, 416, 606, 1141, 2042], [374, 430, 637, 1229, 2198], [374, 430, 667, 1251, 2219], [374, 430, 667, 1251, 2219], [374, 430, 667, 1251, 2219], [374, 434, 697, 1316, 2352], [374, 434, 697, 1316, 2352], [374, 434, 697, 1316, 2352], [388, 438, 756, 1486, 2658], [388, 438, 756, 1486, 2658], [388, 438, 756, 1437, 2614], [388, 438, 756, 1437, 2614], [388, 472, 772, 1537, 2765], [402, 506, 799, 1635, 2914], [430, 576, 930, 1928, 3653], [430, 576, 930, 1928, 3653], [430, 576, 930, 1928, 3653], [430, 576, 930, 1928, 3653]],
+            "1x15cm": [[372, 374, 430, 772, 1294], [346, 374, 438, 853, 1462], [346, 374, 438, 853, 1462], [346, 374, 438, 853, 1462], [346, 388, 472, 906, 1659], [346, 388, 472, 906, 1659], [346, 402, 506, 978, 1678], [360, 416, 572, 1073, 1861], [360, 416, 572, 1073, 1861], [360, 416, 606, 1141, 2042], [374, 430, 637, 1229, 2198], [374, 430, 667, 1251, 2219], [374, 430, 667, 1251, 2219], [374, 430, 667, 1251, 2219], [374, 434, 697, 1316, 2352], [374, 434, 697, 1316, 2352], [374, 434, 697, 1316, 2352], [388, 438, 756, 1486, 2658], [388, 438, 756, 1486, 2658], [388, 438, 756, 1437, 2614], [388, 438, 756, 1437, 2614], [388, 472, 772, 1537, 2765], [402, 506, 799, 1635, 2914], [430, 576, 930, 1928, 3653], [430, 576, 930, 1928, 3653], [430, 576, 930, 1928, 3653], [430, 576, 930, 1928, 3653]],
+            "1x15.5cm": [[332, 374, 434, 826, 1387], [346, 388, 472, 881, 1586], [346, 388, 472, 881, 1586], [346, 388, 472, 881, 1586], [346, 402, 540, 978, 1701], [346, 402, 540, 978, 1701], [360, 402, 572, 1049, 1838], [374, 430, 637, 1229, 2198], [374, 430, 637, 1229, 2198], [374, 434, 697, 1336, 2418], [388, 438, 756, 1462, 2635], [388, 472, 772, 1610, 2870], [388, 472, 772, 1610, 2870], [388, 472, 772, 1610, 2870], [388, 472, 745, 1537, 2765], [388, 472, 745, 1537, 2765], [388, 472, 745, 1537, 2765], [388, 472, 772, 1586, 2870], [388, 472, 772, 1586, 2870], [402, 506, 826, 1685, 3040], [402, 506, 826, 1685, 3040], [402, 540, 880, 1701, 3248], [402, 540, 853, 1654, 3165], [430, 637, 1001, 2064, 3962], [430, 637, 1001, 2064, 3962], [430, 637, 1001, 2064, 3962], [430, 637, 1001, 2064, 3962]],
+            "1x16cm": [[332, 374, 434, 826, 1387], [346, 388, 472, 881, 1586], [346, 388, 472, 881, 1586], [346, 388, 472, 881, 1586], [346, 402, 540, 978, 1701], [346, 402, 540, 978, 1701], [360, 402, 572, 1049, 1838], [374, 430, 637, 1229, 2198], [374, 430, 637, 1229, 2198], [374, 434, 697, 1336, 2418], [388, 438, 756, 1462, 2635], [388, 472, 772, 1610, 2870], [388, 472, 772, 1610, 2870], [388, 472, 772, 1610, 2870], [388, 472, 745, 1537, 2765], [388, 472, 745, 1537, 2765], [388, 472, 745, 1537, 2765], [388, 472, 772, 1586, 2870], [388, 472, 772, 1586, 2870], [402, 506, 826, 1685, 3040], [402, 506, 826, 1685, 3040], [402, 540, 880, 1701, 3248], [402, 540, 853, 1654, 3165], [430, 637, 1001, 2064, 3962], [430, 637, 1001, 2064, 3962], [430, 637, 1001, 2064, 3962], [430, 637, 1001, 2064, 3962]],
+            "1x16.5cm": [[332, 374, 434, 826, 1387], [346, 388, 472, 881, 1586], [346, 388, 472, 881, 1586], [346, 388, 472, 881, 1586], [346, 402, 540, 978, 1701], [346, 402, 540, 978, 1701], [360, 402, 572, 1049, 1838], [374, 430, 637, 1229, 2198], [374, 430, 637, 1229, 2198], [374, 434, 697, 1336, 2418], [388, 438, 756, 1462, 2635], [388, 472, 772, 1610, 2870], [388, 472, 772, 1610, 2870], [388, 472, 772, 1610, 2870], [388, 472, 745, 1537, 2765], [388, 472, 745, 1537, 2765], [388, 472, 745, 1537, 2765], [388, 472, 772, 1586, 2870], [388, 472, 772, 1586, 2870], [402, 506, 826, 1685, 3040], [402, 506, 826, 1685, 3040], [402, 540, 880, 1701, 3248], [402, 540, 853, 1654, 3165], [430, 637, 1001, 2064, 3962], [430, 637, 1001, 2064, 3962], [430, 637, 1001, 2064, 3962], [430, 637, 1001, 2064, 3962]],
+            "1x17cm": [[346, 374, 438, 880, 1511], [346, 388, 506, 976, 1608], [346, 388, 506, 976, 1608], [346, 388, 506, 976, 1608], [360, 402, 572, 1049, 1838], [360, 402, 572, 1049, 1838], [360, 416, 576, 1119, 1974], [374, 430, 637, 1229, 2198], [374, 430, 637, 1229, 2198], [374, 434, 667, 1294, 2331], [388, 438, 756, 1462, 2635], [388, 472, 772, 1610, 2870], [388, 472, 772, 1610, 2870], [388, 472, 772, 1610, 2870], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [416, 572, 857, 1770, 3331], [416, 572, 857, 1770, 3331], [416, 576, 906, 1883, 3565], [416, 572, 881, 1792, 3413], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378]],
+            "1x17.5cm": [[346, 374, 438, 880, 1511], [346, 388, 506, 976, 1608], [346, 388, 506, 976, 1608], [346, 388, 506, 976, 1608], [360, 402, 572, 1049, 1838], [360, 402, 572, 1049, 1838], [360, 416, 576, 1119, 1974], [374, 430, 637, 1229, 2198], [374, 430, 637, 1229, 2198], [374, 434, 667, 1294, 2331], [388, 438, 756, 1462, 2635], [388, 472, 772, 1610, 2870], [388, 472, 772, 1610, 2870], [388, 472, 772, 1610, 2870], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [416, 572, 857, 1770, 3331], [416, 572, 857, 1770, 3331], [416, 576, 906, 1883, 3565], [416, 572, 881, 1792, 3413], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378]],
+            "1x18cm": [[346, 374, 438, 880, 1511], [346, 388, 506, 976, 1608], [346, 388, 506, 976, 1608], [346, 388, 506, 976, 1608], [360, 402, 572, 1049, 1838], [360, 402, 572, 1049, 1838], [360, 416, 576, 1119, 1974], [374, 430, 637, 1229, 2198], [374, 430, 637, 1229, 2198], [374, 434, 667, 1294, 2331], [388, 438, 756, 1462, 2635], [388, 472, 772, 1610, 2870], [388, 472, 772, 1610, 2870], [388, 472, 772, 1610, 2870], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [416, 572, 857, 1770, 3331], [416, 572, 857, 1770, 3331], [416, 576, 906, 1883, 3565], [416, 572, 881, 1792, 3413], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378]],
+            "1x18.5cm": [[346, 388, 472, 906, 1659], [346, 402, 540, 1025, 1770], [346, 402, 540, 1025, 1770], [346, 402, 540, 1025, 1770], [360, 416, 576, 1163, 2042], [360, 416, 576, 1163, 2042], [360, 430, 637, 1229, 2176], [374, 434, 697, 1336, 2418], [374, 434, 697, 1336, 2418], [374, 438, 728, 1437, 2571], [402, 506, 826, 1608, 3040], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [416, 572, 857, 1770, 3331], [416, 572, 857, 1770, 3331], [416, 576, 906, 1883, 3565], [430, 606, 954, 1997, 3763], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378]],
+            "1x19cm": [[346, 388, 472, 906, 1659], [346, 402, 540, 1025, 1770], [346, 402, 540, 1025, 1770], [346, 402, 540, 1025, 1770], [360, 416, 576, 1163, 2042], [360, 416, 576, 1163, 2042], [360, 430, 637, 1229, 2176], [374, 434, 697, 1336, 2418], [374, 434, 697, 1336, 2418], [374, 438, 728, 1437, 2571], [402, 506, 826, 1608, 3040], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [416, 572, 857, 1770, 3331], [416, 572, 857, 1770, 3331], [416, 576, 906, 1883, 3565], [430, 606, 954, 1997, 3763], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378]],
+            "1x19.5cm": [[346, 388, 472, 906, 1659], [346, 402, 540, 1025, 1770], [346, 402, 540, 1025, 1770], [346, 402, 540, 1025, 1770], [360, 416, 576, 1163, 2042], [360, 416, 576, 1163, 2042], [360, 430, 637, 1229, 2176], [374, 434, 697, 1336, 2418], [374, 434, 697, 1336, 2418], [374, 438, 728, 1437, 2571], [402, 506, 826, 1608, 3040], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [416, 572, 857, 1770, 3331], [416, 572, 857, 1770, 3331], [416, 576, 906, 1883, 3565], [430, 606, 954, 1997, 3763], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378]],
+            "1x20cm": [[346, 388, 472, 906, 1659], [346, 402, 540, 1025, 1770], [346, 402, 540, 1025, 1770], [346, 402, 540, 1025, 1770], [360, 416, 576, 1163, 2042], [360, 416, 576, 1163, 2042], [360, 430, 637, 1229, 2176], [374, 434, 697, 1336, 2418], [374, 434, 697, 1336, 2418], [374, 438, 728, 1437, 2571], [402, 506, 826, 1608, 3040], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 506, 826, 1608, 3040], [402, 540, 853, 1654, 3144], [402, 540, 853, 1654, 3144], [416, 572, 857, 1770, 3331], [416, 572, 857, 1770, 3331], [416, 576, 906, 1883, 3565], [430, 606, 954, 1997, 3763], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378], [434, 697, 1073, 2309, 4378]]
+        };
 
-      // 狀態管理
-      const state = {
-        elements: {},
-        filteredMaterials: [...CONFIG.materials],
-        highlightedIndex: -1,
-        isAnimating: false,
-        searchTimeout: null,
-        currentHighlightedRow: null
-      };
+        // 狀態管理
+        const state = {
+            elements: {},
+            filteredMaterials: [...CONFIG.materials],
+            highlightedIndex: -1,
+            isAnimating: false,
+            searchTimeout: null,
+            currentHighlightedRow: null
+        };
 
-      // 工具函數
-      const utils = {
-        debounce(func, wait) {
-          return function executedFunction(...args) {
-            const later = () => {
-              clearTimeout(state.searchTimeout);
-              func(...args);
-            };
-            clearTimeout(state.searchTimeout);
-            state.searchTimeout = setTimeout(later, wait);
-          };
-        }
-      };
-
-      // 收合功能
-      function toggleCollapse(contentId) {
-        const content = document.getElementById(contentId);
-        const btnId = contentId === 'size-buttons-content' ? 'size-collapse-btn' : 'select-collapse-btn';
-        const btn = document.getElementById(btnId);
-        
-        if (!content || !btn) return;
-        
-        try {
-          if (content.classList.contains('collapsed')) {
-            content.classList.remove('collapsed');
-            content.style.maxHeight = content.scrollHeight + 'px';
-            btn.textContent = '−';
-            btn.setAttribute('aria-expanded', 'true');
-            
-            setTimeout(() => {
-              if (!content.classList.contains('collapsed')) {
-                content.style.maxHeight = content.scrollHeight + 'px';
-              }
-            }, 50);
-          } else {
-            content.style.maxHeight = content.scrollHeight + 'px';
-            content.offsetHeight;
-            setTimeout(() => {
-              content.classList.add('collapsed');
-              content.style.maxHeight = '0';
-              btn.textContent = '+';
-              btn.setAttribute('aria-expanded', 'false');
-            }, 10);
-          }
-        } catch (error) {
-          console.warn('Toggle collapse error:', error);
-        }
-      }
-
-      // 材質下拉選單相關函數
-      const materialDropdown = {
-        render() {
-          if (!state.elements.materialDropdown) return;
-          
-          state.elements.materialDropdown.innerHTML = '';
-          
-          if (state.filteredMaterials.length === 0) {
-            const noResults = document.createElement('div');
-            noResults.className = 'no-results';
-            noResults.textContent = '找不到符合的材質';
-            state.elements.materialDropdown.appendChild(noResults);
-            return;
-          }
-          
-          state.filteredMaterials.forEach((material, index) => {
-            const option = document.createElement('div');
-            option.className = 'material-option';
-            option.textContent = material;
-            option.setAttribute('role', 'option');
-            option.setAttribute('aria-selected', index === state.highlightedIndex ? 'true' : 'false');
-            option.addEventListener('click', () => this.select(material));
-            option.addEventListener('mouseenter', () => {
-              state.highlightedIndex = index;
-              this.updateHighlight();
-            });
-            
-            if (index === state.highlightedIndex) {
-              option.classList.add('highlighted');
+        // 工具函數
+        const utils = {
+            debounce(func, wait) {
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(state.searchTimeout);
+                        func(...args);
+                    };
+                    clearTimeout(state.searchTimeout);
+                    state.searchTimeout = setTimeout(later, wait);
+                };
             }
-            
-            state.elements.materialDropdown.appendChild(option);
-          });
-        },
+        };
 
-        updateHighlight() {
-          const options = state.elements.materialDropdown.querySelectorAll('.material-option');
-          options.forEach((option, index) => {
-            const isHighlighted = index === state.highlightedIndex;
-            option.classList.toggle('highlighted', isHighlighted);
-            option.setAttribute('aria-selected', isHighlighted ? 'true' : 'false');
-          });
-        },
-
-        show() {
-          if (!state.elements.materialDropdown || !state.elements.materialDropdownBtn || !state.elements.materialInput) return;
-          
-          state.elements.materialDropdown.classList.add('show');
-          state.elements.materialDropdownBtn.classList.add('open');
-          state.elements.materialInput.setAttribute('aria-expanded', 'true');
-          
-          if (state.filteredMaterials.length > 0 && state.highlightedIndex < 0) {
-            state.highlightedIndex = 0;
-            this.updateHighlight();
-          }
-        },
-
-        hide() {
-          if (!state.elements.materialDropdown || !state.elements.materialDropdownBtn || !state.elements.materialInput) return;
-          
-          state.elements.materialDropdown.classList.remove('show');
-          state.elements.materialDropdownBtn.classList.remove('open');
-          state.elements.materialInput.setAttribute('aria-expanded', 'false');
-          state.highlightedIndex = -1;
-        },
-
-        toggle() {
-          if (state.elements.materialDropdown.classList.contains('show')) {
-            this.hide();
-          } else {
-            state.filteredMaterials = [...CONFIG.materials];
-            state.highlightedIndex = 0;
-            this.render();
-            this.show();
-            state.elements.materialInput.focus();
-          }
-        },
-
-        select(material) {
-          if (!material || !CONFIG.materials.includes(material) || state.isAnimating) return;
-          
-          state.elements.materialInput.value = material;
-          this.hide();
-          state.isAnimating = true;
-          
-          const materialIndex = CONFIG.materials.indexOf(material);
-          if (materialIndex === -1) {
-            state.isAnimating = false;
-            return;
-          }
-
-          setTimeout(() => {
-            const table = document.querySelector('#table-container table');
-            if (!table) {
-              state.isAnimating = false;
-              return;
-            }
-            
-            const materialRows = table.querySelectorAll('tr');
-            const targetRow = materialRows[materialIndex + 1];
-            
-            if (targetRow) {
-              clearHighlight();
-              targetRow.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center' 
-              });
-              
-              setTimeout(() => {
-                targetRow.classList.add('material-highlight');
-                state.currentHighlightedRow = targetRow;
-                
-                setTimeout(() => {
-                  if (targetRow === state.currentHighlightedRow) {
-                    targetRow.classList.remove('material-highlight');
-                    state.currentHighlightedRow = null;
-                  }
-                  state.isAnimating = false;
-                }, 1000);
-              }, 500);
-            } else {
-              state.isAnimating = false;
-            }
-          }, 200);
-        }
-      };
-
-      // 表格生成
-      function generateTable(size) {
-        if (!size) return;
-        
-        state.elements.tableContainer.classList.add('table-loading');
-        
-        const data = priceData[size];
-        if (!data) {
-          state.elements.tableContainer.innerHTML = '<p style="color:red; text-align: center; padding: 20px;">此尺寸尚無價目表資料</p>';
-          state.elements.tableContainer.classList.remove('table-loading');
-          return;
-        }
-
-        let html = '<table role="table" aria-label="價目表">';
-        
-        // 標題行
-        html += '<tr role="row">';
-        html += '<th class="material-name empty-corner" scope="col"></th>';
-        CONFIG.quantities.forEach(q => html += `<th class="qty-header" scope="col">${q}</th>`);
-        html += '</tr>';
-
-        // 材質價格行
-        CONFIG.materials.forEach((mat, i) => {
-          if (!data[i]) return;
-          const even = i % 2 === 0;
-          const materialBg = even ? 'material-even' : 'material-odd';
-          const priceBg = even ? 'price-even' : 'price-odd';
-          
-          html += `<tr role="row"><th class="material-name ${materialBg}" scope="row">${mat}</th>`;
-          data[i].forEach(p => {
-            const formattedPrice = Math.round(p).toLocaleString();
-            html += `<td class="${priceBg}">${formattedPrice}</td>`;
-          });
-          html += '</tr>';
-        });
-
-        state.elements.tableContainer.innerHTML = html + '</table>';
-        
-        setTimeout(() => {
-          state.elements.tableContainer.classList.remove('table-loading');
-        }, 100);
-      }
-
-      // 清除高亮
-      function clearHighlight() {
-        if (state.currentHighlightedRow) {
-          state.currentHighlightedRow.classList.remove('material-highlight');
-          state.currentHighlightedRow = null;
-        }
-        document.querySelectorAll('.material-highlight').forEach(row => {
-          row.classList.remove('material-highlight');
-        });
-      }
-
-      // 尺寸選擇
-      function selectSize(size) {
-        if (!size || !CONFIG.sizes.includes(size)) return;
-        
-        state.elements.select.value = size;
-        state.elements.tableHeader.textContent = size;
-        
-        document.querySelectorAll('.size-btn').forEach(btn => 
-          btn.classList.toggle('active', btn.textContent === size)
-        );
-
-        if (state.elements.materialInput) {
-          state.elements.materialInput.value = '';
-          state.elements.materialInput.setAttribute('aria-expanded', 'false');
-        }
-        state.filteredMaterials = [...CONFIG.materials];
-        materialDropdown.hide();
-        clearHighlight();
-        generateTable(size);
-      }
-
-      function selectSizeFromButton(size) {
-        selectSize(size);
-        const selectAreaSection = document.querySelector('.select-area');
-        if (selectAreaSection) {
-          setTimeout(() => {
-            selectAreaSection.scrollIntoView({ 
-              behavior: 'smooth', 
-              block: 'start' 
-            });
-          }, 100);
-        }
-      }
-
-      // 回到頂部功能
-      function initBackToTop() {
-        const backToTopBtn = document.getElementById('back-to-top');
-        if (!backToTopBtn) return;
-
-        let isScrolling = false;
-        
-        function handleScroll() {
-          if (!isScrolling) {
-            requestAnimationFrame(() => {
-              const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-              if (scrollTop > 300) {
-                backToTopBtn.classList.add('show');
-              } else {
-                backToTopBtn.classList.remove('show');
-              }
-              isScrolling = false;
-            });
-            isScrolling = true;
-          }
-        }
-
-        function scrollToTop() {
-          const scrollToTopSmooth = () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > 0) {
-              window.scrollTo(0, scrollTop * 0.85);
-              requestAnimationFrame(scrollToTopSmooth);
-            }
-          };
-          
-          if (window.CSS && CSS.supports('scroll-behavior', 'smooth')) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          } else {
-            scrollToTopSmooth();
-          }
-        }
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        backToTopBtn.addEventListener('click', scrollToTop);
-        handleScroll();
-      }
-
-      // 事件處理
-      const eventHandlers = {
-        handleMaterialInput: utils.debounce((e) => {
-          const query = e.target.value.toLowerCase().trim();
-          state.filteredMaterials = CONFIG.materials.filter(material => 
-            material.toLowerCase().includes(query)
-          );
-          state.highlightedIndex = state.filteredMaterials.length > 0 ? 0 : -1;
-          materialDropdown.render();
-          materialDropdown.show();
-        }, 200),
-
-        handleKeydown(e) {
-          if (!state.elements.materialDropdown.classList.contains('show')) {
-            if (e.key === 'ArrowDown' || e.key === 'Enter') {
-              e.preventDefault();
-              materialDropdown.show();
-            }
-            return;
-          }
-
-          const maxIndex = Math.max(0, state.filteredMaterials.length - 1);
-
-          switch (e.key) {
-            case 'ArrowDown':
-              e.preventDefault();
-              state.highlightedIndex = state.highlightedIndex < maxIndex ? state.highlightedIndex + 1 : 0;
-              materialDropdown.updateHighlight();
-              break;
-            case 'ArrowUp':
-              e.preventDefault();
-              state.highlightedIndex = state.highlightedIndex > 0 ? state.highlightedIndex - 1 : maxIndex;
-              materialDropdown.updateHighlight();
-              break;
-            case 'Enter':
-              e.preventDefault();
-              if (state.highlightedIndex >= 0 && state.filteredMaterials[state.highlightedIndex]) {
-                materialDropdown.select(state.filteredMaterials[state.highlightedIndex]);
-              }
-              break;
-            case 'Escape':
-              e.preventDefault();
-              materialDropdown.hide();
-              state.elements.materialInput.blur();
-              break;
-            case 'Tab':
-              materialDropdown.hide();
-              break;
-          }
-        },
-
-        handleInputBlur(e) {
-          setTimeout(() => {
-            if (!e.relatedTarget || !e.relatedTarget.closest('.material-search-container')) {
-              materialDropdown.hide();
-            }
-          }, 150);
-        },
-
-        handleOutsideClick(e) {
-          if (!e.target.closest('.material-search-container')) {
-            materialDropdown.hide();
-          }
-        }
-      };
-
-      // 初始化
-      function init() {
-        // 獲取DOM元素
-        Object.assign(state.elements, {
-          select: document.getElementById('size-select'),
-          materialInput: document.getElementById('material-input'),
-          materialDropdownBtn: document.getElementById('material-dropdown-btn'),
-          materialDropdown: document.getElementById('material-dropdown'),
-          buttonsContainer: document.getElementById('buttons'),
-          tableContainer: document.getElementById('table-container'),
-          tableHeader: document.getElementById('table-header')
-        });
-
-        // 驗證必要元素
-        const requiredElements = ['select', 'materialInput', 'buttonsContainer', 'tableContainer'];
-        for (const elem of requiredElements) {
-          if (!state.elements[elem]) {
-            throw new Error(`Required element not found: ${elem}`);
-          }
-        }
-
-        // 生成尺寸選項和按鈕
-        CONFIG.sizes.forEach(size => {
-          // 下拉選單選項
-          const option = document.createElement('option');
-          option.value = option.textContent = size;
-          state.elements.select.appendChild(option);
-          
-          // 按鈕
-          const btn = document.createElement('button');
-          btn.className = 'size-btn';
-          btn.textContent = size;
-          btn.onclick = () => selectSizeFromButton(size);
-          btn.setAttribute('aria-label', `選擇尺寸 ${size}`);
-          state.elements.buttonsContainer.appendChild(btn);
-        });
-
-        // 初始化材質下拉選項
-        materialDropdown.render();
-        
-        // 設置無障礙屬性
-        state.elements.materialInput.setAttribute('role', 'combobox');
-        state.elements.materialInput.setAttribute('aria-expanded', 'false');
-        state.elements.materialInput.setAttribute('aria-haspopup', 'listbox');
-        state.elements.materialDropdown.setAttribute('role', 'listbox');
-        
-        // 事件監聽
-        state.elements.select.onchange = () => selectSize(state.elements.select.value);
-        state.elements.materialInput.addEventListener('input', eventHandlers.handleMaterialInput);
-        state.elements.materialInput.addEventListener('focus', () => materialDropdown.show());
-        state.elements.materialInput.addEventListener('keydown', eventHandlers.handleKeydown);
-        state.elements.materialInput.addEventListener('blur', eventHandlers.handleInputBlur);
-        
-        if (state.elements.materialDropdownBtn) {
-          state.elements.materialDropdownBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            materialDropdown.toggle();
-          });
-        }
-        
-        document.addEventListener('click', eventHandlers.handleOutsideClick);
-        
-        // 防止表單提交
-        const form = document.querySelector('form');
-        if (form) {
-          form.addEventListener('submit', (e) => e.preventDefault());
-        }
-        
-        // 設置初始高度
-        ['size-buttons-content', 'select-area-content'].forEach(id => {
-          const content = document.getElementById(id);
-          if (content) {
-            content.style.maxHeight = content.scrollHeight + 'px';
-            content.classList.remove('collapsed');
-            
-            const btnId = id === 'size-buttons-content' ? 'size-collapse-btn' : 'select-collapse-btn';
+        // 收合功能
+        function toggleCollapse(contentId) {
+            const content = document.getElementById(contentId);
+            const btnId = contentId === 'size-buttons-content' ? 'size-collapse-btn' : 'select-collapse-btn';
             const btn = document.getElementById(btnId);
-            if (btn) {
-              btn.textContent = '−';
-              btn.setAttribute('aria-expanded', 'true');
+
+            if (!content || !btn) return;
+
+            try {
+                if (content.classList.contains('collapsed')) {
+                    content.classList.remove('collapsed');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    btn.textContent = '−';
+                    btn.setAttribute('aria-expanded', 'true');
+
+                    setTimeout(() => {
+                        if (!content.classList.contains('collapsed')) {
+                            content.style.maxHeight = content.scrollHeight + 'px';
+                        }
+                    }, 50);
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    content.offsetHeight;
+                    setTimeout(() => {
+                        content.classList.add('collapsed');
+                        content.style.maxHeight = '0';
+                        btn.textContent = '+';
+                        btn.setAttribute('aria-expanded', 'false');
+                    }, 10);
+                }
+            } catch (error) {
+                console.warn('Toggle collapse error:', error);
             }
-          }
-        });
-        
-        // 初始化回到頂部功能
-        initBackToTop();
-        
-        // 初始選擇
-        selectSize(CONFIG.sizes[0]);
-      }
+        }
 
-      // 清理函數
-      function cleanup() {
-        clearTimeout(state.searchTimeout);
-        clearHighlight();
-        state.isAnimating = false;
-      }
+        // 材質下拉選單相關函數
+        const materialDropdown = {
+            render() {
+                if (!state.elements.materialDropdown) return;
 
-      // 公開API
-      return {
-        init,
-        cleanup,
-        toggleCollapse,
-        materialDropdown
-      };
+                state.elements.materialDropdown.innerHTML = '';
+
+                if (state.filteredMaterials.length === 0) {
+                    const noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.textContent = '找不到符合的材質';
+                    state.elements.materialDropdown.appendChild(noResults);
+                    return;
+                }
+
+                state.filteredMaterials.forEach((material, index) => {
+                    const option = document.createElement('div');
+                    option.className = 'material-option';
+                    option.textContent = material;
+                    option.setAttribute('role', 'option');
+                    option.setAttribute('aria-selected', index === state.highlightedIndex ? 'true' : 'false');
+                    option.addEventListener('click', () => this.select(material));
+                    option.addEventListener('mouseenter', () => {
+                        state.highlightedIndex = index;
+                        this.updateHighlight();
+                    });
+
+                    if (index === state.highlightedIndex) {
+                        option.classList.add('highlighted');
+                    }
+
+                    state.elements.materialDropdown.appendChild(option);
+                });
+            },
+
+            updateHighlight() {
+                const options = state.elements.materialDropdown.querySelectorAll('.material-option');
+                options.forEach((option, index) => {
+                    const isHighlighted = index === state.highlightedIndex;
+                    option.classList.toggle('highlighted', isHighlighted);
+                    option.setAttribute('aria-selected', isHighlighted ? 'true' : 'false');
+                });
+            },
+
+            show() {
+                if (!state.elements.materialDropdown || !state.elements.materialDropdownBtn || !state.elements.materialInput) return;
+
+                state.elements.materialDropdown.classList.add('show');
+                state.elements.materialDropdownBtn.classList.add('open');
+                state.elements.materialInput.setAttribute('aria-expanded', 'true');
+
+                if (state.filteredMaterials.length > 0 && state.highlightedIndex < 0) {
+                    state.highlightedIndex = 0;
+                    this.updateHighlight();
+                }
+            },
+
+            hide() {
+                if (!state.elements.materialDropdown || !state.elements.materialDropdownBtn || !state.elements.materialInput) return;
+
+                state.elements.materialDropdown.classList.remove('show');
+                state.elements.materialDropdownBtn.classList.remove('open');
+                state.elements.materialInput.setAttribute('aria-expanded', 'false');
+                state.highlightedIndex = -1;
+            },
+
+            toggle() {
+                if (state.elements.materialDropdown.classList.contains('show')) {
+                    this.hide();
+                } else {
+                    state.filteredMaterials = [...CONFIG.materials];
+                    state.highlightedIndex = 0;
+                    this.render();
+                    this.show();
+                    state.elements.materialInput.focus();
+                }
+            },
+
+            select(material) {
+                if (!material || !CONFIG.materials.includes(material) || state.isAnimating) return;
+
+                state.elements.materialInput.value = material;
+                this.hide();
+                state.isAnimating = true;
+
+                const materialIndex = CONFIG.materials.indexOf(material);
+                if (materialIndex === -1) {
+                    state.isAnimating = false;
+                    return;
+                }
+
+                setTimeout(() => {
+                    const table = document.querySelector('#table-container table');
+                    if (!table) {
+                        state.isAnimating = false;
+                        return;
+                    }
+
+                    const materialRows = table.querySelectorAll('tr');
+                    const targetRow = materialRows[materialIndex + 1];
+
+                    if (targetRow) {
+                        clearHighlight();
+                        targetRow.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+
+                        setTimeout(() => {
+                            targetRow.classList.add('material-highlight');
+                            state.currentHighlightedRow = targetRow;
+
+                            setTimeout(() => {
+                                if (targetRow === state.currentHighlightedRow) {
+                                    targetRow.classList.remove('material-highlight');
+                                    state.currentHighlightedRow = null;
+                                }
+                                state.isAnimating = false;
+                            }, 1000);
+                        }, 500);
+                    } else {
+                        state.isAnimating = false;
+                    }
+                }, 200);
+            }
+        };
+
+        // 表格生成
+        function generateTable(size) {
+            if (!size) return;
+
+            state.elements.tableContainer.classList.add('table-loading');
+
+            const data = priceData[size];
+            if (!data) {
+                state.elements.tableContainer.innerHTML = '<p style="color:red !important; text-align: center !important; padding: 20px !important;">此尺寸尚無價目表資料</p>';
+                state.elements.tableContainer.classList.remove('table-loading');
+                return;
+            }
+
+            let html = '<table role="table" aria-label="價目表">';
+
+            // 標題行
+            html += '<tr role="row">';
+            html += '<th class="material-name empty-corner" scope="col"></th>';
+            CONFIG.quantities.forEach(q => html += `<th class="qty-header" scope="col">${q}</th>`);
+            html += '</tr>';
+
+            // 材質價格行
+            CONFIG.materials.forEach((mat, i) => {
+                if (!data[i]) return;
+                const even = i % 2 === 0;
+                const materialBg = even ? 'material-even' : 'material-odd';
+                const priceBg = even ? 'price-even' : 'price-odd';
+
+                html += `<tr role="row"><th class="material-name ${materialBg}" scope="row">${mat}</th>`;
+                data[i].forEach(p => {
+                    const formattedPrice = Math.round(p).toLocaleString();
+                    html += `<td class="${priceBg}">${formattedPrice}</td>`;
+                });
+                html += '</tr>';
+            });
+
+            state.elements.tableContainer.innerHTML = html + '</table>';
+
+            setTimeout(() => {
+                state.elements.tableContainer.classList.remove('table-loading');
+            }, 100);
+        }
+
+        // 清除高亮
+        function clearHighlight() {
+            if (state.currentHighlightedRow) {
+                state.currentHighlightedRow.classList.remove('material-highlight');
+                state.currentHighlightedRow = null;
+            }
+            document.querySelectorAll('.material-highlight').forEach(row => {
+                row.classList.remove('material-highlight');
+            });
+        }
+
+        // 尺寸選擇
+        function selectSize(size) {
+            if (!size || !CONFIG.sizes.includes(size)) return;
+
+            state.elements.select.value = size;
+            state.elements.tableHeader.textContent = size;
+
+            document.querySelectorAll('.size-btn').forEach(btn =>
+                btn.classList.toggle('active', btn.textContent === size)
+            );
+
+            if (state.elements.materialInput) {
+                state.elements.materialInput.value = '';
+                state.elements.materialInput.setAttribute('aria-expanded', 'false');
+            }
+            state.filteredMaterials = [...CONFIG.materials];
+            materialDropdown.hide();
+            clearHighlight();
+            generateTable(size);
+        }
+
+        function selectSizeFromButton(size) {
+            selectSize(size);
+            const selectAreaSection = document.querySelector('.select-area');
+            if (selectAreaSection) {
+                setTimeout(() => {
+                    selectAreaSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 100);
+            }
+        }
+
+        // 回到頂部功能
+        function initBackToTop() {
+            const backToTopBtn = document.getElementById('back-to-top');
+            if (!backToTopBtn) return;
+
+            let isScrolling = false;
+
+            function handleScroll() {
+                if (!isScrolling) {
+                    requestAnimationFrame(() => {
+                        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                        if (scrollTop > 300) {
+                            backToTopBtn.classList.add('show');
+                        } else {
+                            backToTopBtn.classList.remove('show');
+                        }
+                        isScrolling = false;
+                    });
+                    isScrolling = true;
+                }
+            }
+
+            function scrollToTop() {
+                const scrollToTopSmooth = () => {
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    if (scrollTop > 0) {
+                        window.scrollTo(0, scrollTop * 0.85);
+                        requestAnimationFrame(scrollToTopSmooth);
+                    }
+                };
+
+                if (window.CSS && CSS.supports('scroll-behavior', 'smooth')) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    scrollToTopSmooth();
+                }
+            }
+
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            backToTopBtn.addEventListener('click', scrollToTop);
+            handleScroll();
+        }
+
+        // 事件處理
+        const eventHandlers = {
+            handleMaterialInput: utils.debounce((e) => {
+                const query = e.target.value.toLowerCase().trim();
+                state.filteredMaterials = CONFIG.materials.filter(material =>
+                    material.toLowerCase().includes(query)
+                );
+                state.highlightedIndex = state.filteredMaterials.length > 0 ? 0 : -1;
+                materialDropdown.render();
+                materialDropdown.show();
+            }, 200),
+
+            handleKeydown(e) {
+                if (!state.elements.materialDropdown.classList.contains('show')) {
+                    if (e.key === 'ArrowDown' || e.key === 'Enter') {
+                        e.preventDefault();
+                        materialDropdown.show();
+                    }
+                    return;
+                }
+
+                const maxIndex = Math.max(0, state.filteredMaterials.length - 1);
+
+                switch (e.key) {
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        state.highlightedIndex = state.highlightedIndex < maxIndex ? state.highlightedIndex + 1 : 0;
+                        materialDropdown.updateHighlight();
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        state.highlightedIndex = state.highlightedIndex > 0 ? state.highlightedIndex - 1 : maxIndex;
+                        materialDropdown.updateHighlight();
+                        break;
+                    case 'Enter':
+                        e.preventDefault();
+                        if (state.highlightedIndex >= 0 && state.filteredMaterials[state.highlightedIndex]) {
+                            materialDropdown.select(state.filteredMaterials[state.highlightedIndex]);
+                        }
+                        break;
+                    case 'Escape':
+                        e.preventDefault();
+                        materialDropdown.hide();
+                        state.elements.materialInput.blur();
+                        break;
+                    case 'Tab':
+                        materialDropdown.hide();
+                        break;
+                }
+            },
+
+            handleInputBlur(e) {
+                setTimeout(() => {
+                    if (!e.relatedTarget || !e.relatedTarget.closest('.material-search-container')) {
+                        materialDropdown.hide();
+                    }
+                }, 150);
+            },
+
+            handleOutsideClick(e) {
+                if (!e.target.closest('.material-search-container')) {
+                    materialDropdown.hide();
+                }
+            }
+        };
+
+        // 初始化
+        function init() {
+            // 獲取DOM元素
+            Object.assign(state.elements, {
+                select: document.getElementById('size-select'),
+                materialInput: document.getElementById('material-input'),
+                materialDropdownBtn: document.getElementById('material-dropdown-btn'),
+                materialDropdown: document.getElementById('material-dropdown'),
+                buttonsContainer: document.getElementById('buttons'),
+                tableContainer: document.getElementById('table-container'),
+                tableHeader: document.getElementById('table-header')
+            });
+
+            // 驗證必要元素
+            const requiredElements = ['select', 'materialInput', 'buttonsContainer', 'tableContainer'];
+            for (const elem of requiredElements) {
+                if (!state.elements[elem]) {
+                    throw new Error(`Required element not found: ${elem}`);
+                }
+            }
+
+            // 生成尺寸選項和按鈕
+            CONFIG.sizes.forEach(size => {
+                // 下拉選單選項
+                const option = document.createElement('option');
+                option.value = option.textContent = size;
+                state.elements.select.appendChild(option);
+
+                // 按鈕
+                const btn = document.createElement('button');
+                btn.className = 'size-btn';
+                btn.textContent = size;
+                btn.onclick = () => selectSizeFromButton(size);
+                btn.setAttribute('aria-label', `選擇尺寸 ${size}`);
+                state.elements.buttonsContainer.appendChild(btn);
+            });
+
+            // 初始化材質下拉選項
+            materialDropdown.render();
+
+            // 設置無障礙屬性
+            state.elements.materialInput.setAttribute('role', 'combobox');
+            state.elements.materialInput.setAttribute('aria-expanded', 'false');
+            state.elements.materialInput.setAttribute('aria-haspopup', 'listbox');
+            state.elements.materialDropdown.setAttribute('role', 'listbox');
+
+            // 事件監聽
+            state.elements.select.onchange = () => selectSize(state.elements.select.value);
+            state.elements.materialInput.addEventListener('input', eventHandlers.handleMaterialInput);
+            state.elements.materialInput.addEventListener('focus', () => materialDropdown.show());
+            state.elements.materialInput.addEventListener('keydown', eventHandlers.handleKeydown);
+            state.elements.materialInput.addEventListener('blur', eventHandlers.handleInputBlur);
+
+            if (state.elements.materialDropdownBtn) {
+                state.elements.materialDropdownBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    materialDropdown.toggle();
+                });
+            }
+
+            document.addEventListener('click', eventHandlers.handleOutsideClick);
+
+            // 防止表單提交
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', (e) => e.preventDefault());
+            }
+
+            // 設置初始高度
+            ['size-buttons-content', 'select-area-content'].forEach(id => {
+                const content = document.getElementById(id);
+                if (content) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    content.classList.remove('collapsed');
+
+                    const btnId = id === 'size-buttons-content' ? 'size-collapse-btn' : 'select-collapse-btn';
+                    const btn = document.getElementById(btnId);
+                    if (btn) {
+                        btn.textContent = '−';
+                        btn.setAttribute('aria-expanded', 'true');
+                    }
+                }
+            });
+
+            // 初始化回到頂部功能
+            initBackToTop();
+
+            // 初始選擇
+            selectSize(CONFIG.sizes[0]);
+        }
+
+        // 清理函數
+        function cleanup() {
+            clearTimeout(state.searchTimeout);
+            clearHighlight();
+            state.isAnimating = false;
+        }
+
+        // 公開API
+        return {
+            init,
+            cleanup,
+            toggleCollapse,
+            materialDropdown
+        };
     })();
 
     // 啟動系統
     window.toggleCollapse = PriceTableSystem.toggleCollapse;
     window.addEventListener('beforeunload', PriceTableSystem.cleanup);
     document.addEventListener('DOMContentLoaded', PriceTableSystem.init);
-  </script>
-</body>
-</html>
+</script>
