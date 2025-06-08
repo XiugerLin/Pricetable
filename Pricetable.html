@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
@@ -7,493 +8,511 @@
   <style>
     /* 基礎樣式 */
     * { box-sizing: border-box !important; }
-    
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif !important; 
-      margin: 0 !important; 
-      padding: 16px !important; 
-      background: #f8f9fa !important;
-      font-size: 16px !important;
-      line-height: 1.5 !important;
-    }
-    
-    /* 共用樣式 */
-    .header {
-      text-align: center !important;
-      margin-bottom: 20px !important;
-      color: #333 !important;
-    }
-    
-    .header h1 {
-      margin: 0 0 8px 0 !important;
-      font-size: 24px !important;
-      font-weight: bold !important;
-    }
-    
-    h3 {
-    font-size: 18px;
-    }
 
-    .header p {
-      margin: 0 !important;
-      color: #666 !important;
-      font-size: 14px !important;
-    }
-    
-    .section {
-      margin-bottom: 20px !important;
-      padding: 16px !important;
-      border-radius: 12px !important;
-      border: 1px solid #ddd !important;
-      background: white !important;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-      position: relative !important;
-      z-index: 10 !important;
-    }
-    
-    .size-buttons { background-color: #f5f5f5 !important; }
-    .select-area { background-color: #fafafa !important; border-color: #e0e0e0 !important; }
-    
-    /* 收合功能樣式 */
-    .collapsible-header {
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      cursor: pointer !important;
-      user-select: none !important;
-      -webkit-tap-highlight-color: transparent !important;
-    }
+```
+body { 
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif !important; 
+  margin: 0 !important; 
+  padding: 16px !important; 
+  background: #f8f9fa !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+}
 
-    .collapse-btn {
-      background: none !important;
-      border: none !important;
-      font-size: 18px !important;
-      color: #666 !important;
-      cursor: pointer !important;
-      padding: 4px !important;
-      border-radius: 4px !important;
-      transition: all 0.2s ease !important;
-      display: none !important;
-    }
+/* 共用樣式 */
+.header {
+  text-align: center !important;
+  margin-bottom: 20px !important;
+  color: #333 !important;
+}
 
-    .collapse-btn:hover { background: rgba(0,0,0,0.1) !important; }
+.header h1 {
+  margin: 0 0 8px 0 !important;
+  font-size: 24px !important;
+  font-weight: bold !important;
+}
 
-    .collapsible-content {
-      overflow: visible !important;
-      transition: max-height 0.3s ease, opacity 0.3s ease !important;
-      position: relative !important;
-      z-index: 10 !important;
-    }
+.header p {
+  margin: 0 !important;
+  color: #666 !important;
+  font-size: 14px !important;
+}
 
-    .collapsible-content.collapsed {
-      max-height: 0 !important;
-      opacity: 0 !important;
-      margin-top: 0 !important;
-      overflow: hidden !important;
-      pointer-events: none !important;
-      z-index: 5 !important;
-    }
+.section {
+  margin-bottom: 20px !important;
+  padding: 16px !important;
+  border-radius: 12px !important;
+  border: 1px solid #ddd !important;
+  background: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
 
-    /* 按鈕網格 */
-    .button-grid {
-      display: grid !important;
-      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important;
-      gap: 10px !important;
-    }
-    
-    .size-btn {
-      padding: 12px 8px !important;
-      border: 2px solid #ccc !important;
-      background: #fff !important;
-      border-radius: 8px !important;
-      cursor: pointer !important;
-      font-size: 13px !important;
-      font-weight: 500 !important;
-      transition: all 0.2s ease !important;
-      text-align: center !important;
-      min-height: 44px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      -webkit-tap-highlight-color: transparent !important;
-      color: #000;
-    }
-    
-    .size-btn:hover { 
-      background: #e0e0e0 !important; 
-      border-color: #999 !important; 
-      transform: translateY(-1px) !important;
-    }
-    
-    .size-btn:active { transform: translateY(0) !important; }
-    
-    .size-btn.active { 
-      background: #ffcc00 !important; 
-      border-color: #ffaa00 !important; 
-      font-weight: bold !important;
-      box-shadow: 0 2px 8px rgba(255, 204, 0, 0.3) !important;
-    }
-    
-    /* 選單容器 */
-    .select-container {
-      display: flex !important;
-      gap: 16px !important;
-      align-items: flex-end !important;
-      flex-wrap: wrap !important;
-    }
+.size-buttons { background-color: #f5f5f5 !important; }
+.select-area { background-color: #fafafa !important; border-color: #e0e0e0 !important; }
 
-    .select-group {
-      flex: 1 !important;
-      min-width: 150px !important;
-    }
+/* 收合功能樣式 */
+.collapsible-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
 
-    .select-group label {
-      display: block !important;
-      margin-bottom: 6px !important;
-      font-size: 16px !important;
-      font-weight: 600 !important;
-      color: #333 !important;
-    }
-    
-    /* 輸入框樣式 */
-    #size-select, #material-input { 
-      padding: 12px 16px !important; 
-      font-size: 16px !important; 
-      border: 2px solid #ccc !important; 
-      border-radius: 8px !important; 
-      width: 100% !important;
-      background: white !important;
-      outline: none !important;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
-    }
+.collapse-btn {
+  background: none !important;
+  border: none !important;
+  font-size: 18px !important;
+  color: #666 !important;
+  cursor: pointer !important;
+  padding: 4px !important;
+  border-radius: 4px !important;
+  transition: all 0.2s ease !important;
+  display: none !important;
+}
 
-    #size-select {
-      appearance: none !important;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") !important;
-      background-repeat: no-repeat !important;
-      background-position: right 12px center !important;
-      background-size: 16px !important;
-      padding-right: 40px !important;
-      cursor: pointer !important;
-      position: relative !important;
-      z-index: 100 !important;
-    }
+.collapse-btn:hover { background: rgba(0,0,0,0.1) !important; }
 
-    #size-select:focus, #material-input:focus {
-      border-color: #ff9800 !important;
-      box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2) !important;
-    }
+.collapsible-content {
+  overflow: visible !important;
+  transition: max-height 0.3s ease, opacity 0.3s ease !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
 
-    #material-input { padding-right: 40px !important; }
+.collapsible-content.collapsed {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  margin-top: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+}
 
-    /* 材質下拉選單 */
-    .material-search-container {
-      position: relative !important;
-      width: 100% !important;
-      z-index: 100 !important;
-    }
+/* 按鈕網格 */
+.button-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important;
+  gap: 10px !important;
+}
 
-    .material-dropdown-btn {
-      position: absolute !important;
-      right: 8px !important;
-      top: 50% !important;
-      transform: translateY(-50%) !important;
-      width: 24px !important;
-      height: 24px !important;
-      border: none !important;
-      background: none !important;
-      cursor: pointer !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      color: #666 !important;
-      font-size: 14px !important;
-      transition: transform 0.2s ease !important;
-    }
+.size-btn {
+  padding: 12px 8px !important;
+  border: 2px solid #ccc !important;
+  background: #fff !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  text-align: center !important;
+  min-height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
 
-    .material-dropdown-btn.open { transform: translateY(-50%) rotate(180deg) !important; }
+.size-btn:hover { 
+  background: #e0e0e0 !important; 
+  border-color: #999 !important; 
+  transform: translateY(-1px) !important;
+}
 
-    .material-dropdown {
-      position: absolute !important;
-      top: 100% !important;
-      left: 0 !important;
-      right: 0 !important;
-      background: white !important;
-      border: 2px solid #ccc !important;
-      border-top: none !important;
-      border-radius: 0 0 8px 8px !important;
-      max-height: 200px !important;
-      overflow-y: auto !important;
-      z-index: 1002 !important;
-      display: none !important;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
-    }
+.size-btn:active { transform: translateY(0) !important; }
 
-    .material-dropdown.show { display: block !important; }
+.size-btn.active { 
+  background: #ffcc00 !important; 
+  border-color: #ffaa00 !important; 
+  font-weight: bold !important;
+  box-shadow: 0 2px 8px rgba(255, 204, 0, 0.3) !important;
+}
 
-    .material-option {
-      padding: 10px 16px !important;
-      cursor: pointer !important;
-      border-bottom: 1px solid #eee !important;
-      transition: background-color 0.2s ease !important;
-    }
+/* 選單容器 */
+.select-container {
+  display: flex !important;
+  gap: 16px !important;
+  align-items: flex-end !important;
+  flex-wrap: wrap !important;
+}
 
-    .material-option:hover, .material-option.highlighted { background-color: #f0f8ff !important; }
-    .material-option:last-child { border-bottom: none !important; }
+.select-group {
+  flex: 1 !important;
+  min-width: 150px !important;
+}
 
-    .no-results {
-      padding: 10px 16px !important;
-      color: #999 !important;
-      font-style: italic !important;
-    }
+.select-group label {
+  display: block !important;
+  margin-bottom: 6px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+}
 
-    /* 表格樣式 */
-    .table-header {
-      padding: 12px 16px !important;
-      font-size: 24px !important;
-      color: #ff8c00 !important;
-      text-align: center !important;
-      font-weight: bold !important;
-      margin: 0 !important;
-    }
-    
-    .table-wrapper {
-      border-radius: 8px !important;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
-      background: white !important;
-      position: relative !important;
-      overflow: visible !important;
-      margin-top: 12px !important;
-      border: 1px solid #e0e0e0 !important;
-    }
-    
-    /* 恢復拖動區域 */
-    .drag-area {
-      height: 40px !important;
-      background: #f0f0f0 !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      color: #999 !important;
-      font-size: 12px !important;
-      cursor: grab !important;
-      user-select: none !important;
-      -webkit-user-select: none !important;
-      touch-action: pan-y !important;
-      border-radius: 8px 8px 0 0 !important;
-      position: relative !important;
-    }
-    
-    .drag-area:active { cursor: grabbing !important; }
-    .drag-area::before { content: "⋯" !important; font-size: 16px !important; color: #ccc !important; }
-    
-    /* 修改表格滾動容器 - 動態高度與垂直滾動 */
-    .table-scroll-container {
-      overflow-x: auto !important;
-      overflow-y: auto !important;
-      -webkit-overflow-scrolling: touch !important;
-      height: 60vh !important; /* 預設高度，會由 JS 動態調整 */
-      min-height: 300px !important;
-      max-height: 85vh !important;
-    }
-    
-    table { 
-      border-collapse: separate !important;
-      border-spacing: 0 !important;
-      width: 100% !important; 
-      min-width: 580px !important;
-      font-size: 14px !important;
-      position: relative !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-    
-    td, th { 
-      padding: 10px 6px !important; 
-      text-align: center !important; 
-      border: 1px solid #e0e0e0 !important;
-      white-space: nowrap !important;
-      background: white !important;
-      margin: 0 !important;
-    }
+/* 輸入框樣式 */
+#size-select, #material-input { 
+  padding: 12px 16px !important; 
+  font-size: 16px !important; 
+  border: 2px solid #ccc !important; 
+  border-radius: 8px !important; 
+  width: 100% !important;
+  background: white !important;
+  outline: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
 
-    .material-name {
-      position: sticky !important;
-      left: 0 !important;
-      z-index: 2 !important;
-      font-weight: 600 !important;
-      text-align: left !important;
-      padding: 10px 8px 10px 10px !important;
-      max-width: 130px !important;
-      min-width: 120px !important;
-      word-wrap: break-word !important;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1) !important;
-      border-left: none !important;
-      font-size: 15px !important;
-      line-height: 1.3 !important;
-      color: #333;
-    }
+#size-select {
+  appearance: none !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 16px !important;
+  padding-right: 40px !important;
+  cursor: pointer !important;
+  position: relative !important;
+  z-index: 100 !important;
+}
 
-    .qty-header, .empty-corner {
-      position: sticky !important;
-      top: 0 !important;
-      z-index: 2 !important;
-      font-weight: bold !important;
-      color: #333 !important;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-      border-top: none !important;
-    }
+#size-select:focus, #material-input:focus {
+  border-color: #ff9800 !important;
+  box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2) !important;
+}
 
-    .empty-corner {
-      position: sticky !important;
-      left: 0 !important;
-      top: 0 !important;
-      z-index: 3 !important;
-      background: #f8f9fa !important;
-      border-left: none !important;
-      border-top: none !important;
-    }
+#material-input { padding-right: 40px !important; }
 
-    .qty-header { background: #ffcc00 !important; }
-    .material-even { background: #ffcc66 !important; }
-    .material-odd { background: #ffcc00 !important; }
-    .price-even { background: #f8f9fa !important; }
-    .price-odd { background: #fff !important; }
+/* 材質下拉選單 */
+.material-search-container {
+  position: relative !important;
+  width: 100% !important;
+  z-index: 100 !important;
+}
 
-    /* 高亮動畫 */
-    .material-highlight {
-      animation: highlightFlash 1s ease-in-out 1 !important;
-    }
+.material-dropdown-btn {
+  position: absolute !important;
+  right: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 24px !important;
+  height: 24px !important;
+  border: none !important;
+  background: none !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #666 !important;
+  font-size: 14px !important;
+  transition: transform 0.2s ease !important;
+}
 
-    .material-highlight td {
-      animation: highlightFlash 1s ease-in-out 1 !important;
-      background-color: #fff3e0 !important;
-      border-left: 3px solid #ff9800 !important;
-    }
+.material-dropdown-btn.open { transform: translateY(-50%) rotate(180deg) !important; }
 
-    @keyframes highlightFlash {
-      0%, 100% { background-color: #fff3e0 !important; }
-      50% { background-color: #ffcc80 !important; }
-    }
-    
-    .scroll-hint {
-      text-align: center !important;
-      color: #666 !important;
-      font-size: 12px !important;
-      margin-top: 8px !important;
-      display: block !important;
-    }
-    
-    .loading {
-      text-align: center !important;
-      color: #666 !important;
-    }
+.material-dropdown {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: white !important;
+  border: 2px solid #ccc !important;
+  border-top: none !important;
+  border-radius: 0 0 8px 8px !important;
+  max-height: 200px !important;
+  overflow-y: auto !important;
+  z-index: 1002 !important;
+  display: none !important;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+}
 
-    .table-loading { opacity: 0.5 !important; pointer-events: none !important; }
-    
-    .sr-only {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      padding: 0 !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
-      white-space: nowrap !important;
-      border: 0 !important;
-    }
+.material-dropdown.show { display: block !important; }
 
-    /* 回到頂部按鈕 */
-    .back-to-top {
-      position: fixed !important;
-      bottom: 20px !important;
-      right: 20px !important;
-      width: 50px !important;
-      height: 50px !important;
-      background: #ff8c00 !important;
-      color: white !important;
-      border: none !important;
-      border-radius: 50% !important;
-      cursor: pointer !important;
-      display: none !important;
-      align-items: center !important;
-      justify-content: center !important;
-      font-size: 20px !important;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
-      transition: all 0.3s ease !important;
-      z-index: 1000 !important;
-      -webkit-tap-highlight-color: transparent !important;
-    }
+.material-option {
+  padding: 10px 16px !important;
+  cursor: pointer !important;
+  border-bottom: 1px solid #eee !important;
+  transition: background-color 0.2s ease !important;
+}
 
-    .back-to-top:hover {
-      background: #ff7700 !important;
-      transform: translateY(-2px) !important;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.3) !important;
-    }
+.material-option:hover, .material-option.highlighted { background-color: #f0f8ff !important; }
+.material-option:last-child { border-bottom: none !important; }
 
-    .back-to-top:active { transform: translateY(0) !important; }
-    .back-to-top.show { display: flex !important; animation: fadeInUp 0.3s ease !important; }
+.no-results {
+  padding: 10px 16px !important;
+  color: #999 !important;
+  font-style: italic !important;
+}
 
-    @keyframes fadeInUp {
-      from { opacity: 0 !important; transform: translateY(20px) !important; }
-      to { opacity: 1 !important; transform: translateY(0) !important; }
-    }
+/* 表格樣式 */
+.table-header {
+  padding: 12px 16px !important;
+  font-size: 24px !important;
+  color: #ff8c00 !important;
+  text-align: center !important;
+  font-weight: bold !important;
+  margin: 0 !important;
+}
 
-    /* 響應式設計 */
-    @media (max-width: 768px) {
-      body { padding: 8px !important; font-size: 14px !important; }
-      .header { margin-bottom: 12px !important; }
-      .header h1 { font-size: 18px !important; margin-bottom: 4px !important; }
-      .header p { font-size: 12px !important; }
-      .section { padding: 10px !important; margin-bottom: 12px !important; }
-      .collapse-btn { display: block !important; }
-      .size-buttons .collapsible-content, .select-area .collapsible-content { margin-top: 12px !important; }
-      .button-grid { grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)) !important; gap: 6px !important; }
-      .select-container { gap: 10px !important; flex-direction: column !important; }
-      .select-group { min-width: 100% !important; }
-      table { font-size: 12px !important; min-width: 520px !important; }
-      td, th { padding: 8px 4px !important; }
-      .material-name { min-width: 110px !important; max-width: 110px !important; font-size: 13px !important; }
-      .table-header { font-size: 18px !important; padding: 6px 8px !important; }
-      .table-wrapper { margin-top: 6px !important; }
-      .table-scroll-container { 
-        height: 50vh !important; 
-        min-height: 250px !important;
-        max-height: 70vh !important;
-      }
-      .drag-area { height: 35px !important; }
-      .scroll-hint { display: block !important; }
-      .back-to-top { width: 45px !important; height: 45px !important; bottom: 15px !important; right: 15px !important; font-size: 18px !important; }
-    }
+.table-wrapper {
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+  background: white !important;
+  position: relative !important;
+  overflow: visible !important;
+  margin-top: 12px !important;
+  border: 1px solid #e0e0e0 !important;
+}
 
-    @media (max-width: 480px) {
-      body { padding: 6px !important; }
-      .section { padding: 8px !important; margin-bottom: 8px !important; }
-      .button-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 4px !important; }
-      .table-scroll-container { 
-        height: 45vh !important; 
-        min-height: 200px !important;
-        max-height: 65vh !important;
-      }
-      .drag-area { height: 30px !important; }
-      .back-to-top { width: 40px !important; height: 40px !important; bottom: 10px !important; right: 10px !important; font-size: 16px !important; }
-    }
+/* 當表格在視窗頂部附近時的特殊樣式 */
+.table-wrapper.near-top .table-scroll-container {
+  height: calc(100vh - 100px) !important;
+  max-height: 90vh !important;
+}
 
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-    }
+/* 恢復拖動區域 */
+.drag-area {
+  height: 40px !important;
+  background: #f0f0f0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #999 !important;
+  font-size: 12px !important;
+  cursor: grab !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  touch-action: pan-y !important;
+  border-radius: 8px 8px 0 0 !important;
+  position: relative !important;
+}
 
-    @media (pointer: coarse) {
-      .size-btn { min-height: 48px !important; padding: 14px 8px !important; }
-      #size-select, #material-input { min-height: 48px !important; padding: 14px 16px !important; }
-      .material-option { padding: 14px 16px !important; min-height: 48px !important; }
-      .drag-area { height: 50px !important; }
-    }
+.drag-area:active { cursor: grabbing !important; }
+.drag-area::before { content: "⋯" !important; font-size: 16px !important; color: #ccc !important; }
+
+/* 修改表格滾動容器 - 動態高度與垂直滾動 */
+.table-scroll-container {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  height: 60vh !important; /* 預設高度，會由 JS 動態調整 */
+  min-height: 300px !important;
+  max-height: 85vh !important;
+  will-change: height !important; /* 優化高度變化的性能 */
+}
+
+table { 
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  width: 100% !important; 
+  min-width: 580px !important;
+  font-size: 14px !important;
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+td, th { 
+  padding: 10px 6px !important; 
+  text-align: center !important; 
+  border: 1px solid #e0e0e0 !important;
+  white-space: nowrap !important;
+  background: white !important;
+  margin: 0 !important;
+}
+
+.material-name {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 2 !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+  padding: 10px 8px 10px 10px !important;
+  max-width: 130px !important;
+  min-width: 120px !important;
+  word-wrap: break-word !important;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1) !important;
+  border-left: none !important;
+  font-size: 15px !important;
+  line-height: 1.3 !important;
+}
+
+.qty-header, .empty-corner {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 2 !important;
+  font-weight: bold !important;
+  color: #333 !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+  border-top: none !important;
+}
+
+.empty-corner {
+  position: sticky !important;
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 3 !important;
+  background: #f8f9fa !important;
+  border-left: none !important;
+  border-top: none !important;
+}
+
+.qty-header { background: #ffcc00 !important; }
+.material-even { background: #ffcc66 !important; }
+.material-odd { background: #ffcc00 !important; }
+.price-even { background: #f8f9fa !important; }
+.price-odd { background: #fff !important; }
+
+/* 高亮動畫 */
+.material-highlight {
+  animation: highlightFlash 1s ease-in-out 1 !important;
+}
+
+.material-highlight td {
+  animation: highlightFlash 1s ease-in-out 1 !important;
+  background-color: #fff3e0 !important;
+  border-left: 3px solid #ff9800 !important;
+}
+
+@keyframes highlightFlash {
+  0%, 100% { background-color: #fff3e0 !important; }
+  50% { background-color: #ffcc80 !important; }
+}
+
+.scroll-hint {
+  text-align: center !important;
+  color: #666 !important;
+  font-size: 12px !important;
+  margin-top: 8px !important;
+  display: block !important;
+}
+
+.loading {
+  text-align: center !important;
+  color: #666 !important;
+}
+
+.table-loading { opacity: 0.5 !important; pointer-events: none !important; }
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* 回到頂部按鈕 */
+.back-to-top {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  width: 50px !important;
+  height: 50px !important;
+  background: #ff8c00 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: none !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+  transition: all 0.3s ease !important;
+  z-index: 1000 !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.back-to-top:hover {
+  background: #ff7700 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3) !important;
+}
+
+.back-to-top:active { transform: translateY(0) !important; }
+.back-to-top.show { display: flex !important; animation: fadeInUp 0.3s ease !important; }
+
+@keyframes fadeInUp {
+  from { opacity: 0 !important; transform: translateY(20px) !important; }
+  to { opacity: 1 !important; transform: translateY(0) !important; }
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  body { padding: 8px !important; font-size: 14px !important; }
+  .header { margin-bottom: 12px !important; }
+  .header h1 { font-size: 18px !important; margin-bottom: 4px !important; }
+  .header p { font-size: 12px !important; }
+  .section { padding: 10px !important; margin-bottom: 12px !important; }
+  .collapse-btn { display: block !important; }
+  .size-buttons .collapsible-content, .select-area .collapsible-content { margin-top: 12px !important; }
+  .button-grid { grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)) !important; gap: 6px !important; }
+  .select-container { gap: 10px !important; flex-direction: column !important; }
+  .select-group { min-width: 100% !important; }
+  table { font-size: 12px !important; min-width: 520px !important; }
+  td, th { padding: 8px 4px !important; }
+  .material-name { min-width: 110px !important; max-width: 110px !important; font-size: 13px !important; }
+  .table-header { font-size: 18px !important; padding: 6px 8px !important; }
+  .table-wrapper { margin-top: 6px !important; }
+  .table-scroll-container { 
+    height: 70vh !important; 
+    min-height: 300px !important;
+    max-height: 85vh !important;
+  }
+  .drag-area { height: 35px !important; }
+  .scroll-hint { display: block !important; font-size: 11px !important; margin-top: 6px !important; }
+  .back-to-top { width: 45px !important; height: 45px !important; bottom: 15px !important; right: 15px !important; font-size: 18px !important; }
+}
+
+@media (max-width: 480px) {
+  body { padding: 6px !important; }
+  .header { margin-bottom: 10px !important; }
+  .section { padding: 8px !important; margin-bottom: 8px !important; }
+  .button-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 4px !important; }
+  .table-scroll-container { 
+    height: 75vh !important; 
+    min-height: 250px !important;
+    max-height: 90vh !important;
+  }
+  .drag-area { height: 30px !important; }
+  .scroll-hint { margin-top: 4px !important; }
+  .back-to-top { width: 40px !important; height: 40px !important; bottom: 10px !important; right: 10px !important; font-size: 16px !important; }
+}
+
+/* 平板裝置優化 */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .table-scroll-container { 
+    height: 65vh !important; 
+    min-height: 400px !important;
+    max-height: 80vh !important;
+  }
+  .section { margin-bottom: 16px !important; }
+  table { font-size: 13px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+@media (pointer: coarse) {
+  .size-btn { min-height: 48px !important; padding: 14px 8px !important; }
+  #size-select, #material-input { min-height: 48px !important; padding: 14px 16px !important; }
+  .material-option { padding: 14px 16px !important; min-height: 48px !important; }
+  .drag-area { height: 50px !important; }
+}
+```
+
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>數位貼紙價目表</h1>
+    <h1>🏷️ 數位貼紙價目表</h1>
+    <p>選擇尺寸查看各材質價格</p>
   </div>
 
   <div class="section size-buttons">
@@ -537,8 +556,9 @@
       <div id="table-container" class="loading">正在載入價目表...</div>
     </div>
   </div>
+  <div class="scroll-hint">👈👆 可上下左右滑動，標題列會保持固定</div>
 
-  <button class="back-to-top" id="back-to-top" aria-label="回到頂部" title="回到頂部">↑</button>
+<button class="back-to-top" id="back-to-top" aria-label="回到頂部" title="回到頂部">↑</button>
 
   <script>
     // 價目表系統
@@ -646,12 +666,11 @@
             btn.textContent = '−';
             btn.setAttribute('aria-expanded', 'true');
             
-            setTimeout(() => {
-              if (!content.classList.contains('collapsed')) {
-                content.style.maxHeight = content.scrollHeight + 'px';
-              }
-              adjustTableHeight(); // 展開後重新計算表格高度
-            }, 350);
+            // 展開後立即和延遲重新計算表格高度
+            requestAnimationFrame(() => {
+              adjustTableHeight();
+              setTimeout(adjustTableHeight, 350);
+            });
           } else {
             content.style.maxHeight = content.scrollHeight + 'px';
             content.offsetHeight;
@@ -660,7 +679,12 @@
               content.style.maxHeight = '0';
               btn.textContent = '+';
               btn.setAttribute('aria-expanded', 'false');
-              setTimeout(adjustTableHeight, 350); // 收合後重新計算表格高度
+              
+              // 收合後立即和延遲重新計算表格高度
+              requestAnimationFrame(() => {
+                adjustTableHeight();
+                setTimeout(adjustTableHeight, 350);
+              });
             }, 10);
           }
         } catch (error) {
@@ -800,25 +824,102 @@
         const tableScrollContainer = document.querySelector('.table-scroll-container');
         if (!tableScrollContainer) return;
 
-        // 計算可用高度
         const windowHeight = window.innerHeight;
         const tableWrapper = document.querySelector('.table-wrapper');
         if (!tableWrapper) return;
 
-        // 獲取表格上方所有元素的高度
-        const tableTop = tableWrapper.getBoundingClientRect().top;
-        const dragAreaHeight = 40; // 拖動區域高度
-        const scrollHintHeight = 30; // 滾動提示高度
-        const bottomMargin = 20; // 底部留白
+        // 獲取表格容器的位置
+        const tableWrapperRect = tableWrapper.getBoundingClientRect();
+        const dragAreaHeight = window.innerWidth <= 768 ? 35 : 40;
+        const scrollHintHeight = 30;
         
-        // 計算可用高度（視窗高度 - 表格上方高度 - 拖動區域 - 底部空間）
+        // 檢查是否為移動裝置
+        const isMobile = window.innerWidth <= 768;
+        const isSmallMobile = window.innerWidth <= 480;
+        
+        // 計算表格上方的實際高度
+        const tableTop = Math.max(0, tableWrapperRect.top);
+        
+        // 底部保留空間（移動裝置較少）
+        const bottomMargin = isMobile ? 10 : 20;
+        
+        // 計算可用高度
         let availableHeight = windowHeight - tableTop - dragAreaHeight - scrollHintHeight - bottomMargin;
         
-        // 限制高度範圍
-        availableHeight = Math.max(300, Math.min(availableHeight, windowHeight * 0.85));
+        // 如果表格已經在視窗頂部或接近頂部，給予更多高度
+        if (tableTop < 100) {
+          availableHeight = windowHeight - dragAreaHeight - scrollHintHeight - bottomMargin - Math.max(0, tableTop);
+          tableWrapper.classList.add('near-top');
+        } else {
+          tableWrapper.classList.remove('near-top');
+        }
+        
+        // 設定最小和最大高度限制
+        let minHeight = isSmallMobile ? 250 : (isMobile ? 300 : 400);
+        let maxHeight = isSmallMobile ? windowHeight * 0.9 : (isMobile ? windowHeight * 0.85 : windowHeight * 0.8);
+        
+        // 確保高度在合理範圍內
+        availableHeight = Math.max(minHeight, Math.min(availableHeight, maxHeight));
         
         // 設置高度
         tableScrollContainer.style.height = availableHeight + 'px';
+      }
+
+      // 監測表格是否在視窗中並調整高度
+      function setupIntersectionObserver() {
+        const tableWrapper = document.querySelector('.table-wrapper');
+        if (!tableWrapper) return;
+
+        const observerOptions = {
+          root: null,
+          rootMargin: '-50px 0px -50px 0px',
+          threshold: [0, 0.1, 0.5, 0.9, 1]
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // 當表格進入視窗時調整高度
+              adjustTableHeight();
+            }
+          });
+        }, observerOptions);
+
+        observer.observe(tableWrapper);
+        
+        // 儲存 observer 以便清理
+        window.tableIntersectionObserver = observer;
+      }
+
+      // 優化的滾動監聽
+      function setupScrollListener() {
+        let ticking = false;
+        let lastScrollY = window.scrollY;
+        
+        function handleScroll() {
+          const currentScrollY = window.scrollY;
+          const scrollDiff = Math.abs(currentScrollY - lastScrollY);
+          
+          // 只有在滾動距離超過閾值時才更新（優化性能）
+          if (scrollDiff > 5 && !ticking) {
+            window.requestAnimationFrame(() => {
+              adjustTableHeight();
+              lastScrollY = currentScrollY;
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }
+        
+        // 使用節流的滾動監聽
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        
+        // 觸控裝置的特殊處理
+        if ('ontouchstart' in window) {
+          window.addEventListener('touchmove', handleScroll, { passive: true });
+        }
+        
+        window.scrollHandler = handleScroll;
       }
 
       // 防抖函數用於 resize 事件
@@ -1129,11 +1230,21 @@
         window.debouncedAdjustHeight = debounceResize(adjustTableHeight, 250);
         window.addEventListener('resize', window.debouncedAdjustHeight);
         
+        // 設置 Intersection Observer
+        setupIntersectionObserver();
+        
+        // 設置滾動監聽
+        setupScrollListener();
+        
         // 初始選擇
         selectSize(CONFIG.sizes[0]);
         
-        // 初始調整高度
-        setTimeout(adjustTableHeight, 100);
+        // 初始調整高度（延遲執行以確保 DOM 完全載入）
+        setTimeout(() => {
+          adjustTableHeight();
+          // 再次調整以確保準確
+          setTimeout(adjustTableHeight, 300);
+        }, 100);
       }
 
       // 清理函數
@@ -1141,8 +1252,20 @@
         clearTimeout(state.searchTimeout);
         clearHighlight();
         state.isAnimating = false;
-        // 移除 resize 事件監聽器
-        window.removeEventListener('resize', window.debouncedAdjustHeight);
+        
+        // 移除事件監聽器
+        if (window.debouncedAdjustHeight) {
+          window.removeEventListener('resize', window.debouncedAdjustHeight);
+        }
+        if (window.scrollHandler) {
+          window.removeEventListener('scroll', window.scrollHandler);
+          window.removeEventListener('touchmove', window.scrollHandler);
+        }
+        
+        // 斷開 Intersection Observer
+        if (window.tableIntersectionObserver) {
+          window.tableIntersectionObserver.disconnect();
+        }
       }
 
       // 公開API
@@ -1159,5 +1282,6 @@
     window.addEventListener('beforeunload', PriceTableSystem.cleanup);
     document.addEventListener('DOMContentLoaded', PriceTableSystem.init);
   </script>
+
 </body>
 </html>
